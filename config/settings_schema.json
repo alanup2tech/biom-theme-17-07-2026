@@ -1728,6 +1728,40 @@
       },
       {
         "type": "header",
+        "content": "Cart recommendations"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_upsells",
+        "label": "Show product recommendations",
+        "default": true,
+        "visible_if": "{{ settings.cart_type == 'drawer' }}"
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_heading",
+        "label": "Heading",
+        "default": "You May Also Like",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.show_cart_upsells }}"
+      },
+      {
+        "type": "collection",
+        "id": "cart_upsell_collection",
+        "label": "Products collection",
+        "info": "Uses the catalog when no collection is selected."
+      },
+      {
+        "type": "range",
+        "id": "cart_upsell_limit",
+        "label": "Maximum products",
+        "min": 2,
+        "max": 8,
+        "step": 1,
+        "default": 6,
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.show_cart_upsells }}"
+      },
+      {
+        "type": "header",
         "content": "t:content.cart_features"
       },
       {

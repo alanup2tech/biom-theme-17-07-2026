@@ -1,0 +1,154 @@
+{% doc %}
+  Renders the cart drawer product recommendation carousel.
+
+  Products come from the configured cart upsell collection, falling back to the
+  catalog when no collection is selected. Products already in the cart are
+  excluded.
+
+  @param {object} section - The header section that owns the cart drawer.
+{% enddoc %}
+
+{%- liquid
+  assign upsell_collection = settings.cart_upsell_collection
+  assign upsell_limit = settings.cart_upsell_limit | default: 6
+  assign rendered_upsells = 0
+
+  if upsell_collection == blank
+    assign upsell_collection = collections.all
+  endif
+-%}
+
+{%- capture upsell_cards -%}
+  {%- for upsell_product in upsell_collection.products -%}
+    {%- if rendered_upsells >= upsell_limit -%}
+      {%- break -%}
+    {%- endif -%}
+
+    {%- liquid
+      assign product_in_cart = false
+      assign upsell_variant = upsell_product.selected_or_first_available_variant
+
+      for cart_item in cart.items
+        if cart_item.product_id == upsell_product.id
+          assign product_in_cart = true
+          break
+        endif
+      endfor
+    -%}
+
+    {%- if product_in_cart == false and upsell_variant != blank and upsell_variant.available -%}
+      {%- liquid
+        assign rendered_upsells = rendered_upsells | plus: 1
+        assign upsell_form_id = 'CartUpsellForm-' | append: section.id | append: '-' | append: upsell_product.id
+        assign upsell_image_alt = upsell_product.featured_image.alt | default: upsell_product.title
+        assign minimum_quantity = upsell_variant.quantity_rule.min | default: 1
+      -%}
+      <article class="upsell-card">
+        <a
+          class="upsell-card__image-link"
+          href="{{ upsell_product.url }}"
+          aria-label="{{ upsell_product.title | escape }}"
+        >
+          {%- if upsell_product.featured_image != blank -%}
+            {{-
+              upsell_product.featured_image
+              | image_url: width: 220
+              | image_tag:
+                class: 'upsell-card__image',
+                loading: 'lazy',
+                widths: '110, 165, 220',
+                sizes: '110px',
+                alt: upsell_image_alt
+            -}}
+          {%- else -%}
+            {{- 'product-1' | placeholder_svg_tag: 'upsell-card__image upsell-card__image--placeholder' -}}
+          {%- endif -%}
+        </a>
+
+        <div class="upsell-card__content">
+          <a class="upsell-card__name" href="{{ upsell_product.url }}">
+            {{- upsell_product.title -}}
+          </a>
+
+          <div class="upsell-card__meta">
+            <span class="upsell-card__price">{{ upsell_variant.price | money }}</span>
+
+            <product-form-component
+              class="upsell-card__form"
+              data-section-id="{{ section.id }}"
+              data-product-id="{{ upsell_product.id }}"
+              data-product-url="{{ upsell_product.url }}"
+              data-quantity-default="{{ minimum_quantity }}"
+              data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+              on:submit="/handleSubmit"
+            >
+              <div
+                class="visually-hidden"
+                aria-live="assertive"
+                role="status"
+                aria-atomic="true"
+                ref="liveRegion"
+              ></div>
+
+              {%- form 'product', upsell_product, id: upsell_form_id, data-type: 'add-to-cart-form' -%}
+                <input
+                  type="hidden"
+                  name="id"
+                  ref="variantId"
+                  value="{{ upsell_variant.id }}"
+                >
+                <input type="hidden" name="quantity" value="{{ minimum_quantity }}">
+
+                <add-to-cart-component
+                  ref="addToCartButtonContainer"
+                  data-add-to-cart-animation="false"
+                >
+                  <button
+                    type="submit"
+                    name="add"
+                    class="upsell-card__add-btn"
+                    ref="addToCartButton"
+                    on:click="/handleClick"
+                    aria-label="Add {{ upsell_product.title | escape }} to cart"
+                  >
+                    <span class="upsell-card__button-label" data-add-to-cart-label>ADD</span>
+                    <span class="upsell-card__button-added">ADDED</span>
+                  </button>
+                </add-to-cart-component>
+              {%- endform -%}
+            </product-form-component>
+          </div>
+        </div>
+      </article>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if settings.show_cart_upsells and rendered_upsells > 0 -%}
+  <cart-upsell class="cart-drawer__upsell" aria-labelledby="CartUpsellHeading-{{ section.id }}">
+    <h3 class="cart-drawer__upsell-title" id="CartUpsellHeading-{{ section.id }}">
+      {{- settings.cart_upsell_heading | default: 'You May Also Like' -}}
+    </h3>
+
+    <div class="cart-drawer__upsell-track-wrapper">
+      <scroll-hint class="cart-drawer__upsell-carousel" data-cart-upsell-track>
+        {{- upsell_cards -}}
+      </scroll-hint>
+
+      <button
+        type="button"
+        class="cart-drawer__upsell-next"
+        data-cart-upsell-next
+        aria-label="Show more recommended products"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-drawer__upsell-progress" data-cart-upsell-progress aria-hidden="true">
+      <span class="cart-drawer__upsell-progress-thumb"></span>
+    </div>
+  </cart-upsell>
+{%- endif -%}

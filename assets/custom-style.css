@@ -380,88 +380,251 @@
 
 /* --- You May Also Like Upsell Carousel --- */
 .cart-drawer__upsell {
-  padding: 16px var(--cart-drawer-padding);
-  border-top: 1px solid #f0f0f0;
-
-  @media screen and (min-width: 750px) {
-    padding-inline: var(--cart-drawer-padding-desktop);
-  }
+  display: block;
+  margin: 8px 24px 0;
+  padding: 24px 0 18px;
+  border-top: 1px solid #cbd8bc;
+  background: #fdfff4;
 }
 .cart-items__title{
   font-size: 28px !important;
   font-family: 'TT Gateral';
 }
 .cart-drawer__upsell-title {
-  font-size: 0.75rem;
+  margin: 0 0 18px;
+  font-size: 20px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #555555;
-  margin-bottom: 12px;
+  line-height: 1.2;
+  color: #2f4028;
+}
+
+.cart-drawer__upsell-track-wrapper {
+  position: relative;
 }
 
 .cart-drawer__upsell-carousel {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  overscroll-behavior-inline: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding-bottom: 4px;
+  padding: 0;
 }
 
 .cart-drawer__upsell-carousel::-webkit-scrollbar {
   display: none;
 }
+
 .upsell-card {
-  flex: 0 0 130px;
+  flex: 0 0 min(378px, calc(100vw - 76px));
   scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  background: #fafafa;
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 16px;
+  min-height: 150px;
+  padding: 16px;
+  background: #f0f6e5;
   border-radius: 10px;
-  padding: 10px;
-  border: 1px solid #efefef;
+  color: #2f4028;
+}
+
+.upsell-card__image-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
 }
 
 .upsell-card__image {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 6px;
-  object-fit: cover;
-  background: #f0f0f0;
+  display: block;
+  width: 82px;
+  height: 112px;
+  object-fit: contain;
+}
+
+.upsell-card__image--placeholder {
+  color: #cbd8bc;
+}
+
+.upsell-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding-block: 8px 4px;
 }
 
 .upsell-card__name {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  line-height: 1.3;
+  display: -webkit-box;
+  overflow: hidden;
+  color: #2f4028;
+  font-family: 'TT Gateral', serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.15;
+  text-decoration: none;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.upsell-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .upsell-card__price {
-  font-size: 0.8rem;
-  color: #444444;
-  font-weight: 500;
+  color: #7aa05f;
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.upsell-card__form {
+  flex: 0 0 auto;
 }
 
 .upsell-card__add-btn {
-  background: #3a6b35;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 103px;
+  min-height: 45px;
+  padding: 10px 18px;
+  background: #7aa05f;
   color: #ffffff;
   border: none;
-  border-radius: 999px;
-  padding: 6px 0;
-  font-size: 0.75rem;
+  border-radius: 10px;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  line-height: 1;
   cursor: pointer;
-  width: 100%;
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
 .upsell-card__add-btn:hover {
-  background: #2e5429;
+  background: #5f8248;
+}
+
+.upsell-card__add-btn:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.upsell-card__button-added {
+  display: none;
+}
+
+.upsell-card__add-btn[data-added='true'] .upsell-card__button-label {
+  display: none;
+}
+
+.upsell-card__add-btn[data-added='true'] .upsell-card__button-added {
+  display: inline;
+}
+
+.cart-drawer__upsell-next {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgb(253 255 244 / 88%);
+  color: #445438;
+  box-shadow: 0 3px 14px rgb(68 84 56 / 14%);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.cart-drawer__upsell-next svg {
+  width: 28px;
+  height: 28px;
+}
+
+.cart-drawer__upsell-progress {
+  --upsell-progress-size: 50%;
+  --upsell-progress-offset: 0%;
+
+  position: relative;
+  height: 5px;
+  margin-top: 28px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dce6d0;
+}
+
+.cart-drawer__upsell-progress-thumb {
+  position: absolute;
+  inset-block: 0;
+  left: var(--upsell-progress-offset);
+  width: var(--upsell-progress-size);
+  border-radius: inherit;
+  background: #445438;
+  transition: left 0.15s linear, width 0.15s linear;
+}
+
+@media screen and (max-width: 749px) {
+  .cart-drawer__upsell {
+    margin-inline: 16px;
+    padding-block: 20px 16px;
+  }
+
+  .cart-drawer__upsell-title {
+    margin-bottom: 14px;
+    font-size: 18px;
+  }
+
+  .upsell-card {
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 12px;
+    min-height: 128px;
+    padding: 12px;
+  }
+
+  .upsell-card__image {
+    width: 68px;
+    height: 92px;
+  }
+
+  .upsell-card__content {
+    padding-block: 4px 0;
+  }
+
+  .upsell-card__name {
+    font-size: 18px;
+  }
+
+  .upsell-card__price {
+    font-size: 16px;
+  }
+
+  .upsell-card__add-btn {
+    min-width: 76px;
+    min-height: 40px;
+    padding-inline: 12px;
+    font-size: 15px;
+  }
+
+  .cart-drawer__upsell-next {
+    right: 8px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .cart-drawer__upsell-progress {
+    margin-top: 20px;
+  }
 }
 
 /* --- Summary / Footer --- */
