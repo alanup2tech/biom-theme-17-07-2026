@@ -168,6 +168,13 @@ class CartDrawerComponent extends DialogComponent {
       return;
     }
 
+    // The recommendation carousel must remain fully visible. A sticky summary
+    // would shrink the items region into a nested vertical scroller and clip it.
+    if (dialog.querySelector('.cart-drawer__upsell')) {
+      dialog.setAttribute('cart-summary-sticky', 'false');
+      return;
+    }
+
     const drawerHeight = dialog.getBoundingClientRect().height;
     const summaryHeight = summary.getBoundingClientRect().height;
     if (drawerHeight <= 0) return;
