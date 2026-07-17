@@ -203,9 +203,11 @@
   height: calc(100% - var(--header-height));
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: 0;
   background-color: #fdfff4;
   flex-grow: 1;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -316,7 +318,10 @@
 .cart-drawer__items {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  width: 100%;
   padding-inline: var(--cart-drawer-padding);
+  overflow-x: hidden;
   overflow-y: auto;
   padding-top: 16px;
 
@@ -655,7 +660,8 @@
 }
 
 .cart-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__items {
-  overflow: unset;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .cart-drawer__summary .cart__summary-totals:not(:has(.cart__subtotal-container:empty)) {
