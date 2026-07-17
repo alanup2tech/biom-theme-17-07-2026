@@ -330,14 +330,6 @@
   }
 }
 
-/* Keep cart content crisp; scroll-hint's edge mask creates a white fog over the drawer. */
-.cart-drawer__content,
-.cart-drawer__items,
-.cart-drawer__upsell-carousel {
-  -webkit-mask-image: none !important;
-  mask-image: none !important;
-}
-
 .cart-drawer__items .cart-items__table-row {
   padding-bottom: var(--gap-xl);
   border-bottom: 1px solid #f0f0f0;
