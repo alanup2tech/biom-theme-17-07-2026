@@ -9,14 +9,12 @@ import { MegaMenuHoverEvent } from '@theme/events';
  * @property {HTMLElement | null} activeItem - The currently active menu item.
  *
  * @typedef {object} Refs
- * @property {HTMLElement} overflowMenu - The overflow menu.
+ * @property {HTMLElement} [overflowMenu] - The optional overflow menu.
  * @property {HTMLElement[]} [submenu] - The submenu in each respective menu item.
  *
  * @extends {Component<Refs>}
  */
 class HeaderMenu extends Component {
-  requiredRefs = ['overflowMenu'];
-
   /**
    * @type {MutationObserver | null}
    */

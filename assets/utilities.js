@@ -708,7 +708,9 @@ export function setHeaderMenuStyle() {
     window.requestAnimationFrame(() => {
       const overflowList = headerComponent?.querySelector('overflow-list');
       const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
-      headerComponent.dataset.menuStyle = isTouchDevice() || hasReachedMinimum ? 'drawer' : 'menu';
+      // Keep this breakpoint aligned with the custom header rules in responsive.css.
+      const usesResponsiveDrawer = window.matchMedia('(max-width: 1199px)').matches;
+      headerComponent.dataset.menuStyle = usesResponsiveDrawer || hasReachedMinimum ? 'drawer' : 'menu';
     });
   }
 }
