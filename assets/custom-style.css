@@ -388,7 +388,6 @@
   display: block;
   margin: 8px 24px 0;
   padding: 24px 0 18px;
-  border-top: 1px solid #cbd8bc;
   background: #fdfff4;
 }
 .cart-items__title{
@@ -671,7 +670,6 @@
 }
 .cart-items__wrapper{
   padding: 24px 0px;
-  border-bottom: 1px solid #e5eed9;
   border-top: 1px solid #e5eed9;
   margin:0 24px;
 }
