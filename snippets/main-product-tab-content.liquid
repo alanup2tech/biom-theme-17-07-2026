@@ -1,0 +1,38 @@
+{%- liquid
+  assign metafield_namespace = block.settings.metafield_namespace | default: 'custom'
+  assign metafield_key = block.settings.metafield_key | strip
+  assign use_product_description = block.settings.use_product_description
+  assign custom_content = block.settings.custom_content
+  assign legacy_source = block.settings.content_source
+  assign tab_metafield = blank
+  assign tab_output = blank
+
+  if legacy_source != blank and metafield_key == blank and custom_content == blank and use_product_description == false
+    case legacy_source
+      when 'description'
+        assign use_product_description = true
+      when 'short_description'
+        assign metafield_key = 'short_description'
+      when 'ingredients'
+        assign metafield_key = 'ingredients_list'
+      when 'benefits'
+        assign metafield_key = 'product_benefits'
+      when 'custom'
+        assign custom_content = block.settings.custom_content
+    endcase
+  endif
+
+  if metafield_key != blank
+    assign tab_metafield = product.metafields[metafield_namespace][metafield_key]
+  endif
+
+  if tab_metafield != blank
+    assign tab_output = tab_metafield | metafield_tag
+  elsif use_product_description and product.description != blank
+    assign tab_output = product.description
+  elsif custom_content != blank
+    assign tab_output = custom_content
+  endif
+-%}
+
+{{- tab_output -}}

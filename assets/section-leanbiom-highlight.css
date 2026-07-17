@@ -1,0 +1,119 @@
+/* ==========================================================================
+   LeanBiom Highlight section
+   ========================================================================== */
+
+.leanbiom-highlight {
+  position: relative;
+  background-color: var(--color-primary);
+  overflow: hidden;
+}
+
+.leanbiom-highlight__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  align-items: center;
+}
+
+.leanbiom-highlight__text {
+  padding: clamp(2rem, 6vw, 6rem);
+  padding-left: clamp(2rem, 8vw, 10rem);
+  color: var(--color-white);
+}
+
+.leanbiom-highlight__heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 2.5rem;
+}
+
+.leanbiom-highlight__benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.leanbiom-highlight__benefit {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.leanbiom-highlight__benefit:last-child {
+  border-bottom: none;
+}
+
+.leanbiom-highlight__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.leanbiom-highlight__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.leanbiom-highlight__text {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.25vw, 1.25rem);
+  line-height: 1.4;
+}
+
+.leanbiom-highlight__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.leanbiom-highlight__media img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Button override for dark background */
+.leanbiom-highlight .btn {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+}
+
+.leanbiom-highlight .btn:hover {
+  background-color: var(--color-cream);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile */
+@media screen and (max-width: 999px) {
+  .leanbiom-highlight__content {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .leanbiom-highlight__text {
+    padding: 3rem 1.5rem;
+    order: 2;
+  }
+
+  .leanbiom-highlight__media {
+    order: 1;
+    padding: 2rem;
+    min-height: 50vh;
+  }
+
+  .leanbiom-highlight__media img {
+    max-height: 50vh;
+    width: auto;
+  }
+}

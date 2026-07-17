@@ -1,0 +1,312 @@
+{{ 'section-testimonials.css' | asset_url | stylesheet_tag }}
+
+<section class="testimonials noise">
+  <h2 class="testimonials__heading reveal">{{ section.settings.heading }}</h2>
+
+  {%- comment -%} Desktop: video + quote + shop now {%- endcomment -%}
+  <div
+    class="swiper testimonials-swiper testimonials-swiper--desktop"
+    data-testimonials-desktop
+    data-autoplay="{{ section.settings.autoplay }}"
+  >
+    <div class="swiper-wrapper">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign video = block.settings.video
+          assign video_url = block.settings.video_url
+          assign video_source = block.settings.source | default: 'uploaded'
+          assign has_video = false
+          if video_source == 'url' and video_url != blank
+            assign has_video = true
+          elsif video != blank
+            assign has_video = true
+          endif
+        -%}
+        <div class="swiper-slide">
+          <div class="testimonial-pair">
+            <div class="testimonial-card testimonial-card--video" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img
+                  class="testimonial-card__poster"
+                  width="1000"
+                  height="750"
+                  src="{{ block.settings.image | image_url: width: 1000 }}"
+                  alt="{{ block.settings.name | escape }}"
+                  loading="lazy"
+                >
+              {%- elsif block.settings.image_asset != blank -%}
+                <img
+                  class="testimonial-card__poster"
+                  width="600"
+                  height="450"
+                  src="{{ block.settings.image_asset | asset_url }}"
+                  alt="{{ block.settings.name | escape }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+
+              {%- if has_video -%}
+                <div class="testimonial-card__video">
+                  {%- if video_source == 'url' and video_url != blank -%}
+                    {%- liquid
+                      assign video_src = video_url
+                      if video_src contains 'youtube'
+                        assign video_class = 'js-youtube'
+                      elsif video_src contains 'vimeo'
+                        assign video_class = 'js-vimeo'
+                      endif
+                    -%}
+                    <iframe
+                      class="{{ video_class }}"
+                      src="{{ video_src }}"
+                      allow="autoplay; encrypted-media"
+                      allowfullscreen
+                      title="{{ block.settings.name | escape }}"
+                    ></iframe>
+                  {%- elsif video != blank -%}
+                    {{
+                      video
+                      | video_tag:
+                        class: 'testimonial-video',
+                        playsinline: true,
+                        controls: true,
+                        autoplay: false,
+                        loop: false,
+                        muted: false
+                    }}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              <span class="testimonial-card__name">
+                {{ block.settings.name }}
+                {{ 'icon-verified.svg' | inline_asset_content }}
+              </span>
+
+              {%- if has_video -%}
+                <span class="testimonial-card__play js-play-video" role="button" tabindex="0">
+                  {{ 'icon-play-circle.svg' | inline_asset_content }}
+                </span>
+              {%- endif -%}
+            </div>
+
+            <div class="testimonial-card testimonial-card--quote">
+              <div class="testimonial-card__panel">
+                <p class="testimonial-card__quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+
+                <span class="testimonial-card__stars">
+                  {{ 'stars-5.svg' | inline_asset_content }}
+                </span>
+
+                <div class="testimonial-card__reveal">
+                  {%- if block.settings.product_image != blank -%}
+                    <img
+                      width="300"
+                      height="225"
+                      src="{{ block.settings.product_image | image_url: width: 300 }}"
+                      alt=""
+                      loading="lazy"
+                    >
+                  {%- elsif block.settings.product_asset != blank -%}
+                    <img
+                      width="600"
+                      height="450"
+                      src="{{ block.settings.product_asset | asset_url }}"
+                      alt=""
+                      loading="lazy"
+                    >
+                  {%- endif -%}
+
+                  <a
+                    class="testimonial-card__shop"
+                    href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+                  >
+                    {{ block.settings.button_label | default: 'Shop Now' }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="testimonial_nav testimonial_nav--desktop">
+      <div class="swiper-pagination testimonial-pagination-desktop"></div>
+      <div class="nav_btns">
+        <button type="button" class="swiper-button-prev" aria-label="Previous testimonial"></button>
+        <button type="button" class="swiper-button-next" aria-label="Next testimonial"></button>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Tablet / mobile: video only, 1 per slide {%- endcomment -%}
+  <div
+    class="swiper testimonials-swiper-mob testimonials-swiper--mobile"
+    data-testimonials-mobile
+    data-autoplay="{{ section.settings.autoplay }}"
+  >
+    <div class="swiper-wrapper">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign video = block.settings.video
+          assign video_url = block.settings.video_url
+          assign video_source = block.settings.source | default: 'uploaded'
+          assign has_video = false
+          if video_source == 'url' and video_url != blank
+            assign has_video = true
+          elsif video != blank
+            assign has_video = true
+          endif
+        -%}
+        <div class="swiper-slide">
+          <div class="testimonial-card testimonial-card--video testimonial-card--mobile" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img
+                class="testimonial-card__poster"
+                width="1000"
+                height="750"
+                src="{{ block.settings.image | image_url: width: 1000 }}"
+                alt="{{ block.settings.name | escape }}"
+                loading="lazy"
+              >
+            {%- elsif block.settings.image_asset != blank -%}
+              <img
+                class="testimonial-card__poster"
+                width="600"
+                height="450"
+                src="{{ block.settings.image_asset | asset_url }}"
+                alt="{{ block.settings.name | escape }}"
+                loading="lazy"
+              >
+            {%- endif -%}
+
+            {%- if has_video -%}
+              <div class="testimonial-card__video">
+                {%- if video_source == 'url' and video_url != blank -%}
+                  {%- liquid
+                    assign video_src = video_url
+                    if video_src contains 'youtube'
+                      assign video_class = 'js-youtube'
+                    elsif video_src contains 'vimeo'
+                      assign video_class = 'js-vimeo'
+                    endif
+                  -%}
+                  <iframe
+                    class="{{ video_class }}"
+                    src="{{ video_src }}"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen
+                    title="{{ block.settings.name | escape }}"
+                  ></iframe>
+                {%- elsif video != blank -%}
+                  {{
+                    video
+                    | video_tag:
+                      class: 'testimonial-video',
+                      playsinline: true,
+                      controls: true,
+                      autoplay: false,
+                      loop: false,
+                      muted: false
+                  }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            <span class="testimonial-card__name">
+              {{ block.settings.name }}
+              {{ 'icon-verified.svg' | inline_asset_content }}
+            </span>
+
+            {%- if has_video -%}
+              <button type="button" class="testimonial-card__play js-play-video" aria-label="Play video">
+                {{ 'icon-play-circle.svg' | inline_asset_content }}
+              </button>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="testimonial_nav testimonial_nav--mobile">
+      <div class="swiper-pagination testimonial-pagination-mobile"></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted by Thousands of Customers Across the U.S."
+    },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Review card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_asset", "label": "Image asset filename" },
+        { "type": "text", "id": "name", "label": "Customer name", "default": "Sarah M" },
+        {
+          "type": "select",
+          "id": "source",
+          "label": "t:settings.video_source",
+          "options": [
+            {
+              "value": "uploaded",
+              "label": "t:options.video_uploaded"
+            },
+            {
+              "value": "url",
+              "label": "t:options.video_external_url"
+            }
+          ],
+          "default": "uploaded"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:settings.video",
+          "visible_if": "{{ block.settings.source == 'uploaded' }}"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "t:settings.video_external_url",
+          "info": "t:info.video_external",
+          "accept": ["youtube", "vimeo"],
+          "visible_if": "{{ block.settings.source == 'url' }}"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "I finally found a probiotic that actually supports my digestion. My bloating improved noticeably in the first few weeks."
+        },
+        { "type": "image_picker", "id": "product_image", "label": "Product image (hover reveal)" },
+        { "type": "text", "id": "product_asset", "label": "Product asset filename" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+        { "type": "url", "id": "link", "label": "Button link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "video", "settings": { "name": "Sarah M", "image_asset": "testimonial-sarah.png" } },
+        { "type": "video", "settings": { "name": "Sarah M", "image_asset": "testimonial-sarah.png" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

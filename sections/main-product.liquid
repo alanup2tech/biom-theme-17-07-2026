@@ -1,0 +1,381 @@
+{{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign media_position = section.settings.media_position
+  assign has_gallery = false
+  for block in section.blocks
+    if block.type == 'gallery'
+      assign has_gallery = true
+      break
+    endif
+  endfor
+-%}
+
+<section
+  class="main-product section section--full-width-margin section--page-width main-product--media-{{ media_position }} color-{{ section.settings.color_scheme }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="main-product__grid{% unless has_gallery %} main-product__grid--no-media{% endunless %}">
+      {%- if has_gallery -%}
+        <div class="main-product__media">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'gallery' -%}
+              {% render 'main-product-block-gallery', block: block, product: product %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="main-product__details">
+        {%- assign tabs_rendered = false -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'gallery' -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- if block.type == 'tab' -%}
+            {%- unless tabs_rendered -%}
+              {% render 'main-product-tabs-group', section: section, product: product, shopify_attributes: block.shopify_attributes %}
+              {%- assign tabs_rendered = true -%}
+            {%- endunless -%}
+          {%- elsif block.type == 'variant-picker' -%}
+            <div class="main-product__block main-product__block--variant-picker" {{ block.shopify_attributes }}>
+              {%- if product != blank -%}
+                {% render 'variant-main-picker', product_resource: product, section: section, product: product, block: block %}
+              {%- endif -%}
+            </div>
+          {%- elsif block.type == 'buy_buttons' -%}
+            <div class="main-product__block main-product__block--buy-buttons" {{ block.shopify_attributes }}>
+              {% render 'main-product-block-buy-buttons', block: block, product: product, section: section %}
+               {%- if block.settings.guarantee_text != blank -%}
+                <p class="product-buy-note">{{ block.settings.guarantee_text }}</p>
+              {%- endif -%}
+            </div>
+          {%- elsif block.type == '@app' -%}
+            <div class="main-product__block main-product__block--app" {{ block.shopify_attributes }}>
+              {% render block %}
+             
+            </div>
+          {%- elsif block.type == 'title' -%}
+            <div class="main-product__block main-product__block--title" {{ block.shopify_attributes }}>
+              {% render 'main-product-block-title', block: block, product: product %}
+            </div>
+          {%- elsif block.type == 'short_description' -%}
+            <div class="main-product__block main-product__block--short-description" {{ block.shopify_attributes }}>
+              {% render 'main-product-block-short-description', block: block, product: product %}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'product.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Gallery position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "paragraph",
+      "content": "Drag blocks to reorder or remove them. Add app widgets via Add block → Apps."
+    }
+   
+  ],
+  "blocks": [
+    {
+      "type": "gallery",
+      "name": "Product gallery",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_feature_pills",
+          "label": "Show feature pills",
+          "info": "Uses the product feature_pills metafield.",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_thumbnail_slider",
+          "label": "Show thumbnail slider",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Product title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom title",
+          "info": "Leave blank to use the product title."
+        }
+      ]
+    },
+    {
+      "type": "short_description",
+      "name": "Short description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_metafield",
+          "label": "Use short description metafield",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "fallback_to_description",
+          "label": "Fallback to product description",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "truncate_words",
+          "label": "Fallback word limit",
+          "min": 20,
+          "max": 120,
+          "step": 5,
+          "default": 60
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "variant-picker",
+      "name": "t:names.product_variant_picker",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "variant_style",
+          "label": "t:settings.style",
+          "options": [
+            {
+              "value": "dropdowns",
+              "label": "t:options.dropdowns"
+            },
+            {
+              "value": "buttons",
+              "label": "t:options.buttons"
+            }
+          ],
+          "default": "buttons"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_swatches",
+          "label": "t:settings.swatches",
+          "default": true
+        },
+        {
+          "type": "text_alignment",
+          "id": "alignment",
+          "label": "t:settings.alignment",
+          "default": "left"
+        },
+        {
+          "type": "header",
+          "content": "t:content.padding"
+        },
+        {
+          "type": "range",
+          "id": "padding-block-start",
+          "label": "t:settings.top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding-block-end",
+          "label": "t:settings.bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 8
+        },
+        {
+          "type": "range",
+          "id": "padding-inline-start",
+          "label": "t:settings.left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding-inline-end",
+          "label": "t:settings.right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Button options"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_quantity",
+          "label": "Show quantity",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_add_to_cart",
+          "label": "Show add to cart",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_accelerated_checkout",
+          "label": "Show accelerated checkout",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "stacking",
+          "label": "Stack buttons vertically",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Accelerated checkout button"
+        },
+        {
+          "type": "text",
+          "id": "checkout_button_label",
+          "label": "Subscribe & Save button text",
+          "default": "Subscribe & Save"
+        },
+        {
+          "type": "text",
+          "id": "one_time_button_label",
+          "label": "One-time purchase button text",
+          "default": "Quick Cart"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Append price to button text",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "guarantee_text",
+          "label": "Guarantee text",
+          "default": "30-day money-back guarantee | Free US shipping",
+          "info": "Shown below the buy buttons block."
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Add or duplicate this block for each tab. Use Product metafield key for any metafield you create in Shopify admin, or connect Custom content to a metafield via the dynamic source icon."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab title",
+          "info": "Optional. Leave blank to use the metafield definition name from Shopify admin."
+        },
+       
+        {
+          "type": "richtext",
+          "id": "custom_content",
+          "label": "Custom content",
+          "info": "Fallback when metafield key is empty. You can also connect a product metafield using the dynamic source icon."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product",
+      "blocks": [
+        { "type": "gallery" },
+        { "type": "title" },
+        { "type": "short_description" },
+        { "type": "variant-picker" },
+        {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity": true,
+            "show_add_to_cart": false,
+            "show_accelerated_checkout": false,
+            "stacking": false,
+            "checkout_button_label": "Subscribe & Save",
+            "show_price": true
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Description",
+            "custom_content": ""
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "",
+            "custom_content": ""
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "",
+            "custom_content": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

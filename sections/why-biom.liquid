@@ -1,0 +1,141 @@
+{{ 'section-why-biom.css' | asset_url | stylesheet_tag }}
+
+<section class="why-biom noise">
+  <div class="page-width">
+    <div class="why-biom__intro reveal">
+      <h2 class="why-biom__heading">{{ section.settings.heading }}</h2>
+      <p class="why-biom__text">{{ section.settings.text }}</p>
+    </div>
+
+    <div class="why-biom__compare">
+      <div class="why-biom-card why-biom-card--left reveal">
+        <h3 class="why-biom-card__title">{{ section.settings.left_title }}</h3>
+        <div class="why-biom-card__rows">
+          {%- assign left_connector_set = false -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'left_row' -%}
+              {%- assign is_left_connector = false -%}
+              {%- unless left_connector_set -%}
+                {%- assign left_connector_set = true -%}
+                {%- assign is_left_connector = true -%}
+              {%- endunless -%}
+              <div class="why-biom-card__row{% if is_left_connector %} why-biom-card__row--connector-left{% endif %}" {{ block.shopify_attributes }}>
+                <span class="why-biom-card__icon">
+                  {%- if block.settings.icon != blank -%}
+                    <img src="{{ block.settings.icon | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
+                  {%- elsif block.settings.icon_asset != blank -%}
+                    <img src="{{ block.settings.icon_asset | asset_url }}" alt="" width="40" height="40" loading="lazy">
+                  {%- endif -%}
+                </span>
+                <p>{{ block.settings.text }}</p>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="why-biom__visual reveal">
+        <div class="probiotics_wrap">
+           <img class="probiotics" width="880" height="660" src="{{ section.settings.image | image_url: width: 880 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy">
+        </div>
+        <div class="biom-probiotics_wrap">
+          <img class="biom-probiotics" width="600" height="450" src="{{ section.settings.right_image | image_url: width: 880 }}" alt="" loading="lazy">
+        </div>
+         
+     
+      </div>
+
+      <div class="why-biom-card why-biom-card--right reveal">
+        <h3 class="why-biom-card__title">{{ section.settings.right_title }}</h3>
+        <div class="why-biom-card__rows">
+          {%- assign right_connector_index = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'right_row' -%}
+              {%- assign right_connector_index = right_connector_index | plus: 1 -%}
+              <div class="why-biom-card__row{% if right_connector_index == 3 %} why-biom-card__row--connector-right{% endif %}" {{ block.shopify_attributes }}>
+                <span class="why-biom-card__icon">
+                  {%- if block.settings.icon != blank -%}
+                    <img src="{{ block.settings.icon | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
+                  {%- elsif block.settings.icon_asset != blank -%}
+                    <img src="{{ block.settings.icon_asset | asset_url }}" alt="" width="40" height="40" loading="lazy">
+                  {%- endif -%}
+                </span>
+                <p>{{ block.settings.text }}</p>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="why-biom__connector why-biom__connector--left" aria-hidden="true">
+        <span class="why-biom__connector-line"></span>
+        <span class="why-biom__connector-dot"></span>
+      </div>
+      <div class="why-biom__connector why-biom__connector--right" aria-hidden="true">
+        <span class="why-biom__connector-line"></span>
+        <span class="why-biom__connector-dot"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Why Biom comparison",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Most Probiotics Don't Work"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "The probiotic aisle is crowded with capsules promising billions of bacteria. But your microbiome isn't a numbers game. Your gut is a complex ecosystem."
+    },
+    { "type": "image_picker", "id": "image", "label": "Center left image" },
+    { "type": "image_picker", "id": "right_image", "label": "Center right image" },
+    { "type": "text", "id": "left_title", "label": "Left card title", "default": "Ordinary Probiotics" },
+    { "type": "text", "id": "right_title", "label": "Right card title", "default": "Biom Microbiome Systems" }
+  ],
+  "blocks": [
+    {
+      "type": "left_row",
+      "name": "Left row",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "text", "id": "icon_asset", "label": "Icon asset filename" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Isolated bacterial strains" }
+      ]
+    },
+    {
+      "type": "right_row",
+      "name": "Right row",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "text", "id": "icon_asset", "label": "Icon asset filename" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Multi-layer microbiome ecosystem" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Biom comparison",
+      "blocks": [
+        { "type": "left_row", "settings": { "text": "Isolated bacterial strains", "icon_asset": "icon-why-ord-1a.svg" } },
+        { "type": "left_row", "settings": { "text": "CFU-driven marketing", "icon_asset": "icon-why-ord-2.svg" } },
+        { "type": "left_row", "settings": { "text": "Random strain combinations", "icon_asset": "icon-why-ord-3.svg" } },
+        { "type": "left_row", "settings": { "text": "Limited ecosystem support", "icon_asset": "icon-why-ord-4.svg" } },
+        { "type": "right_row", "settings": { "text": "Multi-layer microbiome ecosystem", "icon_asset": "icon-why-biom-1.svg" } },
+        { "type": "right_row", "settings": { "text": "Strains + substrates + postbiotic compounds", "icon_asset": "icon-why-biom-2.svg" } },
+        { "type": "right_row", "settings": { "text": "Gut-like fermentation process", "icon_asset": "icon-why-biom-3.svg" } },
+        { "type": "right_row", "settings": { "text": "Designed to support microbial balance", "icon_asset": "icon-why-biom-4.svg" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,398 @@
+/*   11-7-2026  */
+
+.text-block--AY2pBU2JlQVZrSzdGT__text_NKb9bb{
+  width: 75% !important;
+}
+.text-block--ANGhVMnB0R1FvL0tYb__text_AxPx9d{
+    width: 73% !important;
+}
+.text-block--ARmhoYlY1TVZ6YzFib__text_8eyCc8 h3{
+  padding-top:40px;
+}
+.image-block--Ab050NTRwRkRCWk5pR__image_ApqViB .image-block__image {
+  width:1300px;
+  height:330px;
+  object-fit:cover;
+  display:block;
+  margin:0 auto;
+  
+}
+.text-block--AMHl6ZngxanFPVWVzZ__text_URJVke h3 {
+  font-family: "DM Sans", sans-serif;
+}
+.yotpo-new-review-submit{
+    background-color: #7aa05f !important;
+}
+.yotpo-new-review-submit:hover{
+    background-color: #445438 !important;
+}
+.yotpo-new-review-btn:hover{
+    background-color: #445438 !important;
+}
+.product-grid-collection .product-card__title{
+    padding-bottom: 8px;
+}
+.product-grid-collection .product-card__badge{
+    padding: 5px 10px;
+}
+.yotpo-modal-content {
+  overflow: hidden !important;
+}
+.group-block-content .image-block--Ad1ZOTmJBWHZmSGlLa__image_hLEhPf {
+    padding-top:24px;
+}
+
+
+@media screen and (max-width: 1024px) {
+  .image-block--Ab050NTRwRkRCWk5pR__image_ApqViB .image-block__image {
+    width:100%;
+    height:auto;
+    object-fit:cover;
+    display:block;
+    margin:0 auto;
+  
+}
+}
+
+
+
+
+
+
+
+/* 13-7-2026 */
+
+
+.testimonials .testimonial-card__shop {
+    padding: 10px 15px !important;
+   
+}
+
+.ecosystem-cta .ecosystem-cta__btn{
+  width:300px !important;
+}
+
+.team-card__button:hover{ 
+  background-color:rgb(68 84 56 / 1.0) !important;
+  color:white !important;
+}
+
+.team-card__modal-close {
+  transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+.team-card__modal-close:hover{
+  color:white!important;
+  transform: translateY(-2px);
+}
+
+#shopify-section-template--21203203555463__main .blog-post-card__content a:hover{
+  color: rgb(68 84 56 / 1.0) !important;
+}
+
+.yotpo-empty-state svg{
+  display:block !important;
+  margin: 0 auto !important;
+}
+
+.yotpo-icon-button__container .yotpo-icon-button:hover{
+  color: red!important;
+  fill: red !important;
+}
+@media screen and (max-width: 630px) {
+  .hero__panel-content .btn{
+      white-space: nowrap;
+      width: max-content !important;  
+      padding: 10px 20px !important;
+   
+  }
+}
+
+@media screen and (max-width: 989px) {
+.hero__right .hero__panel-content {
+    position: unset;
+     padding: 2% 2%;
+     width:50% !important;
+     margin-bottom:unset !important;
+     margin-left:10px;
+   
+}
+.hero__right .hero__benefit-text{
+  max-width:400px !important;
+}
+}
+@media (max-width: 1470px) {
+  .hero__right .hero__panel-content {
+    margin-bottom: -20px;
+  }
+}
+
+
+@media screen and (max-width: 989px) {
+    .group-block {
+        --padding-inline-end: 0px !important;
+    }
+}
+
+
+@media screen and (max-width: 749px) {
+    .mobile-column {
+        flex-flow: column nowrap;
+        align-items: center; /* Changed from flex-start */
+        justify-content: center;
+    }
+}
+
+
+@media screen and (max-width: 749px) {
+    /* Target this exact text block and force the left margin to 0 on mobile */
+    .text-block--AY2pBU2JlQVZrSzdGT__text_NKb9bb {
+        margin-left: 0px !important;
+    }
+.text-block--ANGhVMnB0R1FvL0tYb__text_AxPx9d {
+        margin-left: 0px !important;
+}
+}
+
+
+@media screen and (max-width: 390px) {
+  .testimonial-card__shop{
+    white-space: nowrap;
+      width: max-content !important;  
+  }
+}
+
+
+@media screen and (max-width: 1560px) {
+  .image-banner__card--text {
+    transform: translate(150px, -58px) !important;
+    margin-right:120px;
+  }
+}
+
+@media screen and (max-width: 1396px) {
+  .image-banner__card--product {
+    top: 2% !important; 
+    bottom: auto !important; 
+  }
+}
+
+.image-banner__card--text.image-banner__desktop-card {
+    max-width: 600px; /* Adjust this value to make the box wider or narrower */
+    width: 100%;      /* Ensures the box remains responsive on smaller screens */
+    padding: 30px;    /* Adds breathing room between the text and the edges of the container */
+    box-sizing: border-box; 
+}
+
+/* 2. Set and Align the Content Inside */
+.image-banner__card--text div {
+    text-align: left; /* Change this to 'center' or 'right' depending on your design preference */
+}
+
+.image-banner__card--text p {
+    font-size: 16px;  /* Adjust the size of the text */
+    line-height: 1.6; /* Adds space between the lines of text for better readability */
+    margin: 0;        /* Removes default browser margins for a cleaner look */
+    color: #333333;   /* Optional: Change the text color (use #ffffff for white if it's over a dark background) */
+}
+
+
+@media screen and (max-width:767px){
+  .ecosystem-cta__media{
+    width:30% !important;
+
+  }
+}
+
+@media screen and (max-width:923px){
+  .why-biom-page__badges-feature-badges {
+    display: block;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width:768px){
+    .why-biom-page__icon-bullets-icon{
+    display: block;
+    margin: 0 auto;
+  }
+  .why-biom-page__icon-bullets-icon img {
+    max-width:250px !important;
+  }
+  .why-biom-page__process-media{
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+
+
+/* 14/07/2026 */
+
+.contact-form__form .button.submit-button{
+padding: 10px 15px !important;
+transition: transform 0.2s ease, color 0.2s ease !important;
+
+}
+
+.contact-form__form .button.submit-button:hover{
+  background-color: rgb(68 84 56 / 1.0);
+  transform: translateY(-2px);
+
+}
+
+
+.cart-items__title {
+  font-weight: bold;
+}
+
+
+
+/* Target the specific auto-generated class and its paragraph */
+.text-block--AL1BZazEwVCtpYnJQb__text_KJfMTM p {
+    color: #fff !important;
+    font-size: clamp(4rem, 2vw, 1rem) !important;
+    font-weight: 900 !important; /* Note: browsers usually cap font-weight at 900 */
+    line-height: 1.05 !important;
+    letter-spacing: -0.02em !important;
+    max-width: 600px !important;
+    margin: 0 auto !important; /* Added 'auto' to ensure it centers if max-width is reached */
+}
+
+ input[name="updates[]"] {
+  font-size: 18px; 
+}
+
+
+.cart-items__remove svg path,
+.cart-drawer__close-button svg path,
+.button--cart__share svg path,
+path[stroke="#445438"] {
+  stroke-width: 2px !important; 
+}
+
+
+/* Targets ONLY the paragraph inside this specific auto-generated div */
+.text-block--AY2pBU2JlQVZrSzdGT__text_NKb9bb p {
+    font-size: clamp(3rem, 1vw, 1rem) !important; /* Larger, responsive size */
+    font-weight: 700 !important; /* Extra bold */
+}
+
+
+input#headline,
+textarea#content,
+input#name {
+  font-family: "DM Sans", sans-serif !important;
+  border: 1px solid rgb(147, 147, 153) !important;
+  border-radius: 4px !important; 
+  padding: 10px !important; 
+  box-sizing: border-box !important; 
+}
+
+
+input#headline:focus,
+textarea#content:focus,
+input#name:focus {
+  outline: none !important; 
+  border: 1px solid #000000 !important; 
+}
+
+
+#ContactForm-name::placeholder, #ContactForm-email::placeholder, #ContactForm-phone::placeholder, #ContactForm-body::placeholder{
+    color: #999;
+    opacity: 1;
+}
+
+/* 15/07/2026 */
+
+
+
+.facets__form-wrapper .search-action {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease !important;
+}
+
+.facets__form-wrapper .search-action:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.facets__summary{
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease !important;
+}
+
+.facets__summary:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+}
+
+.product-atc{
+    transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease !important;
+}
+
+.product-atc:hover{
+      transform: translateY(-3px);
+}
+
+
+/* 16-7-2026 */
+
+#MainContent .team-banner__heading{
+  font-size:90px;
+}
+
+@media screen and (max-width: 1024px){
+  #MainContent .team-banner__heading{
+  font-size:80px !important;
+ }
+.image-block--AWlVYUXQzbTMwU21Dd__image_K9TcdJ {
+    --size-style-width: 100% !important;
+}
+}
+
+
+
+
+
+@media screen and (max-width: 1024px) {
+    .image-block--AMHd0NXZyOTlaa2RVM__image_GVjLwT {
+        --size-style-width: 90% !important;
+    }
+    
+}
+
+
+
+@media screen and (max-width: 768px){
+  #MainContent .team-banner__heading{
+  font-size:30px !important;
+ }
+  .image-block--AWlVYUXQzbTMwU21Dd__image_K9TcdJ {
+    --size-style-width: 60% !important;
+      margin: 0 auto !important;
+}
+ .group-block-content .text-block--ANk9TVEpub0dmYXVTT__text_JHNNxe{
+  padding-top:10px !important;
+ }
+ .text-block--ANkx6QXI1TUFRMGlQV__text_Pwt3x3 {
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: center !important;
+    }
+
+    .text-block--ANkx6QXI1TUFRMGlQV__text_Pwt3x3 h3 {
+        text-align: center !important;
+          margin: 0 auto;
+    }
+    .image-block--AMHd0NXZyOTlaa2RVM__image_GVjLwT {
+        --size-style-width: 60% !important;
+    }
+ 
+}
+
+
+@media @media screen and (max-width: 425px){
+.text-block--ANk9TVEpub0dmYXVTT__text_JHNNxe h2{
+  padding-top:10px;
+}
+
+}

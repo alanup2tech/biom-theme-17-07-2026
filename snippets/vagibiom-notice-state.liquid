@@ -1,0 +1,14 @@
+{%- liquid
+  assign notice_text_stripped = settings.vagibiom_cart_notice_text | strip_html | strip
+  assign has_vagibiom_in_cart = false
+
+  if notice_text_stripped != blank
+    for item in cart.items
+      if item.product.tags contains 'vagibiom'
+        assign has_vagibiom_in_cart = true
+        break
+      endif
+    endfor
+  endif
+-%}
+{%- if has_vagibiom_in_cart -%}true{%- endif -%}

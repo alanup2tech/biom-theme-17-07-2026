@@ -1,0 +1,188 @@
+/* "Built on Microbiome Science" — Figma 3613:3604 (doctor split, cream right) */
+
+.science-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: clamp(36rem, 61.15vw, 73.375rem); /* 1174px */
+}
+
+.science-split__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.science-split__media > img {
+  position: absolute;
+    /* top: -34%; */
+    width: 197%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.science-split__caption {
+  position: absolute;
+  left: clamp(1.25rem, 3.6vw, 6.75rem);
+  bottom: clamp(1.5rem, 8.5vw, 10.25rem);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  /* gap: 1.875rem; */
+  color: var(--color-white);
+  border: 1px solid #ffffff29;
+}
+
+.science-split__name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 38px;
+  margin:0;
+}
+
+.science-split__role {
+  font-size: 18px;
+  font-weight: 500;
+  margin:0;
+}
+
+.science-split__content {
+  background: #F9FFE3;
+  padding: 100px 85px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.science-split__heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: #415135;
+  margin: 0;
+  padding-bottom:1rem;
+}
+
+.science-split__sub {
+  font-size: clamp(1rem, 0.94vw, 1.125rem);
+  font-weight: 500;
+  color: var(--color-ink);
+  max-width: 678px;
+  margin: 0;
+}
+
+.science-split__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+}
+
+.science-card {
+  display: flex;
+  align-items: center;
+  gap: 1.875rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid var(--color-white);
+  border-radius: var(--radius-md);
+  padding: 1.875rem;
+  transition: transform var(--duration-default) var(--ease-spring),
+    box-shadow var(--duration-default) var(--ease-spring);
+}
+
+.science-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(65, 81, 17, 0.1);
+}
+
+.science-card__icon {
+  width: clamp(6rem, 9.3vw, 11.1875rem);
+  height: clamp(6rem, 9.4vw, 11.25rem);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.science-card__icon img,
+.science-card__icon svg {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.science-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+  max-width: 481px;
+}
+.cards-section{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.science-card__title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.25vw, 1.5rem);
+  color: #3f4f33;
+  margin: 0;
+}
+
+.science-card__text {
+  font-size: clamp(1rem, 0.94vw, 1.125rem);
+  font-weight: 500;
+  color: var(--color-ink);
+  line-height: 1.3;
+  margin:0;
+}
+
+.science-card__tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  background: #6A8E4E;
+  color: #fffcf5;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.04vw, 1.25rem);
+  width: fit-content;
+}
+
+@media screen and (max-width: 989px) {
+  .science-split {
+    grid-template-columns: 1fr;
+  }
+
+  .science-split__content {
+    order: 1;
+  }
+
+  .science-split__media {
+    order: 2;
+    min-height: 30rem;
+  }
+
+  .science-split__media > img {
+    inset: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-position: center 10% !important;
+  }
+
+  .science-card {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1.25rem;
+  }
+
+  .science-card__icon {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+}

@@ -1,0 +1,63 @@
+{%- comment -%}
+  Product card (Figma Component 126).
+  Accepts either:
+    product:       product object
+  or static fallbacks:
+    title:         string
+    image_asset:   asset filename
+    price:         string
+    url:           string
+  Optional:
+    badge:         string (e.g. "Subscribe & Save 15%")
+    grid:          boolean — collection/search grid wrapper (default false for carousels)
+{%- endcomment -%}
+{%- liquid
+  assign is_grid = grid | default: false
+  if is_grid
+    assign card_badge = badge | default: 'Subscribe & Save 15%'
+  else
+    assign card_badge = badge
+  endif
+-%}
+{%- capture card_inner -%}
+  <a class="product-card" href="{% if product != blank %}{{ product.url }}{% else %}{{ url | default: '#' }}{% endif %}">
+    {%- if card_badge != blank -%}
+      <span class="product-card__badge">{{ card_badge }}</span>
+    {%- endif -%}
+    <h3 class="product-card__title">{% if product != blank %}{{ product.title }}{% else %}{{ title }}{% endif %}</h3>
+    <span class="product-card__media">
+      {%- if product != blank and product.featured_image -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 610 }}"
+          srcset="{{ product.featured_image | image_url: width: 305 }} 305w, {{ product.featured_image | image_url: width: 610 }} 610w"
+          sizes="(min-width: 750px) 305px, 70vw"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="305"
+          height="374"
+        >
+      {%- elsif image_asset != blank -%}
+        <img src="{{ image_asset | asset_url }}" alt="{{ title | escape }}" loading="lazy" width="305" height="374">
+      {%- endif -%}
+    </span>
+    <span class="product-card__cta">
+      <span class="product-card__cta-label">Shop Now</span>
+      <span class="product-card__cta-price">
+        {%- if product != blank -%}
+          {{ product.price | money }}
+        {%- elsif price != blank -%}
+          {{ price }}
+        {%- endif -%}
+      </span>
+    </span>
+  </a>
+{%- endcapture -%}
+{%- if is_grid -%}
+  <div class="product-grid-collection">
+    {{ card_inner }}
+  </div>
+{%- else -%}
+  <div class="swiper-slide">
+    {{ card_inner }}
+  </div>
+{%- endif -%}

@@ -1,0 +1,100 @@
+{{ 'section-benefit-cards.css' | asset_url | stylesheet_tag }}
+
+<section class="benefit-cards section section--full-width-margin section--page-width">
+  <div class="page-width">
+    <div class="benefit-cards__intro reveal">
+      <h2 class="benefit-cards__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="benefit-cards__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="benefit-cards__grid">
+      {%- for block in section.blocks -%}
+        <div class="benefit-card reveal" {{ block.shopify_attributes }}>
+          <div>
+            <h3 class="benefit-card__title">{{ block.settings.title }}</h3>
+            <p class="benefit-card__text">{{ block.settings.text }}</p>
+          </div>
+          <a class="btn" href="{{ block.settings.link }}">
+            {{ block.settings.button_label }}
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefit cards",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Microbiome Support for Real-Life Needs"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Understanding the microbiome is key for health. Our program promotes gut health, digestion, and immunity. With probiotics and prebiotics, we create balance in your gut for better well-being. Whether facing digestive issues or enhancing health, our solutions can help you thrive."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Daily Gut Health" },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Support digestion, regularity, and everyday microbiome resilience."
+        },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Benefit cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Metabolic & Gut Balance",
+            "text": "Support digestion and microbiome balance during metabolic changes."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Healthy Aging & Longevity",
+            "text": "Support the microbiome's role in long-term wellness."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Women's Gut Health",
+            "text": "Microbiome support designed specifically for women's digestive balance."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Daily Gut Health",
+            "text": "Support digestion, regularity, and everyday microbiome resilience."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

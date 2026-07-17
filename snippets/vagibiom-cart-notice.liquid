@@ -1,0 +1,73 @@
+{%- doc -%}
+  Shows a VagiBiom discount notice when products tagged "vagibiom" are in the cart.
+
+  Always renders a stable wrapper so cart morphing does not misplace checkout buttons.
+  Message is controlled in Theme settings > Cart. Hidden when the message is empty.
+{%- enddoc -%}
+
+{% liquid
+  assign notice_text_stripped = settings.vagibiom_cart_notice_text | strip_html | strip
+  assign show_vagibiom_notice = false
+%}
+
+{% if notice_text_stripped != blank %}
+  {% capture vagibiom_notice_active %}
+    {% render 'vagibiom-notice-state' %}
+  {% endcapture %}
+
+  {% if vagibiom_notice_active contains 'true' %}
+    {% assign show_vagibiom_notice = true %}
+  {% endif %}
+{% endif %}
+
+<div
+  class="vagibiom-cart-notice{% unless show_vagibiom_notice %} vagibiom-cart-notice--hidden{% endunless %}"
+  data-hydration-key="vagibiom-cart-notice"
+  {% unless show_vagibiom_notice %}
+    hidden
+  {% endunless %}
+  role="status"
+>
+  <div class="vagibiom-cart-notice__text rte">
+    {% if show_vagibiom_notice %}
+      {{ settings.vagibiom_cart_notice_text }}
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .vagibiom-cart-notice {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background-color: #f0f6e5;
+    border: 1px solid #c8ddb8;
+  }
+
+  .vagibiom-cart-notice--hidden {
+    display: none;
+  }
+
+  .vagibiom-cart-notice__text {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: #2e5429;
+    text-align: center;
+  }
+
+  .vagibiom-cart-notice__text :is(p, ul, ol):first-child {
+    margin-top: 0;
+  }
+
+  .vagibiom-cart-notice__text :is(p, ul, ol):last-child {
+    margin-bottom: 0;
+  }
+
+  .vagibiom-cart-notice__text a {
+    color: #3a6b35;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+{% endstylesheet %}

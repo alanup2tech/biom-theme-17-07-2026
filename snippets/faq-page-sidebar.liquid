@@ -1,0 +1,63 @@
+{% comment %}
+  FAQ Page Sidebar Navigation
+  Renders nav links from category blocks or custom menu_item blocks.
+{% endcomment %}
+
+{%- assign has_nav = false -%}
+
+{%- for block in section.blocks -%}
+  {%- if block.type == 'menu_item' -%}
+    {%- assign has_nav = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- unless has_nav -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'category' -%}
+      {%- assign has_nav = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+
+{%- if has_nav and section.settings.show_nav -%}
+  <faq-page-nav class="faq-page__nav" aria-label="FAQ categories">
+    <div class="faq-page__nav-inner">
+      {%- assign nav_rendered = false -%}
+
+      {%- comment -%} First: render any custom menu_item blocks {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu_item' -%}
+          {%- assign nav_rendered = true -%}
+          {%- if block.settings.nav_text != blank -%}
+            <a
+              class="faq-page__nav-link"
+              href="#{{ block.settings.anchor_id | escape }}"
+              {{ block.shopify_attributes }}
+            >
+              {{- block.settings.nav_text -}}
+            </a>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} Fallback: if no menu_item blocks, use category block titles {%- endcomment -%}
+      {%- unless nav_rendered -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category' -%}
+            {%- if block.settings.title != blank -%}
+              <a
+                class="faq-page__nav-link"
+                href="#{{ block.settings.anchor_id | escape }}"
+                {{ block.shopify_attributes }}
+              >
+                {{- block.settings.title -}}
+              </a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endunless -%}
+    </div>
+  </faq-page-nav>
+{%- endif -%}

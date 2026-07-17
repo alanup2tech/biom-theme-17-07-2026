@@ -1,0 +1,156 @@
+{%- liquid
+  assign block_settings = block.settings
+  assign variant = product.selected_or_first_available_variant
+  assign inventory_quantity = variant.inventory_quantity
+  assign inventory_policy = variant.inventory_policy
+  assign inventory_managed = false
+
+  if variant.inventory_management == 'shopify'
+    assign inventory_managed = true
+  endif
+
+  assign can_add_to_cart = false
+  assign sold_out_text = 'products.product.sold_out' | t
+
+  if variant
+    assign quantity_rule_soldout = false
+    if variant.quantity_rule.min > variant.inventory_quantity and inventory_managed and inventory_policy == 'deny'
+      assign quantity_rule_soldout = true
+    endif
+
+    if variant.available
+      assign can_add_to_cart = true
+    endif
+  endif
+
+  assign button_label_prefix = block_settings.checkout_button_label 
+  assign button_label = button_label_prefix
+  unless block_settings.show_price == false
+    if can_add_to_cart
+      assign button_label = button_label | append: ' – ' | append: variant.price | money
+    endif
+  endunless
+
+  assign subscribe_price_cents = 0
+  for allocation in variant.selling_plan_allocations
+    if allocation.price > 0
+      if subscribe_price_cents == 0 or allocation.price < subscribe_price_cents
+        assign subscribe_price_cents = allocation.price
+      endif
+    endif
+  endfor
+
+  assign show_quantity = block_settings.show_quantity
+  assign product_form_id = 'BuyButtons-ProductForm-' | append: section.id | append: '-' | append: block.id
+  assign submit_button_id = 'BuyButtons-ProductSubmitButton-' | append: block.id
+
+  assign product_variant_media = variant.featured_media.preview_image | image_url: width: 100
+  if variant.featured_media.preview_image == blank
+    assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
+  endif
+-%}
+
+<span class="buy-buttons-block buy-buttons-block--{{ block.id }}">
+  {%- if product != blank -%}
+    <product-form-component
+      data-section-id="{{ section.id }}"
+      data-product-id="{{ product.id }}"
+      data-product-url="{{ product.url }}"
+      on:submit="/handleSubmit"
+      data-quantity-default="{% if variant.quantity_rule.min %}{{ variant.quantity_rule.min }}{% else %}1{% endif %}"
+      data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+    >
+      <div
+        class="visually-hidden"
+        aria-live="assertive"
+        role="status"
+        aria-atomic="true"
+        ref="liveRegion"
+      ></div>
+      {%- form 'product', product, id: product_form_id, data-type: 'add-to-cart-form' -%}
+        <input
+          type="hidden"
+          name="id"
+          ref="variantId"
+          value="{{ variant.id }}"
+        >
+        {%- unless show_quantity -%}
+          <input type="hidden" name="quantity" value="1">
+        {%- endunless -%}
+
+        <div
+          class="product-form-buttons product-buy-row{% if block_settings.stacking %} product-form-buttons--stacked{% endif %}"
+          ref="productFormButtons"
+        >
+          <span class="product-form-text__error hidden" ref="addToCartTextError">
+            <span class="svg-wrapper">
+              {{- 'icon-error.svg' | inline_asset_content -}}
+            </span>
+          </span>
+
+          {%- if show_quantity -%}
+            {% render 'quantity-selector', product: product, variant: variant, block: block %}
+          {%- endif -%}
+
+          <add-to-cart-component
+            ref="addToCartButtonContainer"
+            class="main-product__subscribe-save-wrap"
+            data-subscribe-save-button
+            data-button-label-prefix="{{ button_label_prefix | escape }}"
+            data-out-of-stock-label="{{ 'content.inventory_out_of_stock' | t | escape }}"
+            data-initial-label="{{ button_label | escape }}"
+            data-variant-price="{{ variant.price | money }}"
+            data-onetime-price="{{ variant.price | money }}"
+            {% if subscribe_price_cents > 0 %}
+              data-subscribe-price="{{ subscribe_price_cents | money }}"
+            {% endif %}
+            data-product-variant-media="{{ product_variant_media }}"
+            data-add-to-cart-animation="false"
+            data-variant-available="{{ can_add_to_cart }}"
+          >
+            <button
+              id="{{ submit_button_id }}"
+              type="submit"
+              name="add"
+              ref="addToCartButton"
+              on:click="/handleClick"
+              class="button product-atc main-product__subscribe-save-btn"
+              data-testid="main-product-add-to-cart"
+              data-variant-available="{{ can_add_to_cart }}"
+              aria-label="{% if can_add_to_cart %}{{ button_label | escape }}{% else %}{{ 'content.inventory_out_of_stock' | t | escape }}{% endif %}"
+              {% unless can_add_to_cart %}
+                disabled
+              {% endunless %}
+            >
+              <span class="main-product__subscribe-save-label" data-subscribe-save-label>
+                <span data-subscribe-save-text>
+                  {% if can_add_to_cart %}
+                    {{ button_label_prefix }} –
+                  {% else %}
+                    {{ 'content.inventory_out_of_stock' | t }}
+                  {% endif %}
+                </span>
+                <span
+                  class="sale-price dynamic-subscribe-price"
+                  {% unless can_add_to_cart %}
+                    hidden
+                  {% endunless %}
+                >
+                  {{ variant.price | money }}
+                </span>
+              </span>
+            </button>
+          </add-to-cart-component>
+        </div>
+      {%- endform -%}
+    </product-form-component>
+  {%- else -%}
+    <div class="product-form-buttons">
+      <button type="submit" name="add" class="button product-atc" disabled>
+        {{ sold_out_text }}
+      </button>
+    </div>
+  {%- endif -%}
+</span>
+
+{% render 'buy-buttons-styles' %}

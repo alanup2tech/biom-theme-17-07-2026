@@ -1,0 +1,153 @@
+{{ 'section-team-grid.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'dialog.js' | asset_url }}" type="module"></script>
+
+<div class="team-grid">
+  {%- for block in section.blocks -%}
+    {%- assign column = forloop.index0 | modulo: 2 -%}
+    {%- if column == 0 -%}
+      <div class="team-grid__row color-{{ block.settings.color_scheme }}">
+        <div class="page-width">
+          <div class="team-grid__inner">
+    {%- endif -%}
+
+            <div class="team-card reveal" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img
+                  class="team-card__image"
+                  width="470"
+                  height="380"
+                  src="{{ block.settings.image | image_url: width: 940 }}"
+                  alt="{{ block.settings.image.alt | default: block.settings.name | escape }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="team-card__image team-card__image--placeholder"></div>
+              {%- endif -%}
+
+              <h3 class="team-card__name">{{ block.settings.name }}</h3>
+
+              {%- if block.settings.role != blank -%}
+                <p class="team-card__role">{{ block.settings.role }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.bio != blank -%}
+                <p class="team-card__bio">{{ block.settings.bio }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.button_label != blank -%}
+                <dialog-component class="team-card__popup">
+                  <button type="button" on:click="/showDialog" class="team-card__button">
+                    {{ block.settings.button_label }}
+                  </button>
+
+                  <dialog
+                    ref="dialog"
+                    class="team-card__modal dialog-modal color-{{ block.settings.color_scheme }}"
+                    scroll-lock
+                    aria-labelledby="team-modal-heading-{{ block.id }}"
+                  >
+                    <h2 id="team-modal-heading-{{ block.id }}" class="team-card__modal-name">
+                      {{ block.settings.name }}
+                    </h2>
+
+                    <div class="team-card__modal-body">
+                      {{ block.settings.full_bio | default: block.settings.bio }}
+                    </div>
+
+                    <button ref="closeButton" type="button" on:click="/closeDialog" class="team-card__modal-close">
+                      Close
+                      {{- 'icon-arrow.svg' | inline_asset_content -}}
+                    </button>
+                  </dialog>
+                </dialog-component>
+              {%- endif -%}
+            </div>
+
+    {%- if column == 1 or forloop.last -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Team members",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [],
+  "blocks": [
+    {
+      "type": "member",
+      "name": "Team member",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Team Member" },
+        { "type": "text", "id": "role", "label": "Title / role", "default": "Job Title" },
+        {
+          "type": "textarea",
+          "id": "bio",
+          "label": "Bio (short, shown on card)",
+          "default": "Short biography describing this team member's background and role."
+        },
+        {
+          "type": "richtext",
+          "id": "full_bio",
+          "label": "Full bio (shown in popup, falls back to short bio if blank)"
+        },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Read More" },
+        { "type": "url", "id": "button_link", "label": "Button link" },
+        { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Team members",
+      "blocks": [
+        {
+          "type": "member",
+          "settings": {
+            "name": "Thomas “Tom” Gardner",
+            "role": "Executive Chairman",
+            "bio": "Thomas E. “Tom” Gardner, currently serving as the Executive Chairman at Biom Pharmaceutical, brings a wealth of experience in healthcare leadership and strategy. With a history of building and scaling successful ventures.",
+            "full_bio": "<p>Thomas E. “Tom” Gardner, currently serving as the Executive Chairman at Biom Pharmaceutical, brings a wealth of experience in healthcare leadership and strategy. With a history of senior executive roles, board memberships, and advisory positions in various healthcare companies, Tom has played a pivotal role in shaping healthcare ventures. He is the founder and senior advisor at Omeza Holdings, Inc., co-founder of KeyView Labs, and founding chairman of IntegriChain, among other notable roles. Tom is also known for his commitment to fostering youth leadership through initiatives like the LEAD Program and his involvement in BRIDGE Angel Investors.</p><p>Before his extensive work in healthcare leadership, Tom Gardner served as Group Vice President at Johnson &amp; Johnson from 1974 to 1987, leading the marketing and R&amp;D teams that propelled Tylenol to become the number 1 Health &amp; Beauty Aids brand in the U.S. Previously, Tylenol had only been marketed as an ethical pharmaceutical product.</p><p>His early career included a role as a Brand Manager at Procter &amp; Gamble from 1970 to 1974, where he specialized in the packaged soap &amp; detergent division. Throughout his career, Tom has demonstrated proficiency in regulatory affairs, management, marketing, strategic thinking, sales management, teamwork, and leadership.</p><p>With a remarkable track record, including leadership positions at Nucryst Pharmaceuticals, Songbird Hearing, Datamonitor, and Access Health, Tom Gardner continues to make significant contributions to the healthcare industry. He holds a B.A. in Economics and Mathematics from the University of St. Thomas (MN) and has shared his expertise as a guest lecturer at Northwestern University’s Kellogg Graduate School of Management.</p>",
+            "color_scheme": "scheme-4dae7f11-c26f-4c33-b52f-68ff3f5f7697"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Vijitha Viv",
+            "role": "President, Chief Operations Officer",
+            "bio": "Vijitha Viv is the founder and Chief Operations Officer at Biom Pharmaceutical. She is an experienced operator focused on building resilient, scalable operations.",
+            "color_scheme": "scheme-4dae7f11-c26f-4c33-b52f-68ff3f5f7697"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Bobban Subhadra M.S, PhD",
+            "role": "President, Chief Science Officer",
+            "bio": "Dr. Subhadra leads Biom Pharmaceutical. As CEO of Biom, he brings expertise in growing and scaling businesses, operations, marketing, innovation, and broad brand portfolios.",
+            "color_scheme": "scheme-7"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Eric Rueping",
+            "role": "General Manager & SVP (Consumer Care)",
+            "bio": "Eric is an operational expert adding long-term value through the supply chain and operational leadership and global strategic sourcing.",
+            "color_scheme": "scheme-7"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

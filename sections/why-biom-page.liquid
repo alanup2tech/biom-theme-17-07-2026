@@ -1,0 +1,2120 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section section--full-width color-{{ section.settings.color_scheme }} why-biom-page">
+  <div class="why-biom-page__article">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'wb_hero' -%}
+          <div class="why-biom-page__hero" {{ block.shopify_attributes }}>
+            <div class="why-biom-page__hero-content">
+              {%- if block.settings.heading != blank -%}
+                <h1 class="why-biom-page__hero-heading">{{ block.settings.heading }}</h1>
+              {%- endif -%}
+            </div>
+          </div>
+
+        {%- when 'wb_intro_card' -%}
+          <div class="why-biom-page__intro" {{ block.shopify_attributes }}>
+            <div class="why-biom-page__intro-panel">
+              {%- if block.settings.heading != blank -%}
+                <h2 class="why-biom-page__intro-heading">{{ block.settings.heading }}</h2>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="why-biom-page__intro-text">{{ block.settings.text }}</div>
+              {%- endif -%}
+              {%- if block.settings.tip_text != blank -%}
+                <div class="why-biom-page__intro-tip">
+                  {%- if block.settings.tip_label != blank -%}
+                    <p class="why-biom-page__intro-tip-label">{{ block.settings.tip_label }}</p>
+                  {%- endif -%}
+                  <div class="why-biom-page__intro-tip-text">{{ block.settings.tip_text }}</div>
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="why-biom-page__intro-media">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 700 }}"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+          </div>
+
+        {%- when 'wb_tips_grid' -%}
+          <div class="why-biom-page__tips-grid" {{ block.shopify_attributes }}>
+            <div class="why-biom-page__tips-grid-heading">
+              {{ block.settings.heading_text }}
+            </div>
+
+            <div class="why-biom-page__tips-grid-icon why-biom-page__tips-grid-icon-1">
+              {%- if block.settings.icon_1 != blank -%}
+                <img
+                  src="{{ block.settings.icon_1 | image_url: width: 300 }}"
+                  alt="{{ block.settings.icon_1.alt | escape }}"
+                  width="{{ block.settings.icon_1.width }}"
+                  height="{{ block.settings.icon_1.height }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+
+            <div class="why-biom-page__tips-grid-card why-biom-page__tips-grid-card--top why-biom-page__tips-grid-tip-1">
+              {%- if block.settings.tip_1_label != blank -%}
+                <p class="why-biom-page__tips-grid-label">{{ block.settings.tip_1_label }}</p>
+              {%- endif -%}
+              <div class="why-biom-page__tips-grid-text">{{ block.settings.tip_1_text }}</div>
+            </div>
+
+            <div class="why-biom-page__tips-grid-card why-biom-page__tips-grid-card--left why-biom-page__tips-grid-tip-2">
+              {%- if block.settings.tip_2_label != blank -%}
+                <p class="why-biom-page__tips-grid-label">{{ block.settings.tip_2_label }}</p>
+              {%- endif -%}
+              <div class="why-biom-page__tips-grid-text">{{ block.settings.tip_2_text }}</div>
+            </div>
+
+            <div class="why-biom-page__tips-grid-icon why-biom-page__tips-grid-icon-2">
+              {%- if block.settings.icon_2 != blank -%}
+                <img
+                  src="{{ block.settings.icon_2 | image_url: width: 300 }}"
+                  alt="{{ block.settings.icon_2.alt | escape }}"
+                  width="{{ block.settings.icon_2.width }}"
+                  height="{{ block.settings.icon_2.height }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+          </div>
+
+        {%- when 'wb_bullet_bar' -%}
+          <div class="why-biom-page__bullet-bar" {{ block.shopify_attributes }}>
+            {{ block.settings.items }}
+          </div>
+
+        {%- when 'wb_functions_section' -%}
+          <div class="why-biom-page__functions" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h2 class="why-biom-page__functions-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            <div class="why-biom-page__functions-row">
+              <div class="why-biom-page__functions-card">
+                {%- for i in (1..3) -%}
+                  {%- assign icon_key = 'category_' | append: i | append: '_icon' -%}
+                  {%- assign title_key = 'category_' | append: i | append: '_title' -%}
+                  {%- assign items_key = 'category_' | append: i | append: '_items' -%}
+                  {%- assign cat_icon = block.settings[icon_key] -%}
+                  {%- assign cat_title = block.settings[title_key] -%}
+                  {%- assign cat_items = block.settings[items_key] -%}
+                  <div class="why-biom-page__functions-category">
+                    <div class="why-biom-page__functions-icon">
+                      {%- if cat_icon != blank -%}
+                        <img
+                          src="{{ cat_icon | image_url: width: 100 }}"
+                          alt=""
+                          width="40"
+                          height="40"
+                          loading="lazy"
+                        >
+                      {%- endif -%}
+                    </div>
+                    {%- if cat_title != blank -%}
+                      <p class="why-biom-page__functions-title">{{ cat_title }}</p>
+                    {%- endif -%}
+                    <div class="why-biom-page__functions-items">{{ cat_items }}</div>
+                  </div>
+                {%- endfor -%}
+              </div>
+
+              <div class="why-biom-page__functions-media">
+                {%- if block.settings.body_image != blank -%}
+                  <img
+                    src="{{ block.settings.body_image | image_url: width: 500 }}"
+                    alt="{{ block.settings.body_image.alt | escape }}"
+                    width="{{ block.settings.body_image.width }}"
+                    height="{{ block.settings.body_image.height }}"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </div>
+
+              <div class="why-biom-page__functions-card">
+                {%- for i in (4..6) -%}
+                  {%- assign icon_key = 'category_' | append: i | append: '_icon' -%}
+                  {%- assign title_key = 'category_' | append: i | append: '_title' -%}
+                  {%- assign items_key = 'category_' | append: i | append: '_items' -%}
+                  {%- assign cat_icon = block.settings[icon_key] -%}
+                  {%- assign cat_title = block.settings[title_key] -%}
+                  {%- assign cat_items = block.settings[items_key] -%}
+                  <div class="why-biom-page__functions-category">
+                    <div class="why-biom-page__functions-icon">
+                      {%- if cat_icon != blank -%}
+                        <img
+                          src="{{ cat_icon | image_url: width: 100 }}"
+                          alt=""
+                          width="40"
+                          height="40"
+                          loading="lazy"
+                        >
+                      {%- endif -%}
+                    </div>
+                    {%- if cat_title != blank -%}
+                      <p class="why-biom-page__functions-title">{{ cat_title }}</p>
+                    {%- endif -%}
+                    <div class="why-biom-page__functions-items">{{ cat_items }}</div>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+
+        {%- when 'wb_dysbiosis_grid' -%}
+          <div class="why-biom-page__dysbiosis" {{ block.shopify_attributes }}>
+            <div class="why-biom-page__dysbiosis-cell why-biom-page__dysbiosis-cell--left">
+              <div class="why-biom-page__dysbiosis-text">{{ block.settings.text_1 }}</div>
+              {%- if block.settings.image_1 != blank -%}
+                <img
+                  class="why-biom-page__dysbiosis-image"
+                  src="{{ block.settings.image_1 | image_url: width: 400 }}"
+                  alt="{{ block.settings.image_1.alt | escape }}"
+                  width="{{ block.settings.image_1.width }}"
+                  height="{{ block.settings.image_1.height }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+
+            <div class="why-biom-page__dysbiosis-cell why-biom-page__dysbiosis-cell--center">
+              {%- if block.settings.image_2 != blank -%}
+                <img
+                  class="why-biom-page__dysbiosis-image"
+                  src="{{ block.settings.image_2 | image_url: width: 400 }}"
+                  alt="{{ block.settings.image_2.alt | escape }}"
+                  width="{{ block.settings.image_2.width }}"
+                  height="{{ block.settings.image_2.height }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+              <div class="why-biom-page__dysbiosis-text">{{ block.settings.text_2 }}</div>
+            </div>
+
+            <div class="why-biom-page__dysbiosis-cell why-biom-page__dysbiosis-cell--center">
+              <div class="why-biom-page__dysbiosis-statement">{{ block.settings.statement }}</div>
+            </div>
+
+            <div class="why-biom-page__dysbiosis-cell why-biom-page__dysbiosis-cell--center">
+              {%- if block.settings.image_3 != blank -%}
+                <img
+                  class="why-biom-page__dysbiosis-image"
+                  src="{{ block.settings.image_3 | image_url: width: 400 }}"
+                  alt="{{ block.settings.image_3.alt | escape }}"
+                  width="{{ block.settings.image_3.width }}"
+                  height="{{ block.settings.image_3.height }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+          </div>
+
+        {%- when 'wb_diversify' -%}
+          <div class="why-biom-page__diversify" {{ block.shopify_attributes }}>
+            <div class="why-biom-page__diversify-row">
+              <div class="why-biom-page__diversify-tip">
+                {%- if block.settings.tip_label != blank -%}
+                  <p class="why-biom-page__diversify-tip-label">{{ block.settings.tip_label }}</p>
+                {%- endif -%}
+                <div class="why-biom-page__diversify-tip-text">{{ block.settings.tip_text }}</div>
+              </div>
+              <div class="why-biom-page__diversify-side">
+                {%- if block.settings.side_heading != blank -%}
+                  <h3 class="why-biom-page__diversify-side-heading">{{ block.settings.side_heading }}</h3>
+                {%- endif -%}
+                <div class="why-biom-page__diversify-side-text">{{ block.settings.side_text }}</div>
+              </div>
+            </div>
+
+            <h2 class="why-biom-page__diversify-banner">
+              {{ block.settings.banner_heading }}
+            </h2>
+
+            {%- if block.settings.image != blank -%}
+              <div class="why-biom-page__diversify-image">
+                <img
+                  src="{{ block.settings.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="lazy"
+                >
+              </div>
+            {%- endif -%}
+          </div>
+
+        {%- when 'wb_badges_feature' -%}
+          <div class="why-biom-page__badges-feature" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h2 class="why-biom-page__badges-feature-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            <div class="why-biom-page__badges-feature-row">
+              <div class="why-biom-page__badges-feature-badges">
+                {%- if block.settings.badge_image != blank -%}
+                  <img
+                    src="{{ block.settings.badge_image | image_url: width: 400 }}"
+                    alt="{{ block.settings.badge_image.alt | escape }}"
+                    width="{{ block.settings.badge_image.width }}"
+                    height="{{ block.settings.badge_image.height }}"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </div>
+              <div class="why-biom-page__badges-feature-text">
+                {{ block.settings.text }}
+              </div>
+            </div>
+          </div>
+
+        {%- when 'wb_icon_bullets' -%}
+          <div
+            class="why-biom-page__icon-bullets why-biom-page__icon-bullets--icon-{{ block.settings.icon_position }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.heading != blank -%}
+              <h2 class="why-biom-page__icon-bullets-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            <div class="why-biom-page__icon-bullets-row">
+              <div class="why-biom-page__icon-bullets-icon">
+                {%- if block.settings.icon != blank -%}
+                  <img
+                    src="{{ block.settings.icon | image_url: width: 300 }}"
+                    alt="{{ block.settings.icon.alt | escape }}"
+                    width="{{ block.settings.icon.width }}"
+                    height="{{ block.settings.icon.height }}"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </div>
+              <div class="why-biom-page__icon-bullets-list">
+                {{ block.settings.items }}
+              </div>
+            </div>
+          </div>
+
+        {%- when 'wb_process_feature' -%}
+          <div class="why-biom-page__process" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h2 class="why-biom-page__process-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            <div class="why-biom-page__process-row">
+              <div class="why-biom-page__process-media">
+                {%- if block.settings.main_image != blank -%}
+                  <img
+                    class="why-biom-page__process-main-image"
+                    src="{{ block.settings.main_image | image_url: width: 500 }}"
+                    alt="{{ block.settings.main_image.alt | escape }}"
+                    width="{{ block.settings.main_image.width }}"
+                    height="{{ block.settings.main_image.height }}"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+                <div class="why-biom-page__process-steps">
+                  {%- for i in (1..4) -%}
+                    {%- assign step_key = 'step_image_' | append: i -%}
+                    {%- assign step_image = block.settings[step_key] -%}
+                    <div class="why-biom-page__process-step">
+                      {%- if step_image != blank -%}
+                        <img
+                          src="{{ step_image | image_url: width: 200 }}"
+                          alt="{{ step_image.alt | escape }}"
+                          width="{{ step_image.width }}"
+                          height="{{ step_image.height }}"
+                          loading="lazy"
+                        >
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+              <div class="why-biom-page__process-list">
+                {{ block.settings.items }}
+              </div>
+            </div>
+          </div>
+
+        {%- when 'wb_tribiom' -%}
+          <div class="why-biom-page__tribiom" {{ block.shopify_attributes }}>
+            {%- if block.settings.statement != blank -%}
+              <div class="why-biom-page__tribiom-statement">{{ block.settings.statement }}</div>
+            {%- endif -%}
+            <div class="why-biom-page__tribiom-box">
+              {%- if block.settings.diagram_image != blank -%}
+                <img
+                  src="{{ block.settings.diagram_image | image_url: width: 900 }}"
+                  alt="{{ block.settings.diagram_image.alt | escape }}"
+                  width="{{ block.settings.diagram_image.width }}"
+                  height="{{ block.settings.diagram_image.height }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+          </div>
+
+        {%- when 'wb_statement' -%}
+          <div class="why-biom-page__statement" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+          </div>
+
+        {%- when 'wb_recommend_section' -%}
+          <div class="why-biom-page__recommend" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h2 class="why-biom-page__recommend-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.subheading != blank -%}
+              <div class="why-biom-page__recommend-subheading">{{ block.settings.subheading }}</div>
+            {%- endif -%}
+
+            <div class="why-biom-page__recommend-row">
+              <div class="why-biom-page__recommend-list-1">{{ block.settings.list_1 }}</div>
+              <div class="why-biom-page__recommend-col-2">
+                {%- if block.settings.image != blank -%}
+                  <div class="why-biom-page__recommend-image">
+                    <img
+                      src="{{ block.settings.image | image_url: width: 500 }}"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                      loading="lazy"
+                    >
+                  </div>
+                {%- endif -%}
+                <div class="why-biom-page__recommend-list-2">{{ block.settings.list_2 }}</div>
+              </div>
+            </div>
+
+            <div class="why-biom-page__recommend-cards">
+              {%- for i in (1..3) -%}
+                {%- assign heading_key = 'card_' | append: i | append: '_heading' -%}
+                {%- assign subheading_key = 'card_' | append: i | append: '_subheading' -%}
+                {%- assign text_key = 'card_' | append: i | append: '_text' -%}
+                {%- assign image_key = 'card_' | append: i | append: '_image' -%}
+                {%- assign card_heading = block.settings[heading_key] -%}
+                {%- assign card_subheading = block.settings[subheading_key] -%}
+                {%- assign card_text = block.settings[text_key] -%}
+                {%- assign card_image = block.settings[image_key] -%}
+                <div class="why-biom-page__recommend-card">
+                  {%- if card_heading != blank -%}
+                    <p class="why-biom-page__recommend-card-heading">{{ card_heading }}</p>
+                  {%- endif -%}
+                  {%- if card_subheading != blank -%}
+                    <p class="why-biom-page__recommend-card-subheading">{{ card_subheading }}</p>
+                  {%- endif -%}
+                  {%- if card_text != blank -%}
+                    <p class="why-biom-page__recommend-card-text">{{ card_text }}</p>
+                  {%- endif -%}
+                  {%- if card_image != blank -%}
+                    <div class="why-biom-page__recommend-card-media">
+                      <img
+                        src="{{ card_image | image_url: width: 400 }}"
+                        alt="{{ card_image.alt | escape }}"
+                        width="{{ card_image.width }}"
+                        height="{{ card_image.height }}"
+                        loading="lazy"
+                      >
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .why-biom-page {
+    --wb-section-gap: 90px;
+    padding-block: 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+    background: var(--color-background);
+  }
+
+  @media screen and (max-width: 1199px) {
+    .why-biom-page {
+      --wb-section-gap: 60px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page {
+      --wb-section-gap: 40px;
+    }
+  }
+
+  .why-biom-page__article {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    box-sizing: border-box;
+    padding-inline: 48px;
+  }
+
+  @media screen and (max-width: 1199px) {
+    .why-biom-page__article {
+      padding-inline: 24px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__article {
+      padding-inline: 20px;
+    }
+  }
+
+  /* Hero block: heading with an optional full-width background image.
+     Breaks out of the article's max-width to stay full viewport width. */
+  .why-biom-page__hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(220px, 22vw, 340px);
+    padding: 40px 60px;
+    overflow: hidden;
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    background: #2c3a22;
+  }
+
+  .why-biom-page__hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .why-biom-page__hero-heading {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: var(--font-h1--line-height);
+    color: var(--color-white);
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__hero {
+      padding: 32px 20px;
+    }
+  }
+
+  /* Intro card block (gradient panel + nested tip + side illustration) */
+  .why-biom-page__intro {
+    display: flex;
+    align-items: stretch;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-block: var(--wb-section-gap);
+  }
+
+  .why-biom-page__intro-panel {
+    flex: 1 1 0;
+    min-width: 320px;
+    background: #7AA05F;
+    border-radius: 24px;
+    padding: 40px 48px 48px;
+    box-shadow: 0 24px 40px -16px rgb(44 58 34 / 0.35);
+  }
+
+  .why-biom-page__intro-heading {
+    margin: 0 0 20px;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  .why-biom-page__intro-text {
+    color: var(--color-white);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__intro-text p {
+    margin: 0;
+  }
+
+  .why-biom-page__intro-text strong {
+    color: var(--color-white);
+  }
+
+  .why-biom-page__intro-tip {
+    margin-top: 24px;
+    background: #f4f4f5;
+    border-radius: 14px;
+    padding: 24px 28px;
+    box-shadow: 0 12px 24px -12px rgb(0 0 0 / 0.25);
+  }
+
+  .why-biom-page__intro-tip-label {
+    margin: 0 0 10px;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c3a22;
+  }
+
+  .why-biom-page__intro-tip-text {
+    color: var(--color-foreground);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__intro-tip-text p {
+    margin: 0;
+  }
+
+  .why-biom-page__intro-media {
+    flex: 1 1 0;
+    min-width: 220px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .why-biom-page__intro-media img {
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__intro-panel {
+      padding: 32px 24px 36px;
+    }
+
+    .why-biom-page__intro-media {
+      flex-basis: 100%;
+      margin-inline: auto;
+    }
+
+    .why-biom-page__intro-media img {
+      width: 100%;
+      max-width: 160px;
+      height: auto;
+      max-height: none;
+    }
+  }
+
+  /* Tips grid block (heading + icon + tip / tip + icon, staggered two-row layout) */
+  .why-biom-page__tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 32px;
+    row-gap: 40px;
+    align-items: center;
+    margin-block: var(--wb-section-gap);
+  }
+
+  .why-biom-page__tips-grid-heading {
+    grid-column: 1;
+    grid-row: 1;
+    color: var(--color-foreground);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__tips-grid-heading p {
+    margin: 0;
+  }
+
+  .why-biom-page__tips-grid-heading strong {
+    color: var(--color-foreground);
+  }
+
+  .why-biom-page__tips-grid-icon {
+    text-align: center;
+  }
+
+  .why-biom-page__tips-grid-icon img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    display: inline-block;
+  }
+
+  .why-biom-page__tips-grid-icon-1 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .why-biom-page__tips-grid-icon-2 {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .why-biom-page__tips-grid-icon-2 img {
+    max-width: 280px;
+  }
+
+  .why-biom-page__tips-grid-card {
+    background: #f4f4f5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    box-shadow: 0 14px 22px -14px rgb(0 0 0 / 0.3);
+  }
+
+  .why-biom-page__tips-grid-tip-1 {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .why-biom-page__tips-grid-tip-2 {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+  }
+
+  .why-biom-page__tips-grid-card--top {
+    border-top: 4px solid #2c3a22;
+  }
+
+  .why-biom-page__tips-grid-card--left {
+    border-left: 4px solid #2c3a22;
+  }
+
+  .why-biom-page__tips-grid-label {
+    margin: 0 0 10px;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c3a22;
+  }
+
+  .why-biom-page__tips-grid-text {
+    color: var(--color-foreground);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__tips-grid-text p {
+    margin: 0;
+  }
+
+  .why-biom-page__tips-grid-text a {
+    color: #2c3a22;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 1199px) {
+    .why-biom-page__tips-grid {
+      grid-template-columns: 1fr;
+      row-gap: 28px;
+    }
+
+    .why-biom-page__tips-grid-heading,
+    .why-biom-page__tips-grid-icon-1,
+    .why-biom-page__tips-grid-tip-1,
+    .why-biom-page__tips-grid-tip-2,
+    .why-biom-page__tips-grid-icon-2 {
+      grid-column: 1;
+      grid-row: auto;
+    }
+  }
+
+  /* Bullet bar block (gradient bar with chevron-marked lines) */
+  .why-biom-page__bullet-bar {
+    background: linear-gradient(90deg, #7aa05f 0%, #2c3a22 100%);
+    border-radius: 12px;
+    padding: 24px 40px;
+    margin-block: var(--wb-section-gap);
+  }
+
+  .why-biom-page__bullet-bar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .why-biom-page__bullet-bar li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+    color: var(--color-white);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__bullet-bar li:last-child {
+    margin-bottom: 0;
+  }
+
+  .why-biom-page__bullet-bar li::before {
+    content: '\00bb';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-white);
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__bullet-bar {
+      padding: 20px 24px;
+    }
+  }
+
+  /* Dysbiosis grid block (2x2: text+image, image+caption, statement, diagram) */
+  .why-biom-page__dysbiosis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    row-gap: 48px;
+    margin-block: var(--wb-section-gap);
+    background: #f7f8f4;
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 24px 48px -32px rgb(44 58 34 / 0.18);
+  }
+
+  .why-biom-page__dysbiosis-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .why-biom-page__dysbiosis-cell--left {
+    align-items: flex-start;
+  }
+
+  .why-biom-page__dysbiosis-cell--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .why-biom-page__dysbiosis-image {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    display: block;
+  }
+
+  .why-biom-page__dysbiosis-text {
+    color: var(--color-foreground);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__dysbiosis-cell--left .why-biom-page__dysbiosis-text {
+    text-align: left;
+  }
+
+  .why-biom-page__dysbiosis-cell--center .why-biom-page__dysbiosis-text {
+    text-align: center;
+  }
+
+  .why-biom-page__dysbiosis-text p {
+    margin: 0;
+  }
+
+  .why-biom-page__dysbiosis-text a {
+    color: #2c3a22;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .why-biom-page__dysbiosis-statement {
+    color: var(--color-foreground);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: var(--font-paragraph--line-height);
+    text-align: center;
+    max-width: 420px;
+    background: rgb(122 160 95 / 0.12);
+    border-radius: 16px;
+    padding: 24px 28px;
+  }
+
+  .why-biom-page__dysbiosis-statement p {
+    margin: 0;
+  }
+
+  .why-biom-page__dysbiosis-statement a {
+    color: #2c3a22;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__dysbiosis {
+      grid-template-columns: 1fr;
+      row-gap: 32px;
+      padding: 32px 24px;
+      border-radius: 16px;
+    }
+
+    .why-biom-page__dysbiosis-cell--left {
+      align-items: center;
+    }
+
+    .why-biom-page__dysbiosis-cell--left .why-biom-page__dysbiosis-image {
+      order: -1;
+      max-width: 120px;
+    }
+
+    .why-biom-page__dysbiosis-cell--left .why-biom-page__dysbiosis-text {
+      align-self: flex-start;
+      text-align: left;
+    }
+
+    .why-biom-page__dysbiosis-image {
+      max-width: 160px;
+    }
+  }
+
+  /* Diversify block (tip + side box row, then centered banner heading + circular image) */
+  .why-biom-page__diversify {
+    margin-block: var(--wb-section-gap);
+  }
+
+  .why-biom-page__diversify-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
+  .why-biom-page__diversify-tip {
+    flex: 2 1 400px;
+    background: #f4f4f5;
+    border-left: 4px solid #2c3a22;
+    border-radius: 10px;
+    padding: 24px 28px;
+    box-shadow: 0 14px 22px -14px rgb(0 0 0 / 0.3);
+  }
+
+  .why-biom-page__diversify-tip-label {
+    margin: 0 0 10px;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c3a22;
+  }
+
+  .why-biom-page__diversify-tip-text {
+    color: var(--color-foreground);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__diversify-tip-text p {
+    margin: 0;
+  }
+
+  .why-biom-page__diversify-tip-text a {
+    color: #2c3a22;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .why-biom-page__diversify-side {
+    flex: 1 1 240px;
+    background: #f4f4f5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    text-align: center;
+  }
+
+  .why-biom-page__diversify-side-heading {
+    margin: 0 0 10px;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-foreground-heading);
+  }
+
+  .why-biom-page__diversify-side-text {
+    color: var(--color-foreground);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__diversify-side-text p {
+    margin: 0;
+  }
+
+  .why-biom-page__diversify-banner {
+    position: relative;
+    margin: 0 0 40px;
+    padding-bottom: 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--color-foreground-heading);
+  }
+
+  .why-biom-page__diversify-banner::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background: #7AA05F;
+    transform: translateX(-50%);
+  }
+
+  .why-biom-page__diversify-banner p {
+    margin: 0;
+  }
+
+  .why-biom-page__diversify-banner a {
+    color: #2c3a22;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .why-biom-page__diversify-image {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .why-biom-page__diversify-image img {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__diversify-row {
+      margin-bottom: 32px;
+    }
+  }
+
+  /* Badges feature block (heading, badge grid + text) */
+  .why-biom-page__badges-feature {
+    margin-block: var(--wb-section-gap);
+    background: #f7f8f4;
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 24px 48px -32px rgb(44 58 34 / 0.18);
+  }
+
+  .why-biom-page__badges-feature-heading {
+    position: relative;
+    margin: 0 0 40px;
+    padding-bottom: 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-foreground-heading);
+  }
+
+  .why-biom-page__badges-feature-heading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background: #7AA05F;
+    transform: translateX(-50%);
+  }
+
+  .why-biom-page__badges-feature-row {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .why-biom-page__badges-feature-badges {
+    flex: 0 0 auto;
+    width: min(100%, 420px);
+  }
+
+  .why-biom-page__badges-feature-badges img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .why-biom-page__badges-feature-text {
+    flex: 1 1 320px;
+    color: var(--color-foreground);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__badges-feature-text p {
+    margin: 0 0 1em;
+  }
+
+  .why-biom-page__badges-feature-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__badges-feature {
+      padding: 32px 24px;
+      border-radius: 16px;
+    }
+
+    .why-biom-page__badges-feature-row {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .why-biom-page__badges-feature-badges {
+      width: min(100%, 220px);
+    }
+
+    .why-biom-page__badges-feature-text {
+      width: 100%;
+      flex-basis: auto;
+      text-align: left;
+    }
+  }
+
+  /* Icon bullets block (heading, icon + bulleted list) */
+  .why-biom-page__icon-bullets {
+    margin-block: var(--wb-section-gap);
+    background: #f7f8f4;
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 24px 48px -32px rgb(44 58 34 / 0.18);
+  }
+
+  .why-biom-page__icon-bullets-heading {
+    position: relative;
+    margin: 0 0 40px;
+    padding-bottom: 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-foreground-heading);
+  }
+
+  .why-biom-page__icon-bullets-heading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background: #7AA05F;
+    transform: translateX(-50%);
+  }
+
+  .why-biom-page__icon-bullets-row {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .why-biom-page__icon-bullets--icon-right .why-biom-page__icon-bullets-row {
+    flex-direction: row-reverse;
+  }
+
+  .why-biom-page__icon-bullets-icon {
+    flex: 0 0 auto;
+    width: min(100%, 320px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(122 160 95 / 0.12);
+    border-radius: 24px;
+    padding: 32px;
+  }
+
+  .why-biom-page__icon-bullets-icon img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    display: block;
+  }
+
+  .why-biom-page__icon-bullets-list {
+    flex: 1 1 320px;
+  }
+
+  .why-biom-page__icon-bullets-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .why-biom-page__icon-bullets-list li {
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 18px;
+    color: var(--color-foreground);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__icon-bullets-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .why-biom-page__icon-bullets-list li::before {
+    content: '\00bb';
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #7AA05F;
+    color: var(--color-white);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__icon-bullets {
+      padding: 32px 24px;
+      border-radius: 16px;
+    }
+
+    .why-biom-page__icon-bullets-row,
+    .why-biom-page__icon-bullets--icon-right .why-biom-page__icon-bullets-row {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .why-biom-page__icon-bullets-icon {
+      width: min(100%, 220px);
+      padding: 24px;
+    }
+
+    .why-biom-page__icon-bullets-list {
+      width: 100%;
+      flex-basis: auto;
+      text-align: left;
+    }
+  }
+
+  /* Process feature block (heading, main image + step thumbnails, bulleted list) */
+  .why-biom-page__process {
+    margin-block: var(--wb-section-gap);
+    background: #f7f8f4;
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 24px 48px -32px rgb(44 58 34 / 0.18);
+  }
+
+  .why-biom-page__process-heading {
+    position: relative;
+    margin: 0 0 40px;
+    padding-bottom: 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-foreground-heading);
+  }
+
+  .why-biom-page__process-heading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background: #7AA05F;
+    transform: translateX(-50%);
+  }
+
+  .why-biom-page__process-row {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .why-biom-page__process-media {
+    flex: 0 0 auto;
+    width: min(100%, 460px);
+  }
+
+  .why-biom-page__process-main-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .why-biom-page__process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .why-biom-page__process-step {
+    background: #f4f4f5;
+    border-radius: 6px;
+    padding: 6px;
+  }
+
+  .why-biom-page__process-step img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .why-biom-page__process-list {
+    flex: 1 1 320px;
+  }
+
+  .why-biom-page__process-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .why-biom-page__process-list li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 20px;
+    color: var(--color-foreground);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__process-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .why-biom-page__process-list li::before {
+    content: '\00bb';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #2c3a22;
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__process {
+      padding: 32px 24px;
+      border-radius: 16px;
+    }
+
+    .why-biom-page__process-row {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .why-biom-page__process-media {
+      width: min(100%, 320px);
+    }
+
+    .why-biom-page__process-list {
+      width: 100%;
+      flex-basis: auto;
+      text-align: left;
+    }
+  }
+
+  /* TriBiom block (bold statement + bordered box containing a single diagram image) */
+  .why-biom-page__tribiom {
+    margin-block: var(--wb-section-gap);
+  }
+
+  .why-biom-page__tribiom-statement {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding-top: 28px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+    color: var(--color-foreground);
+  }
+
+  .why-biom-page__tribiom-statement::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background: #7AA05F;
+    transform: translateX(-50%);
+  }
+
+  .why-biom-page__tribiom-statement p {
+    margin: 0;
+  }
+
+  .why-biom-page__tribiom-box {
+    background: var(--color-background);
+    border: 1px solid rgb(0 0 0 / 0.08);
+    border-radius: 4px;
+    box-shadow: 0 30px 40px -20px rgb(0 0 0 / 0.35);
+    padding: 32px;
+    text-align: center;
+  }
+
+  .why-biom-page__tribiom-box img {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    display: inline-block;
+  }
+
+  /* Statement block (standalone highlighted callout) */
+  .why-biom-page__statement {
+    max-width: 760px;
+    margin: var(--wb-section-gap) auto;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+    color: var(--color-white);
+    background: linear-gradient(135deg, #2c3a22 0%, #7aa05f 100%);
+    border-radius: 20px;
+    padding: 32px 40px;
+    box-shadow: 0 24px 48px -28px rgb(44 58 34 / 0.4);
+  }
+
+  .why-biom-page__statement p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__statement {
+      padding: 28px 24px;
+      border-radius: 16px;
+    }
+  }
+
+  /* Recommend section block (pink headings, list + image + list row, 3 gold cards) */
+  .why-biom-page__recommend {
+    margin-block: var(--wb-section-gap);
+  }
+
+  .why-biom-page__recommend-heading {
+    position: relative;
+    margin: 0 0 24px;
+    padding-bottom: 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #2c3a22;
+  }
+
+  .why-biom-page__recommend-heading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background: #7AA05F;
+    transform: translateX(-50%);
+  }
+
+  .why-biom-page__recommend-subheading {
+    margin-bottom: 32px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #2c3a22;
+  }
+
+  .why-biom-page__recommend-subheading p {
+    margin: 0;
+  }
+
+  .why-biom-page__recommend-row {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    background: #f7f8f4;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 24px 48px -32px rgb(44 58 34 / 0.18);
+  }
+
+  .why-biom-page__recommend-list-1 {
+    flex: 1 1 400px;
+  }
+
+  .why-biom-page__recommend-col-2 {
+    flex: 1 1 320px;
+  }
+
+  .why-biom-page__recommend-list-1 ul,
+  .why-biom-page__recommend-list-2 ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .why-biom-page__recommend-list-1 li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 14px;
+    color: var(--color-foreground);
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__recommend-list-1 li:last-child {
+    margin-bottom: 0;
+  }
+
+  .why-biom-page__recommend-list-1 li::before {
+    content: '\00bb';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-foreground);
+    font-weight: 700;
+  }
+
+  .why-biom-page__recommend-image {
+    margin-bottom: 16px;
+  }
+
+  .why-biom-page__recommend-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .why-biom-page__recommend-list-2 li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 14px;
+    color: #2c3a22;
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .why-biom-page__recommend-list-2 li:last-child {
+    margin-bottom: 0;
+  }
+
+  .why-biom-page__recommend-list-2 li::before {
+    content: '\00bb';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #2c3a22;
+    font-weight: 700;
+  }
+
+  .why-biom-page__recommend-cards {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .why-biom-page__recommend-card {
+    flex: 1 1 260px;
+    background: #7AA05F;
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 20px 40px -28px rgb(44 58 34 / 0.35);
+  }
+
+  .why-biom-page__recommend-card-heading,
+  .why-biom-page__recommend-card-subheading {
+    margin: 0 0 6px;
+    font-weight: 800;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: var(--color-white);
+  }
+
+  .why-biom-page__recommend-card-text {
+    margin: 0 0 20px;
+    font-weight: 400;
+    font-size: 15px;
+    text-transform: none;
+    color: var(--color-white);
+  }
+
+  .why-biom-page__recommend-card-media img {
+    width: 100%;
+    max-width: 160px;
+    height: 160px;
+    object-fit: contain;
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__recommend-row {
+      padding: 28px 24px;
+      border-radius: 16px;
+    }
+
+    .why-biom-page__recommend-cards {
+      flex-direction: column;
+    }
+  }
+
+  /* Functions section block (heading, two dark cards of 3 stacked categories + center body image) */
+  .why-biom-page__functions {
+    margin-block: var(--wb-section-gap);
+  }
+
+  .why-biom-page__functions-heading {
+    position: relative;
+    margin: 0 0 40px;
+    padding-bottom: 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-foreground-heading);
+  }
+
+  .why-biom-page__functions-heading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 56px;
+    height: 4px;
+    border-radius: 2px;
+    background: #7AA05F;
+    transform: translateX(-50%);
+  }
+
+  .why-biom-page__functions-row {
+    display: grid;
+    grid-template-columns: 1fr 200px 1fr;
+    grid-template-rows: repeat(3, auto);
+    column-gap: 32px;
+  }
+
+  .why-biom-page__functions-card {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: 1 / span 3;
+    align-items: stretch;
+    background: #7AA05F;
+    border-radius: 20px;
+    padding: 28px 24px;
+    color: var(--color-white);
+    box-shadow: 0 24px 48px -32px rgb(44 58 34 / 0.35);
+  }
+
+  .why-biom-page__functions-media {
+    grid-row: 1 / span 3;
+    align-self: center;
+  }
+
+  .why-biom-page__functions-media img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .why-biom-page__functions-category {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgb(255 255 255 / 0.15);
+    text-align: center;
+  }
+
+  .why-biom-page__functions-category:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .why-biom-page__functions-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    border: 2px solid var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .why-biom-page__functions-icon img {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+
+  .why-biom-page__functions-title {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-align: center;
+    color: var(--color-white);
+  }
+
+  .why-biom-page__functions-items ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  .why-biom-page__functions-items li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    line-height: var(--font-paragraph--line-height);
+    color: #e8f1f8;
+  }
+
+  .why-biom-page__functions-items li:last-child {
+    margin-bottom: 0;
+  }
+
+  .why-biom-page__functions-items li::before {
+    content: '\00bb';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-white);
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 1199px) {
+    .why-biom-page__functions-row {
+      grid-template-columns: 1fr 180px 1fr;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .why-biom-page__functions-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .why-biom-page__functions-card {
+      display: block;
+      width: 100%;
+    }
+
+    .why-biom-page__functions-media {
+      width: 90px;
+    }
+  }
+
+  /* Larger section headings on desktop */
+  @media screen and (min-width: 1200px) {
+    .why-biom-page__functions-heading,
+    .why-biom-page__process-heading,
+    .why-biom-page__badges-feature-heading,
+    .why-biom-page__icon-bullets-heading,
+    .why-biom-page__recommend-heading,
+    .why-biom-page__diversify-banner {
+      font-size: 42px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Why Biom Page",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "wb_hero",
+      "name": "Hero",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "The Power of Human Microbiome In Health & Longevity"
+        }
+      ]
+    },
+    {
+      "type": "wb_intro_card",
+      "name": "Intro card",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Human Commensal Microbiota" },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Refers to the microbial flora naturally living in human body. The total collection of all of their genes is called <strong>Human Microbiome</strong></p>"
+        },
+        { "type": "text", "id": "tip_label", "label": "Tip label", "default": "Health Tip" },
+        {
+          "type": "richtext",
+          "id": "tip_text",
+          "label": "Tip text",
+          "default": "<p>Human Microbiome is now considered as a highly adaptable “human organ” with multitude of metabolic functions in human body.</p>"
+        },
+        { "type": "image_picker", "id": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "wb_tips_grid",
+      "name": "Tips grid",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "heading_text",
+          "label": "Heading text",
+          "default": "<p><strong>Human Microbiome</strong> plays a critical role in maintaining our <strong>Health &amp; Longevity</strong></p>"
+        },
+        { "type": "image_picker", "id": "icon_1", "label": "Icon 1" },
+        { "type": "text", "id": "tip_1_label", "label": "Tip 1 label", "default": "Health Tip" },
+        {
+          "type": "richtext",
+          "id": "tip_1_text",
+          "label": "Tip 1 text",
+          "default": "<p>Gut microbiomes are in constant communication with our body's cells; to the point that our intestinal flora is said to be our second brain.</p>"
+        },
+        { "type": "text", "id": "tip_2_label", "label": "Tip 2 label", "default": "Health Tip" },
+        {
+          "type": "richtext",
+          "id": "tip_2_text",
+          "label": "Tip 2 text",
+          "default": "<p>Microbiome and Immune System's cross-talk during early life stages can shape the proper development of immune system. And impairment to this process can lead to several immune disorders later in life, Among the human microbes, <a href=\"#\">gut microbiome</a> is the major one, which has far-reaching impact on human health.</p>"
+        },
+        { "type": "image_picker", "id": "icon_2", "label": "Icon 2" }
+      ]
+    },
+    {
+      "type": "wb_bullet_bar",
+      "name": "Bullet bar",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "items",
+          "label": "Lines",
+          "default": "<ul><li>Gut Microbiome comprises of 100 trillion microbes and contains over 3 million microbial genes modulating human genome.</li><li>Over 1,000 species of bacteria have been cataloged from gut flora and can weigh up to 2 kg!</li></ul>"
+        }
+      ]
+    },
+    {
+      "type": "wb_functions_section",
+      "name": "Functions section",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Human Microbiome Functions" },
+        { "type": "image_picker", "id": "body_image", "label": "Body image" },
+        { "type": "image_picker", "id": "category_1_icon", "label": "Category 1 icon" },
+        { "type": "text", "id": "category_1_title", "label": "Category 1 title", "default": "Immune Functions" },
+        {
+          "type": "richtext",
+          "id": "category_1_items",
+          "label": "Category 1 list",
+          "default": "<ul><li>Proper maturation and maintenance of immune tissues</li><li>Control and maintain immune homeostasis</li><li>Produces immune-molecules such as butyric acid, antimicrobial peptides, key signaling molecules, natural antibiotics</li><li>Prevents the growth of disease-causing pathogenic bacteria</li></ul>"
+        },
+        { "type": "image_picker", "id": "category_2_icon", "label": "Category 2 icon" },
+        {
+          "type": "text",
+          "id": "category_2_title",
+          "label": "Category 2 title",
+          "default": "Anti-Inflammatory Functions"
+        },
+        {
+          "type": "richtext",
+          "id": "category_2_items",
+          "label": "Category 2 list",
+          "default": "<ul><li>Enhance the gut barrier function to reduce “leaky gut-mediated inflammation”</li><li>Produces anti-inflammatory molecules</li><li>Reduces endotoxin mediated chronic inflammation</li><li>Enhances skin barrier function to reduce dermatological allergic diseases</li></ul>"
+        },
+        { "type": "image_picker", "id": "category_3_icon", "label": "Category 3 icon" },
+        { "type": "text", "id": "category_3_title", "label": "Category 3 title", "default": "Metabolic Functions" },
+        {
+          "type": "richtext",
+          "id": "category_3_items",
+          "label": "Category 3 list",
+          "default": "<ul><li>Regulates energy balance by harvest &amp; expenditure from diet</li><li>Controls appetite &amp; satiety</li><li>Increases insulin sensitivity, controls adiposity &amp; optimum maintenance of body weight</li><li>Proper cholesterol metabolism for cardiovascular health</li><li>Helps liver to metabolize &amp; detoxify drugs (e.g. opioids, NSAIDs)</li></ul>"
+        },
+        { "type": "image_picker", "id": "category_4_icon", "label": "Category 4 icon" },
+        { "type": "text", "id": "category_4_title", "label": "Category 4 title", "default": "Digestive Functions" },
+        {
+          "type": "richtext",
+          "id": "category_4_items",
+          "label": "Category 4 list",
+          "default": "<ul><li>Enhances digestion by producing enzymes, vitamins &amp; growth factors</li><li>Produces gut hormones, &amp; balances intestinal pH</li><li>Control the gut motility &amp; proper colonic tone for bowel movement</li></ul>"
+        },
+        { "type": "image_picker", "id": "category_5_icon", "label": "Category 5 icon" },
+        {
+          "type": "text",
+          "id": "category_5_title",
+          "label": "Category 5 title",
+          "default": "Longevity & Healthy Aging Functions"
+        },
+        {
+          "type": "richtext",
+          "id": "category_5_items",
+          "label": "Category 5 list",
+          "default": "<ul><li>Produces longevity enhancing metabolites from diet such as Urolithins, Quercetins etc</li><li>Produces anti-cancer metabolites from natural compounds</li><li>Regulates &amp; balances key endocrine hormones</li></ul>"
+        },
+        { "type": "image_picker", "id": "category_6_icon", "label": "Category 6 icon" },
+        { "type": "text", "id": "category_6_title", "label": "Category 6 title", "default": "Brain Functions" },
+        {
+          "type": "richtext",
+          "id": "category_6_items",
+          "label": "Category 6 list",
+          "default": "<ul><li>Gut-brain axis modulates behaviors – mood, emotion, stress response, appetite, addiction</li><li>Microbiome regulates tryptophan metabolism and the serotonergic system</li><li>Gut microbiota has important function in visceral sensitivity &amp; perception</li><li>Produces neuroactive &amp; cognitive enhancing metabolites</li><li>Regulates circadian rhythm &amp; proper sleep pattern</li></ul>"
+        }
+      ]
+    },
+    {
+      "type": "wb_dysbiosis_grid",
+      "name": "Dysbiosis grid",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text_1",
+          "label": "Text 1",
+          "default": "<p>Our gut microbiome evolves from birth to <a href=\"#\">a mature homeostatic core microbiome</a> modulating several beneficial functions. Any disturbances is called dysbiosis which can alter the normal balance.</p>"
+        },
+        { "type": "image_picker", "id": "image_1", "label": "Image 1" },
+        { "type": "image_picker", "id": "image_2", "label": "Image 2" },
+        {
+          "type": "richtext",
+          "id": "text_2",
+          "label": "Text 2",
+          "default": "<p>Dysbiosis of the gut microbiome is caused by the imbalance between the commensal and <a href=\"#\">pathogenic microbiomes.</a></p>"
+        },
+        {
+          "type": "richtext",
+          "id": "statement",
+          "label": "Statement",
+          "default": "<p>Today, dysbiosis has been linked with several disease conditions such as autoimmune, digestive, metabolic and other <a href=\"#\">chronic inflammatory diseases</a></p>"
+        },
+        { "type": "image_picker", "id": "image_3", "label": "Image 3" }
+      ]
+    },
+    {
+      "type": "wb_diversify",
+      "name": "Diversify",
+      "settings": [
+        { "type": "text", "id": "tip_label", "label": "Tip label", "default": "Health Tip" },
+        {
+          "type": "richtext",
+          "id": "tip_text",
+          "label": "Tip text",
+          "default": "<p>Healthy and diverse diet can promote a <a href=\"#\">diversified microbiome</a> which in turn helps to protect our health.</p>"
+        },
+        { "type": "text", "id": "side_heading", "label": "Side heading", "default": "Microbiome Diversification" },
+        {
+          "type": "richtext",
+          "id": "side_text",
+          "label": "Side text",
+          "default": "<p>Is critical to achieve optimum health &amp; longevity</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "banner_heading",
+          "label": "Banner heading",
+          "default": "<p><a href=\"#\">Biom Probiotics&reg;</a> Diversify Your Microbiome For Health, Wellbeing and Longevity</p>"
+        },
+        { "type": "image_picker", "id": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "wb_badges_feature",
+      "name": "Badges feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "What Is Biom Probiotics®? Biom Probiotics® Different From Other Products?"
+        },
+        { "type": "image_picker", "id": "badge_image", "label": "Badge image" },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Biom Probiotics&reg; is a next-generation probiotic technology focused on microbiome diversity &amp; balance</p><p>Biom Probiotics&reg; is a microbiome science-driven product formulated by scientists and physicians founders. We have built-in several layers of efficacy to be an excellent gut microbiome health enhancer using microbiome science and formulation technology</p><p>Biom Probiotics&reg; is Non-GMO, Gluten-free, Dairy-free, Soy-free, No Artificial dyes or preservatives, Vegetarian, Made-in-USA</p>"
+        }
+      ]
+    },
+    {
+      "type": "wb_icon_bullets",
+      "name": "Icon bullets",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Biom Probiotics&reg;: R & D" },
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        {
+          "type": "richtext",
+          "id": "items",
+          "label": "List",
+          "default": "<ul><li>Biom Probiotics&reg; is the result of innovative microbiome R &amp; D developed by a team of scientists, physicians &amp; clinical practitioners</li><li>We have developed Biomsify&trade; humanized probiotic production and delivery technology along with Microbiome Diversifying Complex. Biom Probiotics&reg; is the result of 4 patent-pending technology</li></ul>"
+        },
+        {
+          "type": "select",
+          "id": "icon_position",
+          "label": "Icon position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "type": "wb_process_feature",
+      "name": "Process feature",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Biom Probiotics&reg;: Form & Delivery" },
+        { "type": "image_picker", "id": "main_image", "label": "Main image" },
+        { "type": "image_picker", "id": "step_image_1", "label": "Step image 1" },
+        { "type": "image_picker", "id": "step_image_2", "label": "Step image 2" },
+        { "type": "image_picker", "id": "step_image_3", "label": "Step image 3" },
+        { "type": "image_picker", "id": "step_image_4", "label": "Step image 4" },
+        {
+          "type": "richtext",
+          "id": "items",
+          "label": "List",
+          "default": "<ul><li>Acid-resistant enteric-coating prevents die-offs of freeze-dried probiotics in stomach acid pH and ensures bacteria's viability until they reach intestine and colon</li><li>Biom Probiotic&reg; capsules ensures the formulation are protected and delivered efficiently via microencapsulated sustained release technology</li><li>Prebiotic cellulosic capsule</li></ul>"
+        }
+      ]
+    },
+    {
+      "type": "wb_tribiom",
+      "name": "TriBiom diagram",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "statement",
+          "label": "Statement",
+          "default": "<p>Studies have shown that probiotics capsules without proper enteric coating and microencapsulation lose 60% or more viability before reaching target sites</p>"
+        },
+        { "type": "image_picker", "id": "diagram_image", "label": "Diagram image" }
+      ]
+    },
+    {
+      "type": "wb_statement",
+      "name": "Statement",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Statement text</p>"
+        }
+      ]
+    },
+    {
+      "type": "wb_recommend_section",
+      "name": "Recommend section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Who We Recommend To Take Biom Probiotics&reg;? Microbiome Vulnerable Group"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "<p>Highly Recommended For Restoring Nourishing and Diversifying Dysbiotic Microbiome in the following groups</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "list_1",
+          "label": "List 1",
+          "default": "<ul><li>People/patients taking antibiotics or antimicrobial therapy</li><li>People/patients taking opioids or other NSAIDs pain medications or opioid-addicted patients</li><li>People/patients having digestive dysfunctions (Crohn's disease, IBD, IBS, Celiac diseases)</li><li>People/patients using medical cannabis for medical or recreational use</li><li>Alzheimer's and Parkinson's patients</li><li>Autistic patients</li><li>People undergoing diet control or weight loss programs/regimes</li><li>Women with Menopause symptoms</li><li>Patients undergoing chemotherapy and other immunotherapies</li></ul>"
+        },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "richtext",
+          "id": "list_2",
+          "label": "List 2",
+          "default": "<ul><li>People who recently had diarrheal episodes due to medications, travel or food-borne infection</li><li>Patients taking Proton Pump Inhibitors (PPI)-based drugs (e.g. GORD and to prevent gastric and duodenal ulcers)</li></ul>"
+        },
+        { "type": "text", "id": "card_1_heading", "label": "Card 1 heading", "default": "Athletic and Sporty" },
+        { "type": "text", "id": "card_1_subheading", "label": "Card 1 subheading", "default": "Highly Recommended" },
+        {
+          "type": "text",
+          "id": "card_1_text",
+          "label": "Card 1 text",
+          "default": "For optimum energy metabolism and rebalancing gut microbiome"
+        },
+        { "type": "image_picker", "id": "card_1_image", "label": "Card 1 image" },
+        { "type": "text", "id": "card_2_heading", "label": "Card 2 heading", "default": "Elderly" },
+        { "type": "text", "id": "card_2_subheading", "label": "Card 2 subheading", "default": "Highly Recommended" },
+        {
+          "type": "text",
+          "id": "card_2_text",
+          "label": "Card 2 text",
+          "default": "For diversifying gut microbiome for enhanced brain functions, disease resistance, and quality of life"
+        },
+        { "type": "image_picker", "id": "card_2_image", "label": "Card 2 image" },
+        { "type": "text", "id": "card_3_heading", "label": "Card 3 heading", "default": "Normal People" },
+        { "type": "text", "id": "card_3_subheading", "label": "Card 3 subheading", "default": "Recommended" },
+        {
+          "type": "text",
+          "id": "card_3_text",
+          "label": "Card 3 text",
+          "default": "For diversifying gut microbiome for a healthy life along with longevity"
+        },
+        { "type": "image_picker", "id": "card_3_image", "label": "Card 3 image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Biom Page",
+      "blocks": [
+        { "type": "wb_hero", "settings": {} }
+      ]
+    }
+  ]
+}
+{% endschema %}

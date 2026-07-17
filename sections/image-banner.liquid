@@ -1,0 +1,166 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+{% comment %} <section class="image-banner">
+  {%- if section.settings.image != blank -%}
+    <img width="1200" height="900" class="image-banner__bg" src="{{ section.settings.image | image_url: width: 2400 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy">
+  {%- else -%}
+    <img width="600" height="450" class="image-banner__bg" src="{{ 'banner-yoga.png' | asset_url }}" alt="" loading="lazy">
+  {%- endif -%}
+
+  {%- if section.settings.show_product_card -%}
+    <div class="image-banner__card image-banner__card--product reveal">
+      {%- if section.settings.product_image != blank -%}
+        <img width="300" height="225" src="{{ section.settings.product_image | image_url: width: 300 }}" alt="" loading="lazy">
+      {%- else -%}
+        <img width="600" height="450" src="{{ 'banner-product.png' | asset_url }}" alt="" loading="lazy">
+      {%- endif -%}
+      <a class="btn" href="{{ section.settings.product_link | default: routes.all_products_collection_url }}">
+        {{ section.settings.product_button_label }}
+      </a>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_text_card -%}
+    <div class="image-banner__card image-banner__card--text reveal">
+      <div>{{ section.settings.card_text }}</div>
+      <a class="image-banner__about-btn" href="{{ section.settings.about_link | default: '#' }}">
+        {{ section.settings.about_label }}
+      </a>
+    </div>
+  {%- endif -%}
+
+  <h2 class="image-banner__title">
+    {{ section.settings.title_line_1 }}<br>
+    {{ section.settings.title_line_2 }}
+  </h2>
+</section> {% endcomment %}
+<section class="image-banner">
+  <div class="swiper image-banner-swiper">
+    <div class="swiper-wrapper">
+
+      {%- for block in section.blocks -%}
+        <div class="swiper-slide" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img width="1200" height="900" class="image-banner__bg" src="{{ block.settings.image | image_url: width: 2400 }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy">
+          {%- else -%}
+            <img width="600" height="450" class="image-banner__bg" src="{{ 'banner-yoga.png' | asset_url }}" alt="" loading="lazy">
+          {%- endif -%}
+
+          <div class="image-banner__slide-content">
+            {%- if block.settings.show_product_card -%}
+              <div class="image-banner__card image-banner__card--product image-banner__desktop-card reveal">
+                {%- if block.settings.product_image != blank -%}
+                  <img width="300" height="225" src="{{ block.settings.product_image | image_url: width: 300 }}" alt="" loading="lazy">
+                {%- else -%}
+                  <img width="600" height="450" src="{{ 'banner-product.png' | asset_url }}" alt="" loading="lazy">
+                {%- endif -%}
+                <a class="btn" href="{{ block.settings.product_link | default: routes.all_products_collection_url }}">
+                  {{ block.settings.product_button_label }}
+                </a>
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.show_text_card -%}
+              <div class="image-banner__card image-banner__card--text image-banner__desktop-card reveal">
+                <div>{{ block.settings.card_text }}</div>
+                {% comment %} <a class="image-banner__about-btn" href="{{ block.settings.about_link | default: '#' }}">
+                  {{ block.settings.about_label }}
+                </a> {% endcomment %}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.show_product_card or block.settings.show_text_card -%}
+              <div class="image-banner__mobile-stack reveal">
+                <div class="image-banner__mobile-card">
+                  {%- if block.settings.show_product_card -%}
+                    <div class="image-banner__mobile-product">
+                      {%- if block.settings.product_image != blank -%}
+                        <img width="300" height="225" src="{{ block.settings.product_image | image_url: width: 300 }}" alt="" loading="lazy">
+                      {%- else -%}
+                        <img width="600" height="450" src="{{ 'banner-product.png' | asset_url }}" alt="" loading="lazy">
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.show_text_card -%}
+                    <div class="image-banner__mobile-text">{{ block.settings.card_text }}</div>
+                  {%- endif -%}
+
+                {%- if block.settings.show_product_card and block.settings.product_button_label != blank -%}
+                  <a class="btn image-banner__mobile-btn" href="{{ block.settings.product_link | default: routes.all_products_collection_url }}">
+                    {{ block.settings.product_button_label }}
+                  </a>
+                {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="swiper-pagination image-banner-pagination"></div>
+  </div>
+
+  <h2 class="image-banner__title">
+    {{ section.settings.title_line_1 }}<br>
+    {{ section.settings.title_line_2 }}
+  </h2>
+</section>
+
+{% comment %} {% schema %}
+{
+  "name": "Image banner",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "title_line_1", "label": "Title line 1", "default": "Support Your Body." },
+    { "type": "text", "id": "title_line_2", "label": "Title line 2", "default": "Nourish Your Microbiome." },
+    { "type": "header", "content": "Product card" },
+    { "type": "checkbox", "id": "show_product_card", "label": "Show product card", "default": true },
+    { "type": "image_picker", "id": "product_image", "label": "Product image" },
+    { "type": "text", "id": "product_button_label", "label": "Button label", "default": "Shop Lean Biom" },
+    { "type": "url", "id": "product_link", "label": "Button link" },
+    { "type": "header", "content": "Text card" },
+    { "type": "checkbox", "id": "show_text_card", "label": "Show text card", "default": true },
+    {
+      "type": "richtext",
+      "id": "card_text",
+      "label": "Text",
+      "default": "<p>LeanBiom's proprietary formula is the first to combine nine clinically studied 'lean bacteria' strains with Diversify® a soluble + insoluble lean fiber enhanced with patented LiveBiom Patented technology for improved absorption.</p><p>This powerful ingredient blend works to rebalance the bacterial composition in your gut microbiome, addressing the newly uncovered root cause of belly fat and unexplained weight gain.</p>"
+    },
+    { "type": "text", "id": "about_label", "label": "Button label", "default": "About LeanBiom" },
+    { "type": "url", "id": "about_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Image banner" }]
+}
+{% endschema %} {% endcomment %}
+
+{% schema %}
+{
+  "name": "Image banner",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title_line_1", "label": "Title line 1", "default": "Support Your Body." },
+    { "type": "text", "id": "title_line_2", "label": "Title line 2", "default": "Nourish Your Microbiome." },
+  ],
+  "blocks": [
+  {
+    "type": "slide",
+    "name": "Slide",
+    "settings": [
+      { "type": "image_picker", "id": "image", "label": "Background image" },
+      { "type": "checkbox", "id": "show_product_card", "label": "Show product card", "default": true },
+      { "type": "image_picker", "id": "product_image", "label": "Product image" },
+      { "type": "url", "id": "product_link", "label": "Product link" },
+      { "type": "text", "id": "product_button_label", "label": "Button label", "default": "Shop Now" },
+      { "type": "checkbox", "id": "show_text_card", "label": "Show text card", "default": true },
+      { "type": "richtext", "id": "card_text", "label": "Description text" },
+      { "type": "url", "id": "about_link", "label": "About link" },
+      { "type": "text", "id": "about_label", "label": "About button label", "default": "About Us" }
+    ]
+  }
+],
+  "presets": [{ "name": "Image banner" }]
+}
+{% endschema %}

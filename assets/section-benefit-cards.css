@@ -1,0 +1,105 @@
+/* Benefit cards band — Figma 3613:3664 heading + 3613:3667…3685 cards (olive band) */
+
+.benefit-cards {
+  background: #445438 !important;
+  position: relative;
+  padding: 90px 0;
+  overflow: hidden;
+}
+
+.benefit-cards__intro {
+  max-width: 1200px;
+  margin:0 auto clamp(1rem, 2.2vw, 2rem);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.benefit-cards__heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: #F9FFE3;
+  margin:0;
+}
+
+.benefit-cards__text {
+  font-family: var(--font-grift);
+  font-size: clamp(1rem, 0.94vw, 1.125rem); 
+  color: var(--color-white);
+  line-height: 1.35;
+   margin:0;
+}
+
+.benefit-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 1.77vw, 2.125rem);
+  position: relative;
+  z-index: 1;
+}
+
+.benefit-card {
+  position: relative;
+  min-height: 250px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  transition: background-color var(--duration-default),
+    border-color var(--duration-default),
+    transform var(--duration-default) var(--ease-spring),
+    box-shadow var(--duration-default) var(--ease-spring);
+}
+
+.benefit-card:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.18);
+}
+
+.benefit-card__title {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 1.46vw, 1.75rem);
+  color: #F9FFE3;
+  margin-bottom: 1.875rem;
+  margin-top:0;
+}
+
+.benefit-card__text {
+  font-size: clamp(1rem, 0.94vw, 1.125rem);
+  color: var(--color-white);
+  line-height: 1.5;
+}
+
+.benefit-card .btn {
+  align-self: flex-start;
+}
+
+@media screen and (max-width: 1279px) {
+  .benefit-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 649px) {
+  .benefit-cards__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit-card {
+    min-height: 0;
+  }
+
+  .benefit-card__title {
+    margin-bottom: 0.75rem;
+  }
+}

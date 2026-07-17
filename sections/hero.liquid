@@ -1,0 +1,231 @@
+{{ 'section-hero.css' | asset_url | stylesheet_tag }}
+
+<section class="hero">
+  <div class="hero__left">
+    {%- if section.settings.left_background_video != blank -%}
+      <video class="hero__left-bg" autoplay muted loop playsinline>
+        {%- for source in section.settings.left_background_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    {%- elsif section.settings.left_background != blank -%}
+      <img class="hero__left-bg" src="{{ section.settings.left_background | image_url: width: 1920 }}" alt="" width="960" height="810" loading="eager">
+    {%- endif -%}
+    <h1 class="hero__heading reveal">{{ section.settings.heading }}</h1>
+    <p class="hero__text reveal">{{ section.settings.text }}</p>
+
+    {%- if section.settings.show_video_card -%}
+      <div class="hero__video-card reveal" data-hero-video-card>
+        <span class="hero__video-thumb">
+          {%- if section.settings.video_thumb != blank -%}
+            <img src="{{ section.settings.video_thumb | image_url: width: 160 }}" alt="" width="80" height="80" loading="eager">
+          {%- else -%}
+            <img src="{{ 'hero-video-thumb-body.png' | asset_url }}" alt="" width="80" height="80" loading="eager">
+          {%- endif -%}
+          <span class="hero__video-thumb-overlay" aria-hidden="true"></span>
+          <button
+            type="button"
+            class="hero__video-play"
+            data-hero-video-play
+            aria-label="{{ section.settings.video_title | default: 'Play video' | escape }}"
+          >
+            {{ 'icon-discover.svg' | inline_asset_content }}
+          </button>
+        </span>
+        <span class="hero__video-copy">
+          <span class="hero__video-title">{{ section.settings.video_title }}</span>
+          <span class="hero__video-sub">{{ section.settings.video_text }}</span>
+        </span>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="hero__right noise">
+    <div class="hero__corner-arcs" aria-hidden="true">
+      {{ 'hero-corner-arcs.svg' | inline_asset_content }}
+    </div>
+    {%- if section.settings.panel_image != blank -%}
+      <img width="1200" height="900"
+        class="hero__model"
+        src="{{ section.settings.panel_image | image_url: width: 1410 }}"
+        alt="{{ section.settings.panel_image.alt | escape }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- else -%}
+      <img width="600" height="450" class="hero__model" src="{{ 'hero-model.png' | asset_url }}" alt="" loading="eager" fetchpriority="high">
+    {%- endif -%}
+
+    <div class="hero__panel-content">
+      <p class="hero__product-title">{{ section.settings.panel_title }}</p>
+
+      <div>
+        <div class="hero__benefits">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'benefit' -%}
+              <div class="hero__benefit" {{ block.shopify_attributes }}>
+                <span class="hero__benefit-icon">
+                  {%- if block.settings.icon != blank -%}
+                    <img src="{{ block.settings.icon | image_url: width: 72 }}" alt="" width="36" height="36" loading="lazy">
+                  {%- elsif block.settings.icon_asset != blank -%}
+                    <img src="{{ block.settings.icon_asset | asset_url }}" alt="" width="36" height="36" loading="lazy">
+                  {%- endif -%}
+                </span>
+                <span class="hero__benefit-text">{{ block.settings.text }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <a class="btn" href="{{ section.settings.panel_button_link | default: routes.all_products_collection_url }}">
+        {{ section.settings.panel_button_label }}
+      </a>
+    </div>
+  </div>
+</section>
+{%- liquid
+        assign popup_embed_url = blank
+        assign external_url = section.settings.video_external_url
+
+        if section.settings.video_link == blank and external_url != blank
+          if external_url contains 'youtu.be/'
+            assign youtube_id = external_url | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first
+            assign popup_embed_url = 'https://www.youtube.com/embed/' | append: youtube_id | append: '?autoplay=1&rel=0'
+          elsif external_url contains 'watch?v='
+            assign youtube_id = external_url | split: 'watch?v=' | last | split: '&' | first
+            assign popup_embed_url = 'https://www.youtube.com/embed/' | append: youtube_id | append: '?autoplay=1&rel=0'
+          elsif external_url contains 'vimeo.com/'
+            assign vimeo_id = external_url | split: 'vimeo.com/' | last | split: '?' | first | split: '/' | last
+            assign popup_embed_url = 'https://player.vimeo.com/video/' | append: vimeo_id | append: '?autoplay=1'
+          endif
+        endif
+      -%}
+
+      <div
+        class="hero__video-modal"
+        id="modal"
+        data-hero-video-modal
+        role="dialog"
+        aria-modal="true"
+        aria-hidden="true"
+        aria-label="{{ section.settings.video_title | default: 'Video player' | escape }}"
+      >
+        <div class="hero__video-modal-backdrop" data-hero-video-backdrop></div>
+        <div class="hero__video-modal-content">
+          <button
+            type="button"
+            class="hero__video-modal-close"
+            data-hero-video-close
+            aria-label="Close video"
+          >
+            &times;
+          </button>
+          <div class="hero__video-modal-player" data-hero-video-player>
+            {%- if section.settings.video_link != blank -%}
+              {{
+                section.settings.video_link
+                | video_tag:
+                  controls: true,
+                  autoplay: false,
+                  loop: false,
+                  muted: false,
+                  class: 'hero__video-modal-video'
+              }}
+            {%- elsif popup_embed_url != blank -%}
+              <iframe
+                class="hero__video-modal-iframe"
+                src="{{ popup_embed_url }}"
+                title="{{ section.settings.video_title | default: 'Video player' | escape }}"
+                allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                allowfullscreen
+              ></iframe>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The First Microbiome System Designed for Gut & Metabolic Health"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Biom offers a complete microbial ecosystem with beneficial microbes and nutrients to support digestion and microbiome balance."
+    },
+    {
+      "type": "image_picker",
+      "id": "left_background",
+      "label": "Left background illustration"
+    },
+    {
+      "type": "video",
+      "id": "left_background_video",
+      "label": "Upload video"
+    },
+    { 
+      "type": "header", 
+      "content": "Video card"
+    },
+    { 
+      "type": "checkbox", 
+      "id": "show_video_card", 
+      "label": "Show video card", 
+      "default": true 
+    },
+    { "type": "text", "id": "video_title", "label": "Title", "default": "Discover Biom" },
+    {
+      "type": "text",
+      "id": "video_text",
+      "label": "Text",
+      "default": "Balance isn't something you add. It's something your ecosystem creates."
+    },
+    { "type": "image_picker", "id": "video_thumb", "label": "Thumbnail" },
+    { "type": "video", "id": "video_link", "label": "Popup video (upload)" },
+    {
+      "type": "url",
+      "id": "video_external_url",
+      "label": "Popup video URL (YouTube or Vimeo)",
+      "info": "Optional. Used when no uploaded video is set."
+    },
+    { "type": "header", "content": "Product panel" },
+    { "type": "text", "id": "panel_title", "label": "Product name", "default": "LeanBiom" },
+    { "type": "image_picker", "id": "background_panel_image", "label": "Background Image" },
+    { "type": "image_picker", "id": "panel_image", "label": "Image" },
+    { "type": "text", "id": "panel_button_label", "label": "Button label", "default": "Shop LeanBiom" },
+    { "type": "url", "id": "panel_button_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        
+        { "type": "text", "id": "text", "label": "Text", "default": "Supports Lean Muscle Preservation" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        { "type": "benefit", "settings": { "text": "Supports Lean Muscle Preservation" } },
+        { "type": "benefit", "settings": { "text": "Eases GLP-1 Gut Side Effects"} },
+        { "type": "benefit", "settings": { "text": "Promotes Long-Term Weight Management" } },
+        { "type": "benefit", "settings": { "text": "Enhances GLP-1 Efficacy" } },
+        { "type": "benefit", "settings": { "text": "Improves Gut Tolerance & Comfort" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

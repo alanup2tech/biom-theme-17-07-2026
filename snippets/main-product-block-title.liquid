@@ -1,0 +1,10 @@
+{%- liquid
+  assign title_text = product.title
+  if block.settings.custom_title != blank
+    assign title_text = block.settings.custom_title
+  endif
+-%}
+
+<h1 class="product-info__title" {{ block.shopify_attributes }}>
+  {{ title_text | escape }}
+</h1>

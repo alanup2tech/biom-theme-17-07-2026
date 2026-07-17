@@ -1,0 +1,127 @@
+{% doc %}
+  Renders a responsive header row with three columns (left, center, right).
+  Organizes header elements based on their configured position.
+
+  @param {string} order - Comma-separated list of item names defining the order of elements
+  @param {object} settings - Section settings object containing position settings for each item
+  @param {string} [first] - Optional captured HTML for the first item (typically drawer menu)
+  @param {string} [logo] - Captured HTML for the logo element
+  @param {string} [menu] - Captured HTML for the menu navigation
+  @param {string} [actions] - Captured HTML for header actions (cart, account buttons, etc.)
+  @param {string} [localization] - Captured HTML for language/country selector
+  @param {string} [search] - Captured HTML for search input
+   @param {object} [section] - Header section object (for products dropdown menu)
+  @param {string} [drawer_search] - Captured HTML for drawer-based search
+{% enddoc %}
+
+{%- liquid
+  assign order = order | split: ','
+  assign left = ''
+  assign center = ''
+  assign right = ''
+
+  if first != blank
+    assign left = 'first '
+  endif
+
+  for item in order
+    assign column_key = item | append: '_position'
+    assign item_column = settings[column_key] | default: 'left'
+
+    case item
+      when 'actions'
+        assign item_column = 'right'
+    endcase
+
+    case item_column
+      when 'left'
+        assign left = left | append: item | append: ' '
+      when 'center'
+        assign center = center | append: item | append: ' '
+      else
+        assign right = right | append: item | append: ' '
+    endcase
+  endfor
+
+  assign columns = 'left,center,right' | split: ','
+-%}
+
+{%- for column in columns -%}
+  {%- capture items_for_column -%}
+    {% case column %}
+      {% when 'left' %}
+        {{ left }}
+      {% when 'center' %}
+        {{ center }}
+      {% else %}
+        {{ right }}
+    {% endcase %}
+  {%- endcapture -%}
+
+  {%- assign items_array = items_for_column | strip | split: ' ' | compact -%}
+
+  {%- if items_array.size > 0 -%}
+    <div
+      class="header__column header__column--{{ column }}"
+      data-testid="header-{{ column }}"
+    >
+      <div class="header-actions-list">
+        {% for key in items_array %}
+          {% unless key == blank %}
+            {% case key %}
+              {% when 'first' %}
+                {{ first }}
+              {% when 'logo' %}
+                {{ logo }}
+              {% when 'menu' %}
+                {{ menu }}
+              {% when 'localization' %}
+                {{ localization }}
+              {% when 'search' %}
+                {{ search }}
+              {% when 'drawer_search' %}
+                {{ drawer_search }}
+              {% when 'actions' %}
+                {{ actions }}
+            {% endcase %}
+          {% endunless %}
+        {% endfor %}
+      </div>
+      <div class="right-menu">
+        {%- if column == 'right' -%}
+        {%- comment -%} OUR PRODUCTS dropdown {%- endcomment -%}
+          <nav class="header__nav-dropdown">
+            <div class="header__dropdown-wrapper">
+              <button class="header__dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+                OUR PRODUCTS
+                <svg class="header__dropdown-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+               <ul class="header__dropdown-menu" role="list">
+                {%- assign products_menu = linklists['our-products'] -%}
+                {%- if section.settings.products_menu != blank -%}
+                  {%- assign products_menu = section.settings.products_menu -%}
+                {%- endif -%}
+                {%- for link in products_menu.links -%}
+                  <li class="header__dropdown-item">
+                    <a href="{{ link.url }}" class="header__dropdown-link">
+                      {{ link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+
+            {%- comment -%} WHOLESALE link {%- endcomment -%}
+            <a href="/pages/wholesale" class="header__nav-link header__nav-link--wholesale">
+              WHOLESALE
+            </a>
+          </nav>
+        {%- endif -%}
+      </div>
+      
+       
+    </div>
+  {%- endif -%}
+{%- endfor -%} 

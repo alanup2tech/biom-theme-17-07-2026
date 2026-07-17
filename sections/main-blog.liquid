@@ -1,0 +1,393 @@
+{% paginate blog.articles by section.settings.posts_per_page %}
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div
+    class="
+      section
+      color-{{ section.settings.color_scheme }}
+      blog-posts
+      spacing-style
+      size-style
+    "
+    data-testid="blog-posts"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    {% content_for 'blocks' %}
+
+    <div
+      ref="grid"
+      class="blog-posts-container"
+    >
+      {% liquid
+        assign items_on_page = blog.articles.size
+      %}
+      {% for article in blog.articles %}
+        {% liquid
+          # Defaults for compact layout
+          assign col_span = 2
+          assign scale = 0.6
+          assign is_horizontal = false
+
+          case items_on_page
+            when 1
+              # Single post: full width hero
+              assign col_span = 6
+              assign scale = 1
+              assign is_horizontal = true
+            when 2
+              # Two posts: both standard side by side
+              assign col_span = 3
+              assign scale = 0.8
+            when 3
+              # Three posts: hero + 2 standard
+              if forloop.index == 1
+                assign col_span = 6
+                assign scale = 1
+                assign is_horizontal = true
+              else
+                assign col_span = 3
+                assign scale = 0.8
+              endif
+            when 4
+              # Four posts: all standard in 2x2 grid
+              assign col_span = 3
+              assign scale = 0.8
+            when 5
+              # Five posts: hero + 4 standard
+              if forloop.index == 1
+                assign col_span = 6
+                assign scale = 1
+                assign is_horizontal = true
+              else
+                assign col_span = 3
+                assign scale = 0.8
+              endif
+            else
+              # 6+ posts: hero, 2 standard, rest compact
+              if forloop.index == 1
+                assign col_span = 6
+                assign scale = 1
+                assign is_horizontal = true
+              elsif forloop.index <= 3
+                assign col_span = 3
+                assign scale = 0.8
+              else
+                assign col_span = 2
+                assign scale = 0.6
+              endif
+          endcase
+        %}
+        {% style %}
+          [data-blog-index="{{ section.id }}-{{ paginate.current_page }}-{{ forloop.index }}"] {
+            --col-span: {{ col_span }};
+            --blog-post-card-scale: {{ scale }};
+          }
+
+          @media screen and (max-width: 749px) {
+            [data-blog-index="{{ section.id }}-{{ paginate.current_page }}-{{ forloop.index }}"] {
+              --col-span: 6;
+              --blog-post-card-scale: 0.5;
+            }
+          }
+        {% endstyle %}
+        <div
+          class="blog-post-item{% if is_horizontal %} blog-post-item--horizontal{% endif %}"
+          data-testid="blog-post-item"
+          data-blog-index="{{ section.id }}-{{ paginate.current_page }}-{{ forloop.index }}"
+        >
+          {% content_for 'block', id: 'static-blog-post-card', type: '_blog-post-card', article: article %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if paginate.pages > 1 %}
+      <nav class="blog-pagination" aria-label="Blog pagination">
+        <ul class="blog-pagination__list list-unstyled" role="list">
+          <li class="blog-pagination__item">
+            {% if paginate.previous %}
+              <a class="blog-pagination__link blog-pagination__link--nav" href="{{ paginate.previous.url }}" aria-label="Go to previous page">
+                <span class="blog-pagination__icon" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+                    <path d="M9.75 3.25 5 8l4.75 4.75" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                  </svg>
+                </span>
+                <span class="visually-hidden">Previous page</span>
+              </a>
+            {% else %}
+              <span class="blog-pagination__link blog-pagination__link--nav blog-pagination__link--disabled" aria-disabled="true">
+                <span class="blog-pagination__icon" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+                    <path d="M9.75 3.25 5 8l4.75 4.75" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                  </svg>
+                </span>
+                <span class="visually-hidden">Previous page unavailable</span>
+              </span>
+            {% endif %}
+          </li>
+
+          {% for part in paginate.parts %}
+            <li class="blog-pagination__item">
+              {% if part.is_link %}
+                <a class="blog-pagination__link" href="{{ part.url }}" aria-label="Go to page {{ part.title }}">{{ part.title }}</a>
+              {% elsif part.title == paginate.current_page %}
+                <span class="blog-pagination__link blog-pagination__link--current" aria-current="page">{{ part.title }}</span>
+              {% else %}
+                <span class="blog-pagination__ellipsis" aria-hidden="true">{{ part.title }}</span>
+              {% endif %}
+            </li>
+          {% endfor %}
+
+          <li class="blog-pagination__item">
+            {% if paginate.next %}
+              <a class="blog-pagination__link blog-pagination__link--nav" href="{{ paginate.next.url }}" aria-label="Go to next page">
+                <span class="blog-pagination__icon" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+                    <path d="M6.25 3.25 11 8l-4.75 4.75" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                  </svg>
+                </span>
+                <span class="visually-hidden">Next page</span>
+              </a>
+            {% else %}
+              <span class="blog-pagination__link blog-pagination__link--nav blog-pagination__link--disabled" aria-disabled="true">
+                <span class="blog-pagination__icon" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+                    <path d="M6.25 3.25 11 8l-4.75 4.75" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                  </svg>
+                </span>
+                <span class="visually-hidden">Next page unavailable</span>
+              </span>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+{% endpaginate %}
+
+{% stylesheet %}
+  /**
+   * Blog posts page layout
+   */
+  .blog-posts {
+    --page-content-width: var(--narrow-page-width);
+    --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
+    --columns-gap: 36px;
+    --rows-gap: 36px;
+  }
+
+  .blog-posts-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    width: 100%;
+    column-gap: var(--columns-gap);
+    row-gap: var(--rows-gap);
+  }
+
+  /**
+   * Blog post item grid positioning and scaling.
+   * Layout is calculated in Liquid based on total article count.
+   * Mobile overrides are applied per-item in inline styles for proper specificity.
+   */
+  .blog-post-item {
+    grid-column: span var(--col-span);
+  }
+
+  /**
+   * When there's no image, the blog post item has a border.
+   */
+  .blog-post-item {
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    padding: 0 1rem 1rem;
+  }
+
+  .blog-post-item:has(.blog-post-card__image-container) {
+    border: none;
+    padding: 0;
+  }
+
+  .blog-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .blog-pagination__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .blog-pagination__item {
+    display: flex;
+  }
+
+  .blog-pagination__link,
+  .blog-pagination__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    min-height: 3rem;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.14);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform var(--duration-short) ease, box-shadow var(--duration-short) ease, background-color var(--duration-short) ease, border-color var(--duration-short) ease, color var(--duration-short) ease;
+  }
+
+  .blog-pagination__link:hover {
+    transform: translateY(-1px);
+    border-color: rgb(var(--color-foreground-rgb) / 0.24);
+    box-shadow: 0 10px 24px rgb(var(--color-foreground-rgb) / 0.08);
+    color: var(--color-foreground-heading);
+  }
+
+  .blog-pagination__link--current {
+    background: var(--color-primary-button-background);
+    border-color: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    box-shadow: 0 12px 28px rgb(var(--color-foreground-rgb) / 0.12);
+  }
+
+  .blog-pagination__link--disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .blog-pagination__link--disabled:hover {
+    transform: none;
+    border-color: rgb(var(--color-foreground-rgb) / 0.14);
+    box-shadow: none;
+    color: var(--color-foreground);
+  }
+
+  .blog-pagination__icon {
+    width: 1rem;
+    height: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .blog-pagination__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .blog-pagination__ellipsis {
+    border-style: dashed;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  .blog-pagination__link:focus-visible {
+    outline-offset: 4px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-pagination__list {
+      gap: 0.5rem;
+    }
+
+    .blog-pagination__link,
+    .blog-pagination__ellipsis {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+      padding: 0.625rem;
+      font-size: 0.9375rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.blog_posts",
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "_divider"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Posts per page",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

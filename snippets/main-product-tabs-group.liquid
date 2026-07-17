@@ -1,0 +1,78 @@
+{%- liquid
+  assign tab_count = 0
+  for tab_block in section.blocks
+    if tab_block.type == 'tab'
+      capture tab_content_output
+        render 'main-product-tab-content', block: tab_block, product: product
+      endcapture
+      assign tab_content_output = tab_content_output | strip
+      if tab_content_output != blank
+        assign tab_count = tab_count | plus: 1
+      endif
+    endif
+  endfor
+-%}
+
+{%- if tab_count > 0 -%}
+  <div class="product-tabs-wrap" {{ shopify_attributes }}>
+    <div class="product-tabs" role="tablist">
+      {%- assign first_product_tab = true -%}
+      {%- for tab_block in section.blocks -%}
+        {%- if tab_block.type == 'tab' -%}
+          {%- capture tab_content_output -%}
+            {%- render 'main-product-tab-content', block: tab_block, product: product -%}
+          {%- endcapture -%}
+          {%- assign tab_content_output = tab_content_output | strip -%}
+          {%- if tab_content_output != blank -%}
+            {%- liquid
+              assign tab_title = tab_block.settings.title
+              assign metafield_namespace = tab_block.settings.metafield_namespace | default: 'custom'
+              assign metafield_key = tab_block.settings.metafield_key | strip
+
+              if tab_title == blank and metafield_key != blank
+                assign tab_metafield = product.metafields[metafield_namespace][metafield_key]
+                if tab_metafield != blank and tab_metafield.definition.name != blank
+                  assign tab_title = tab_metafield.definition.name
+                endif
+              endif
+
+              if tab_title == blank and tab_block.settings.use_product_description
+                assign tab_title = 'Description'
+              endif
+            -%}
+            <button
+              type="button"
+              role="tab"
+              class="{% if first_product_tab %}is-active{% endif %}"
+              data-product-tab="tab-{{ tab_block.id }}"
+              aria-selected="{% if first_product_tab %}true{% else %}false{% endif %}"
+            >
+              {{ tab_title }}
+            </button>
+            {%- assign first_product_tab = false -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- assign first_product_tab = true -%}
+    {%- for tab_block in section.blocks -%}
+      {%- if tab_block.type == 'tab' -%}
+        {%- capture tab_content_output -%}
+          {%- render 'main-product-tab-content', block: tab_block, product: product -%}
+        {%- endcapture -%}
+        {%- assign tab_content_output = tab_content_output | strip -%}
+        {%- if tab_content_output != blank -%}
+          <div
+            class="product-tab-panel rte{% if first_product_tab %} is-active{% endif %}"
+            id="tab-{{ tab_block.id }}"
+            role="tabpanel"
+          >
+            {{ tab_content_output }}
+          </div>
+          {%- assign first_product_tab = false -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

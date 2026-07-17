@@ -1,0 +1,200 @@
+/* Team members grid — Figma node 363:370 "MANAGEMENT TEAM" (two-up card rows, alternating color scheme) */
+
+body.template-page-team {
+  background-color: #f9ffe3;
+}
+
+.team-grid {
+  position: relative;
+}
+
+.team-grid__row {
+  padding: clamp(2.5rem, 6.25vw, 7.5rem) 0;
+}
+
+.team-grid__inner {
+  max-width: 1720px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  gap: clamp(2.5rem, 4.5vw, 5.625rem) clamp(1.5rem, 3vw, 3rem);
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.team-card__image {
+  width: 100%;
+  max-width: 470px;
+  aspect-ratio: 470 / 380;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: clamp(1.5rem, 2.6vw, 3.125rem);
+}
+
+.team-card__image--placeholder {
+  background: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+}
+
+.team-card__name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 48px;
+  color: #415135;
+  margin: 0 0 0.75rem;
+}
+
+.team-card__role {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #415135;
+  opacity: 0.85;
+  margin: 0 0 1.25rem;
+}
+
+.team-card__bio {
+  font-size: #333333;
+  line-height: 1.5;
+  color: var(--color-foreground);
+  opacity: 0.9;
+  max-width: 34rem;
+  margin: 0 0 1.875rem;
+}
+
+.team-card__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 165px;
+  padding: 0.9375rem 1.875rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--color-primary-button-background);
+  color: var(--color-primary-button-text);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color var(--duration-default),
+    color var(--duration-default),
+    transform var(--duration-default) var(--ease-spring);
+}
+
+.team-card__button:hover {
+  background: var(--color-primary-button-hover-background);
+  color: var(--color-primary-button-hover-text);
+  transform: translateY(-2px);
+}
+
+/* Team member popup (bio modal) — sizing only. Centering is left to the
+   browser's native dialog:modal default (position: fixed; inset: 0; margin: auto),
+   since manually forcing position/transform here fights that default inside
+   some preview contexts (e.g. the theme editor's iframe) and can knock the
+   dialog off-center or full-bleed instead of a compact centered card. */
+.team-card__modal {
+  width: auto;
+  height: auto;
+  max-height: 75vh;
+  padding: clamp(1.75rem, 3.5vw, 3.75rem);
+  text-align: center;
+  overflow-y: auto;
+  background-color: #445438;
+  color: #F9FFE3;
+}
+
+/* The shared .dialog-modal[open]/.dialog-closing animations move via
+   margin-top / transform, which can undo the native "margin: auto" centering
+   once the animation settles. Override with an opacity+transform animation
+   that never touches margin, so centering holds throughout open and close. */
+.team-card__modal[open] {
+  animation: teamModalIn var(--animation-speed) var(--animation-easing) forwards;
+}
+
+.team-card__modal.dialog-closing {
+  animation: teamModalOut var(--animation-speed) var(--animation-easing) forwards;
+}
+
+@keyframes teamModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes teamModalOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.team-card__modal-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 48px;
+  color: #F9FFE3;
+  margin: 0 0 0.5rem;
+}
+
+.team-card__modal-body {
+  max-width: 52rem;
+  margin: 0 auto;
+  /* color: var(--color-foreground); */
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.team-card__modal-body p + p {
+  margin-top: 1.25rem;
+}
+
+.team-card__modal-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #F9FFE3;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.team-card__modal-close svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media screen and (max-width: 749px) {
+  .team-grid__inner {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 8vw, 3rem);
+  }
+
+  .team-card__bio {
+    max-width: none;
+  }
+}

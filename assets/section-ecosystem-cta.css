@@ -1,0 +1,77 @@
+/* Ecosystem CTA — Figma 3613:3398 "Your Microbiome Is an Ecosystem." */
+
+.ecosystem-cta {
+  position: relative;
+  background: #F7F2EB;
+  min-height: clamp(26rem, 46.875vw, 56.25rem); /* 900px */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ecosystem-cta__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+  max-width: calc(802px + 2 * var(--page-gutter));
+  padding: clamp(3rem, 5vw, 6rem) var(--page-gutter);
+}
+
+.ecosystem-cta__heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 1;
+  color: #2C3A22;
+  margin:0;
+}
+
+.ecosystem-cta__text {
+  font-family: var(--font-grift);
+  font-size: clamp(1rem, 0.94vw, 1.125rem);
+  color: #757575;
+  max-width: 707px;
+  line-height: 1.35;
+  margin:0;
+}
+
+.ecosystem-cta__btn {
+  align-self: auto;
+   width: 340px;
+}
+
+.ecosystem-cta__media {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: clamp(18rem, 40.6vw, 48.75rem); /* 780px */
+  pointer-events: none;
+}
+
+.ecosystem-cta__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+@media screen and (max-width: 989px) {
+  .ecosystem-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ecosystem-cta__media {
+    position: relative;
+    width: 100%;
+    height: 22rem;
+    order: -1;
+  }
+
+  .ecosystem-cta__media img {
+    object-position: center;
+  }
+}

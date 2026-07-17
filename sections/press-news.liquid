@@ -1,0 +1,470 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="press-news color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.hero_image != blank or section.settings.hero_image_url != blank -%}
+    <div class="press-news__hero">
+      {%- if section.settings.hero_image != blank -%}
+        <img
+          class="press-news__hero-image"
+          src="{{ section.settings.hero_image | image_url: width: 2000 }}"
+          alt="{{ section.settings.hero_image.alt | default: section.settings.hero_title | escape }}"
+          width="{{ section.settings.hero_image.width }}"
+          height="{{ section.settings.hero_image.height }}"
+          loading="eager"
+        >
+      {%- else -%}
+        <img
+          class="press-news__hero-image"
+          src="{{ section.settings.hero_image_url }}"
+          alt="{{ section.settings.hero_title | escape }}"
+          width="1600"
+          height="480"
+          loading="eager"
+        >
+      {%- endif -%}
+      {%- if section.settings.hero_title != blank -%}
+        <h1 class="press-news__hero-title">{{ section.settings.hero_title | newline_to_br }}</h1>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="press-news__content page-width-content">
+    {%- assign featured_after = section.settings.featured_after_article_count | default: 13 -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'article' -%}
+          <article class="press-news__item" {{ block.shopify_attributes }}>
+            <div class="press-news__item-media">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 800 }}"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                  width="600"
+                  height="355"
+                  loading="lazy"
+                >
+              {%- elsif block.settings.image_url != blank -%}
+                <img
+                  src="{{ block.settings.image_url }}"
+                  alt="{{ block.settings.title | escape }}"
+                  width="600"
+                  height="355"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+            <div class="press-news__item-body">
+              {%- if block.settings.style != 'quote_only' and block.settings.title != blank -%}
+                <h3 class="press-news__item-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.meta_line != blank -%}
+                <p class="press-news__item-meta">{{ block.settings.meta_line }}</p>
+              {%- endif -%}
+              {%- if block.settings.excerpt != blank -%}
+                <div class="press-news__item-excerpt rte">
+                  {{ block.settings.excerpt }}
+                </div>
+              {%- endif -%}
+            </div>
+          </article>
+      {%- endcase -%}
+
+      {%- if forloop.index == featured_after and section.settings.show_featured_footer -%}
+        <div class="press-news__featured">
+          {%- if section.settings.featured_logo_image != blank or section.settings.featured_logo_url != blank -%}
+            <div class="press-news__featured-logo">
+              {%- if section.settings.featured_logo_image != blank -%}
+                <img
+                  src="{{ section.settings.featured_logo_image | image_url: width: 700 }}"
+                  alt=""
+                  width="349"
+                  height="139"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <img
+                  src="{{ section.settings.featured_logo_url }}"
+                  alt=""
+                  width="349"
+                  height="139"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          <div class="press-news__featured-grid">
+            {%- if section.settings.featured_highlight_text != blank -%}
+              <div class="press-news__featured-highlight">
+                {%- if section.settings.featured_highlight_link != blank -%}
+                  <a href="{{ section.settings.featured_highlight_link }}">
+                    {{ section.settings.featured_highlight_text }}
+                  </a>
+                {%- else -%}
+                  {{ section.settings.featured_highlight_text }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.featured_summary != blank -%}
+              <div class="press-news__featured-summary rte">
+                {{ section.settings.featured_summary }}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .press-news {
+    padding-bottom: 60px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .press-news__hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    height: clamp(280px, 38vw, 480px);
+    margin-bottom: 30px;
+    overflow: hidden;
+  }
+
+  .press-news__hero-image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+  }
+
+ .press-news__hero-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: #ffffff;
+
+  /* positioning */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  z-index: 2;
+
+  /* visibility fix */
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
+}
+
+  .press-news__content {
+    width: 100%;
+    max-width: 1248px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+
+  .press-news__item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(16px, 3vw, 32px);
+    align-items: center;
+    margin-top: 20px;
+    padding-bottom: 24px;
+  }
+
+  .press-news__item-media {
+    text-align: center;
+  }
+
+  .press-news__item-media img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .press-news__item-title {
+    margin: 0 0 8px;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: left;
+  }
+
+  .press-news__item-meta {
+    margin: 0 0 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    text-align: left;
+  }
+
+  .press-news__item-excerpt {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    text-align: left;
+  }
+
+  .press-news__item-excerpt p,
+  .press-news__item-excerpt a {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .press-news__item-excerpt p {
+    margin: 0;
+  }
+
+  .press-news__item-excerpt a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .press-news__featured {
+    margin-top: 20px;
+    padding-bottom: 24px;
+  }
+
+  .press-news__featured-logo {
+    margin-top: 16px;
+    margin-bottom: 30px;
+    text-align: -webkit-center;
+  }
+
+  .press-news__featured-logo img {
+    max-width: 349px;
+    width: 100%;
+    height: auto;
+  }
+
+  .press-news__featured-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(16px, 3vw, 28px);
+    align-items: stretch;
+  }
+
+  .press-news__featured-highlight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #0063a6;
+    border: 4px solid #0063a6;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .press-news__featured-highlight a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .press-news__featured-summary {
+    padding: 20px;
+    background: #f6f6f6;
+    border: 2px solid #f6f6f6;
+    border-left: 3px solid #0063a6;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .press-news__featured-summary p,
+  .press-news__featured-summary a {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .press-news__featured-summary p {
+    margin: 0 0 12px;
+  }
+
+  .press-news__featured-summary p:last-child {
+    margin-bottom: 0;
+  }
+
+  .press-news__featured-summary a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: 749px) {
+    .press-news__hero {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+
+    .press-news__hero-image {
+      position: relative;
+      height: 280px;
+    }
+
+    .press-news__hero-title {
+      grid-column: 1;
+      max-width: none;
+      padding: 20px 16px 0;
+      font-size: clamp(32px, 8vw, 48px);
+    }
+
+    .press-news__item-title {
+      font-size: 20px;
+    }
+
+    .press-news__item,
+    .press-news__featured-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .press-news__item-body {
+      margin-top: 8px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Press News",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_url",
+      "label": "Hero image URL (used if hero image is empty)",
+      "default": "https://biomprobiotics.com/wp-content/uploads/2020/06/press-biom-probiotics.jpg"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero title",
+      "default": "News and\nUpdates"
+    },
+    {
+      "type": "header",
+      "content": "Featured patents section"
+    },
+    {
+      "type": "range",
+      "id": "featured_after_article_count",
+      "label": "Show featured section after article number",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_footer",
+      "label": "Show featured patents section",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_logo_image",
+      "label": "Featured patents logo"
+    },
+    {
+      "type": "text",
+      "id": "featured_logo_url",
+      "label": "Featured patents logo URL (fallback)",
+      "default": "https://biomprobiotics.com/wp-content/uploads/2018/09/patents-for-microbiome.jpg"
+    },
+    {
+      "type": "text",
+      "id": "featured_highlight_text",
+      "label": "Featured highlight text",
+      "default": "Biom Pharmaceutical Corporation Secures Key Patents on Humanized Gut Commensal Microbiota production from USPTO for Microbiome Drug Research & Development."
+    },
+    {
+      "type": "url",
+      "id": "featured_highlight_link",
+      "label": "Featured highlight link"
+    },
+    {
+      "type": "html",
+      "id": "featured_summary",
+      "label": "Featured summary",
+      "default": "<p><strong>Sarasota, FL August 10, 2018</strong></p><p><strong>Biom Pharmaceutical Corporation today announced a key landmark in their technology platform to develop drug and consumer care products that utilize modulating human microbiome. Human gut flora and its associated gene pool –human microbiome- is a powerful new organ that modulates all aspects of human physiology, health and longevity. <a href=\"/pages/patents-press-release\">Read more</a></strong></p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Press article",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_url",
+          "label": "Image URL (fallback if image is empty)"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Layout style",
+          "options": [
+            { "value": "standard", "label": "Standard (title + excerpt)" },
+            { "value": "quote_only", "label": "Quote only (no title)" }
+          ],
+          "default": "standard"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "meta_line",
+          "label": "Meta line (optional)"
+        },
+        {
+          "type": "html",
+          "id": "excerpt",
+          "label": "Excerpt"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Press News"
+    }
+  ]
+}
+{% endschema %}

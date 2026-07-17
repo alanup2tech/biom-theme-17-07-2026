@@ -1,0 +1,44 @@
+{{ 'section-ecosystem-cta.css' | asset_url | stylesheet_tag }}
+
+<section class="ecosystem-cta">
+  <div class="ecosystem-cta__content reveal">
+    <h2 class="ecosystem-cta__heading">{{ section.settings.heading }}</h2>
+    <p class="ecosystem-cta__text">{{ section.settings.text }}</p>
+    <a class="btn ecosystem-cta__btn" href="{{ section.settings.button_link | default: '/pages/take-the-quiz' }}">
+      {{ section.settings.button_label }}
+    </a>
+  </div>
+
+  <div class="ecosystem-cta__media">
+    {%- if section.settings.image != blank -%}
+      <img width="1200" height="900" src="{{ section.settings.image | image_url: width: 1560 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy">
+    {%- else -%}
+      <img width="600" height="450" src="{{ 'ecosystem-hands.png' | asset_url }}" alt="" loading="lazy">
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ecosystem CTA",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Microbiome Is an Ecosystem. Support It Like One."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Made for every woman that's endlessly searched for answers. Developed with medical experts and validated through independent clinical studies, because it's what we deserve."
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Take the Gut Health Quiz" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "image", "label": "Image" }
+  ],
+  "presets": [{ "name": "Ecosystem CTA" }]
+}
+{% endschema %}

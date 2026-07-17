@@ -1,0 +1,185 @@
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section section--full-width color-{{ section.settings.color_scheme }} press-release-patents">
+  <article class="press-release-patents__article">
+    {%- if section.settings.hero_image != blank -%}
+      <figure class="press-release-patents__hero">
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+          alt="{{ section.settings.hero_image.alt | default: 'The U.S. Patent and Trademark Office - Patents for Microbiome Drug Research & Development' | escape }}"
+          width="{{ section.settings.hero_image.width }}"
+          height="{{ section.settings.hero_image.height }}"
+          loading="eager"
+        >
+      </figure>
+    {%- endif -%}
+
+    <h1 class="press-release-patents__title">
+      {{ section.settings.title }}
+    </h1>
+
+    <p class="press-release-patents__meta">{{ section.settings.meta_text }}</p>
+
+    <div class="press-release-patents__body">
+      {{ section.settings.body_content }}
+
+      <h2 class="press-release-patents__subtitle">{{ section.settings.subtitle }}</h2>
+
+      {{ section.settings.about_content }}
+    </div>
+  </article>
+</div>
+
+{% stylesheet %}
+  .press-release-patents {
+    padding-block: 40px 80px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .press-release-patents__article {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding-inline: 60px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .press-release-patents__article {
+      padding-inline: 20px;
+    }
+  }
+
+  .press-release-patents__hero {
+    margin: 0 0 32px;
+    text-align: center;
+  }
+
+  .press-release-patents__hero img {
+    display: inline-block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+  }
+
+  .press-release-patents__title {
+    margin: 0 0 16px;
+    font-family: var(--font-heading);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: left;
+  }
+
+  .press-release-patents__meta {
+    margin: 0 0 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  .press-release-patents__body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--color-foreground);
+  }
+
+  .press-release-patents__body p,
+  .press-release-patents__body a {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .press-release-patents__body p {
+    margin: 0 0 1.25em;
+  }
+
+  .press-release-patents__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .press-release-patents__subtitle {
+    margin: 2rem 0 1rem;
+    font-family: var(--font-heading);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  @media screen and (max-width: 749px) {
+    .press-release-patents__title,
+    .press-release-patents__subtitle {
+      font-size: clamp(32px, 8vw, 48px);
+    }
+  }
+
+  .press-release-patents__body a {
+    color: #4caf50;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .press-release-patents__body a:hover {
+    color: #388e3c;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Press Release - Patents",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Biom Pharmaceutical Corporation Secures Key Patents on Humanized Gut Commensal Microbiota production from USPTO for Microbiome Drug Research & Development."
+    },
+    {
+      "type": "text",
+      "id": "meta_text",
+      "label": "Meta text",
+      "default": "PRNewswire/Sarasota, FL, August 10, 2018"
+    },
+    {
+      "type": "richtext",
+      "id": "body_content",
+      "label": "Body content",
+      "default": "<p>Biom Pharmaceutical Corporation today announced a key landmark in their technology platform to develop drug and consumer care products that utilize modulating human microbiome. Human gut flora and its associated gene pool –human microbiome- is a powerful new organ that modulates all aspects of human physiology, health and longevity.</p><p>Biom Pharmaceutical has a broad patent portfolio on human microbiome therapeutics space and is proud to announce that USPTO allowed claims in two of their patent applications. This will allow Biom to develop novel therapeutics and protect the technology from infringement Biom Pharmaceutical has already developed and marketed consumer care products using the technology to produce “Humanized Gut Commensal Microbiota”. Biom’s designer humanized microbiota production and compositions are going to be its key technology asset for developing its drug platform. In vitro studies in cell culture models have already shown promising results using this technology. Biom is conducting key preclinical proof-of-concept experimental studies in animals. Biom Pharmaceutical expects to accelerate the drug candidates using the technology for neural indications specifically for dementia and autism disorders.“We are excited that USPTO allowed the claims and value the efforts that we bringing on emerging field of microbiome” said Dr. Bobban Subhadra; “These patents are key value proposition for us as a innovative drug company” he added.</p><p>Biom Pharmaceutical humanized commensal production platform called “Biomsify” selectively modulates and diversify gut flora composition to produce anti-inflammatory, longevity and senolytic compounds. This technology is currently used on Biom’s 2nd generation probiotic line called Biom Probiotics and Biom Turmeric Bar (<a href=\"https://biomprobiotics.com\" target=\"_blank\" rel=\"noopener\">biomprobiotics.com</a>) healthy and longevity products.</p>"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "About Biom Pharmaceutical Corporation"
+    },
+    {
+      "type": "richtext",
+      "id": "about_content",
+      "label": "About content",
+      "default": "<p>Biom Pharmaceutical is dedicated to achieving one of the most ambitious goals of 21st century medicine: increasing human longevity with high quality of life. This objective is at the heart of everything we do, from early research and development to product development. With this goal in mind we are focusing on developing true-to-label nutritional supplements to novel microbiome services to developing therapeutic modalities against Alzheimer’s like diseases. To bring about this transformation, Biom’s team are developing innovative designer drug products that harness a patient’s own microbiome to target various disease and pathological conditions. Biom Pharmaceutical is a biopharmaceutical founded by Bobban Subhadra with a focus on developing clinical-based microbiome technologies and services to address various metabolic and immune diseases. The company has developed several cutting edge technologies for healthcare market applications. Biom’s vision is to be a global leader in developing microbiome-based drug technologies for safer, healthier and longer life for all using a new generation of innovative drug products and technologies. For more information, please refer <a href=\"https://www.biompharma.com\" target=\"_blank\" rel=\"noopener\">www.biompharma.com</a> or <a href=\"https://www.biomprobiotics.com\" target=\"_blank\" rel=\"noopener\">www.biomprobiotics.com</a></p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Press Release - Patents"
+    }
+  ]
+}
+{% endschema %}

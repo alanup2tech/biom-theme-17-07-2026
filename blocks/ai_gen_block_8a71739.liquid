@@ -1,0 +1,365 @@
+{% doc %}
+  @prompt
+    need a pagination button use default colors
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-pagination-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-pagination-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text }};
+    border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_border }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .ai-pagination-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text }};
+    border-color: {{ block.settings.button_hover_border }};
+  }
+
+  .ai-pagination-button-{{ ai_gen_id }}:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .ai-pagination-button-{{ ai_gen_id }}--active {
+    background-color: {{ block.settings.active_background }};
+    color: {{ block.settings.active_text }};
+    border-color: {{ block.settings.active_border }};
+  }
+
+  .ai-pagination-button-{{ ai_gen_id }}--active:hover {
+    background-color: {{ block.settings.active_hover_background }};
+    color: {{ block.settings.active_hover_text }};
+    border-color: {{ block.settings.active_hover_border }};
+  }
+
+  .ai-pagination-ellipsis-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    color: {{ block.settings.button_text }};
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-pagination-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<pagination-buttons-{{ ai_gen_id }}
+  class="ai-pagination-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if paginate %}
+    {% if paginate.previous %}
+      <a
+        href="{{ paginate.previous.url }}"
+        class="ai-pagination-button-{{ ai_gen_id }}"
+        aria-label="Previous page"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    {% else %}
+      <button
+        class="ai-pagination-button-{{ ai_gen_id }}"
+        disabled
+        aria-label="Previous page"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 12L6 8L10 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    {% endif %}
+
+    {% for part in paginate.parts %}
+      {% if part.is_link %}
+        <a
+          href="{{ part.url }}"
+          class="ai-pagination-button-{{ ai_gen_id }}"
+          aria-label="Page {{ part.title }}"
+        >
+          {{ part.title }}
+        </a>
+      {% elsif part.title == paginate.current_page %}
+        <span
+          class="ai-pagination-button-{{ ai_gen_id }} ai-pagination-button-{{ ai_gen_id }}--active"
+          aria-current="page"
+          aria-label="Current page, page {{ part.title }}"
+        >
+          {{ part.title }}
+        </span>
+      {% else %}
+        <span class="ai-pagination-ellipsis-{{ ai_gen_id }}">{{ part.title }}</span>
+      {% endif %}
+    {% endfor %}
+
+    {% if paginate.next %}
+      <a
+        href="{{ paginate.next.url }}"
+        class="ai-pagination-button-{{ ai_gen_id }}"
+        aria-label="Next page"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6 4L10 8L6 12"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    {% else %}
+      <button
+        class="ai-pagination-button-{{ ai_gen_id }}"
+        disabled
+        aria-label="Next page"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6 4L10 8L6 12"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    {% endif %}
+  {% else %}
+    <a
+      href="#"
+      class="ai-pagination-button-{{ ai_gen_id }} ai-pagination-button-{{ ai_gen_id }}--active"
+      aria-current="page"
+    >
+      1
+    </a>
+    <a href="#" class="ai-pagination-button-{{ ai_gen_id }}">2</a>
+    <a href="#" class="ai-pagination-button-{{ ai_gen_id }}">3</a>
+    <span class="ai-pagination-ellipsis-{{ ai_gen_id }}">...</span>
+    <a href="#" class="ai-pagination-button-{{ ai_gen_id }}">10</a>
+    <a href="#" class="ai-pagination-button-{{ ai_gen_id }}">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6 4L10 8L6 12"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </a>
+  {% endif %}
+</pagination-buttons-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PaginationButtons{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.style.display = 'block';
+      }
+    }
+
+    customElements.define('pagination-buttons-{{ ai_gen_id }}', PaginationButtons{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Pagination buttons",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Border",
+      "default": "#eae8e6"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Hover text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border",
+      "label": "Hover border",
+      "default": "#eae8e6"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Active button style"
+    },
+    {
+      "type": "color",
+      "id": "active_background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "active_text",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "active_border",
+      "label": "Border",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "active_hover_background",
+      "label": "Hover background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "active_hover_text",
+      "label": "Hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "active_hover_border",
+      "label": "Hover border",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pagination buttons"
+    }
+  ]
+}
+{% endschema %}

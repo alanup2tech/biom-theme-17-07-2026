@@ -1,0 +1,492 @@
+
+
+<script
+  src="{{ 'results-list.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{% javascript %}
+  const url = new URL(window.location.href);
+  if (url.hash) {
+    document.addEventListener(
+      'DOMContentLoaded',
+      () => {
+        const card = document.getElementById(url.hash.slice(1));
+        if (card) {
+          card.scrollIntoView({ behavior: 'instant' });
+        }
+      },
+      { once: true }
+    );
+  }
+{% endjavascript %}
+
+{% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<nav class="collection-tabs" aria-label="Collections">
+  {%- if section.settings.tabs_menu != blank -%}
+    {%- for tab in section.settings.tabs_menu -%}
+      <a class="collection-tabs__tab{% if tab.handle == collection.handle %} is-active{% endif %}"
+         href="{{ tab.url }}">
+        {{ tab.title }}
+      </a>
+    {%- endfor -%}
+  {%- endif -%}
+  {% comment %} <a class="collection-tabs__tab{% if collection.handle == 'daily-gut-health' %} is-active{% endif %}"
+     href="/collections/daily-gut-health">
+    DAILY GUT HEALTH
+  </a> {% endcomment %}
+
+</nav>
+<results-list
+  class="section product-grid-container color-{{ section.settings.color_scheme }}"
+  style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
+  section-id="{{ section.id }}"
+  infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
+>
+  {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
+
+  <div
+    class="collection-wrapper grid gap-style{% if section.settings.product_grid_width == 'full-width' %} collection-wrapper--grid-full-width{% endif %}"
+  >
+    {% content_for 'block',
+      type: 'filters',
+      id: 'filters',
+      results: collection,
+      results_size: collection.products_count
+    %}
+
+    {% assign products_per_page = 24 %}
+
+    {% if section.settings.enable_infinite_scroll == false %}
+      {% assign products_per_page = section.settings.products_per_page %}
+    {% endif %}
+
+    {%- liquid
+      assign promo_mf_key = section.settings.promo_metafield_key | default: 'grid_promos'
+
+      case promo_mf_key
+        when 'grid_promo'
+          assign promo_metafield = collection.metafields.custom.grid_promo
+        when 'featured_grid_promos'
+          assign promo_metafield = collection.metafields.custom.featured_grid_promos
+        else
+          assign promo_metafield = collection.metafields.custom.grid_promos
+      endcase
+
+      if promo_metafield == blank
+        assign promo_metafield = collection.metafields.custom.grid_promos
+      endif
+      if promo_metafield == blank
+        assign promo_metafield = collection.metafields.custom.grid_promo
+      endif
+
+      assign grid_promos = blank
+
+      if promo_metafield != blank and promo_metafield.value != blank
+        assign grid_promos = promo_metafield.value
+      endif
+    -%}
+
+    {%- if request.design_mode and promo_metafield != blank -%}
+      <!-- grid promos: key={{ promo_mf_key }} type={{ promo_metafield.type }} count={{ grid_promos.count | default: grid_promos.size | default: 0 }} -->
+      {%- for promo_debug in grid_promos limit: 5 -%}
+        <!-- promo {{ forloop.index }} position={{ promo_debug.position.value | default: promo_debug.position }} heading={{ promo_debug.heading.value | default: promo_debug.heading }} -->
+      {%- endfor -%}
+    {%- endif -%}
+
+    {% paginate collection.products by products_per_page %}
+      {% capture children %}
+        {% for product in collection.products %}
+          <li
+            id="{{ section.id }}-{{ product.id }}"
+            class="product-grid__item product-grid__item--{{ forloop.index0 }}"
+            data-page="{{ paginate.current_page }}"
+            data-product-id="{{ product.id }}"
+            ref="cards[]"
+          >
+            {% # theme-check-disable %}
+            <div class="product-grid-collection">
+              <a class="product-card" href="{{ product.url }}">
+                {% if section.settings.offer_msg %}
+                  <span class="product-card__badge">{{ section.settings.offer_msg }}</span>
+                {%- else -%}
+                    <span class="product-card__badge">Subscribe & Save 10%</span>
+                {%- endif -%}
+                <h3 class="product-card__title">{{ product.title }}</h3>
+                <span class="product-card__media">
+                  {%- if product.featured_image -%}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 610 }}"
+                      srcset="{{ product.featured_image | image_url: width: 305 }} 305w, {{ product.featured_image | image_url: width: 610 }} 610w"
+                      sizes="(min-width: 750px) 305px, 70vw"
+                      alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                      loading="lazy"
+                      width="305"
+                      height="374"
+                    >
+                  {%- endif -%}
+                </span>
+                      <span class="product-card__cta{% unless product.available %} product-card__cta--sold-out{% endunless %}">
+                        {%- if product.available -%}
+                          <span class="product-card__cta-label">Shop Now</span>
+                          <span class="product-card__cta-price">{{ product.price | money }}</span>
+                        {%- else -%}
+                          <span class="product-card__cta-label">Out of Stock</span>
+                        {%- endif -%}
+                      </span>
+              </a>
+            </div>
+            {% comment %} {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %} {% endcomment %}
+            {% # theme-check-enable %}
+          </li>
+
+          {%- if paginate.current_page == 1 and grid_promos != blank -%}
+            {%- assign product_index = forloop.index -%}
+            {%- for promo_ref in grid_promos -%}
+              {%- liquid
+                assign promo_item = promo_ref
+                if promo_ref.system.type == blank and promo_ref.value != blank
+                  assign promo_item = promo_ref.value
+                endif
+
+                assign promo_position = blank
+                if promo_item.position.value != blank
+                  assign promo_position = promo_item.position.value
+                elsif promo_item.position != blank
+                  assign promo_position = promo_item.position
+                endif
+                if promo_position == blank and promo_item.insert_after_product_number.value != blank
+                  assign promo_position = promo_item.insert_after_product_number.value
+                elsif promo_position == blank and promo_item.insert_after_product_number != blank
+                  assign promo_position = promo_item.insert_after_product_number
+                endif
+                assign promo_position = promo_position | plus: 0
+              -%}
+              {%- if promo_position == product_index -%}
+                {%- liquid
+                  assign promo_id = section.id | append: '-promo-' | append: forloop.index
+                  assign promo_layout = promo_item.layout.value | default: promo_item.layout | default: 'text-left' | downcase | strip
+                  if promo_layout contains 'image-left' or promo_layout contains 'image left'
+                    assign promo_layout = 'image-left'
+                  else
+                    assign promo_layout = 'text-left'
+                  endif
+                  assign promo_col_span = promo_item.column_span.value | default: promo_item.column_span | plus: 0
+                  if promo_col_span == 0
+                    assign promo_col_span = 2
+                  endif
+                  assign promo_heading = promo_item.heading.value | default: promo_item.heading
+                  assign promo_text = promo_item.text.value | default: promo_item.text
+                  assign promo_tags_list = blank
+                  assign tags_field = promo_item['tag_1_tag_2_tag_3']
+                  assign tags_value = tags_field.value | default: tags_field
+                  if tags_value != blank
+                    assign promo_tags_list = tags_value | split: ','
+                  endif
+                  assign promo_button_label = promo_item.button_label.value | default: promo_item.button_label | strip
+                  assign promo_button_link = promo_item.button_link.value | default: promo_item.button_link | strip
+                  assign promo_image_field = promo_item.image | default: promo_item.photo
+                  assign promo_image = promo_image_field.value | default: promo_image_field
+                -%}
+                <li
+                  id="{{ promo_id }}"
+                  class="product-grid__item product-grid__promo product-grid__promo--{{ promo_layout }}"
+                  style="--promo-col-span: {{ promo_col_span }};"
+                  data-promo-position="{{ promo_position }}"
+                >
+                  <div class="collection-grid-promo collection-grid-promo--{{ promo_layout }}">
+                    {%- if promo_layout == 'image-left' -%}
+                      <div class="collection-grid-promo__media">
+                        {%- if promo_image != blank -%}
+                          {{
+                            promo_image
+                            | image_url: width: 800
+                            | image_tag:
+                              loading: 'lazy',
+                              widths: '400, 600, 800',
+                              sizes: '(min-width: 750px) 40vw, 100vw',
+                              class: 'collection-grid-promo__image'
+                          }}
+                        {%- else -%}
+                          {{ 'lifestyle-1' | placeholder_svg_tag: 'collection-grid-promo__placeholder' }}
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+
+                    <div class="collection-grid-promo__content">
+                      {%- if promo_heading != blank -%}
+                        <h2 class="collection-grid-promo__heading">{{ promo_heading }}</h2>
+                      {%- endif -%}
+
+                      {%- if promo_text != blank -%}
+                        <div class="collection-grid-promo__text rte">{{ promo_item.text | metafield_tag | default: promo_text }}</div>
+                      {%- endif -%}
+
+                      {%- if promo_tags_list != blank -%}
+                        <div class="collection-grid-promo__tags">
+                          {%- for tag in promo_tags_list -%}
+                            {%- assign tag_label = tag | strip -%}
+                            {%- if tag_label != blank -%}
+                              <span class="collection-grid-promo__tag">{{ tag_label }}</span>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </div>
+                      {%- endif -%}
+
+                      {%- if promo_button_label != blank and promo_button_link != blank -%}
+                        <a class="collection-grid-promo__btn" href="{{ promo_button_link }}">
+                          {{ promo_button_label }}
+                        </a>
+                      {%- endif -%}
+                    </div>
+
+                    {%- if promo_layout == 'text-left' -%}
+                      <div class="collection-grid-promo__media">
+                        {%- if promo_image != blank -%}
+                          {{
+                            promo_image
+                            | image_url: width: 800
+                            | image_tag:
+                              loading: 'lazy',
+                              widths: '400, 600, 800',
+                              sizes: '(min-width: 750px) 40vw, 100vw',
+                              class: 'collection-grid-promo__image'
+                          }}
+                        {%- else -%}
+                          {{ 'lifestyle-2' | placeholder_svg_tag: 'collection-grid-promo__placeholder' }}
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {% endfor %}
+      {% endcapture %}
+
+      {% render 'product-grid',
+        section: section,
+        children: children,
+        products: collection.products,
+        paginate: paginate,
+        enable_infinite_scroll: section.settings.enable_infinite_scroll
+      %}
+    {% endpaginate %}
+  </div>
+</results-list>
+
+{% schema %}
+{
+  "name": "t:names.collection_container",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "t:settings.type",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:options.grid"
+        },
+        {
+          "value": "organic",
+          "label": "t:options.editorial"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "select",
+      "id": "product_card_size",
+      "label": "t:settings.card_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "extra-large",
+          "label": "t:options.extra_large"
+        }
+      ],
+      "default": "medium",
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
+    },
+    
+    {
+      "type": "select",
+      "id": "mobile_product_card_size",
+      "label": "t:settings.mobile_card_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "collection_list",
+      "id": "tabs_menu",
+      "label": "Select Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_infinite_scroll",
+      "label": "t:settings.auto_load_products",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "t:settings.products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "default": 24,
+      "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
+    },
+    {
+      "type": "text",
+      "id": "offer_msg",
+      "label": "Offer message"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "product_grid_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "centered",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "centered"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width_on_mobile",
+      "label": "t:settings.full_width_on_mobile",
+      "default": true,
+      "visible_if": "{{ section.settings.product_grid_width != 'full-width' }}"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_horizontal",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_vertical",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Grid featured promos"
+    },
+    {
+      "type": "select",
+      "id": "promo_metafield_key",
+      "label": "Collection metafield key",
+      "info": "Namespace is always custom. Match the key from Settings → Custom data → Collections.",
+      "options": [
+        { "value": "grid_promos", "label": "grid_promos" },
+        { "value": "grid_promo", "label": "grid_promo" },
+        { "value": "featured_grid_promos", "label": "featured_grid_promos" }
+      ],
+      "default": "grid_promos"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add promos on each collection under Metafields → Grid promos. Each metaobject needs a Position (insert after product #). Metaobjects must be Active. Metafield must allow storefront access."
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

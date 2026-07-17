@@ -1,0 +1,71 @@
+{%- liquid
+  assign feature_pills = product.metafields.custom.feature_pills.value
+  assign show_pills = block.settings.show_feature_pills
+  assign show_thumbs = block.settings.show_thumbnail_slider
+-%}
+
+<div class="product-gallery" {{ block.shopify_attributes }}>
+  <div class="product-gallery__main" data-gallery-main>
+    {%- if product.featured_media -%}
+      <img
+        src="{{ product.featured_media | image_url: width: 1100 }}"
+        alt="{{ product.featured_media.alt | default: product.title | escape }}"
+        width="550"
+        height="600"
+        loading="eager"
+        fetchpriority="high"
+        data-gallery-image
+      >
+    {%- else -%}
+      <img width="600" height="450" src="{{ 'product-biom.png' | asset_url }}" alt="{{ product.title | escape }}" data-gallery-image>
+    {%- endif -%}
+
+    {%- if show_pills and feature_pills != blank -%}
+      <div class="product-feature-pills">
+        {%- for pill in feature_pills -%}
+          {%- assign pill_text = pill | strip -%}
+          {%- if pill_text != blank -%}
+            <span>{{ pill_text }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if show_thumbs and product.media.size > 1 -%}
+    <div class="product-gallery__slider" data-product-gallery-slider>
+      <button
+        type="button"
+        class="product-gallery__nav product-gallery__nav--prev"
+        data-gallery-prev
+        aria-label="Previous image"
+      ></button>
+      <div class="product-gallery__thumbs-track" data-gallery-track>
+        {%- for media in product.media -%}
+          <button
+            class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+            type="button"
+            data-gallery-thumb="{{ media | image_url: width: 1100 }}"
+            data-media-id="{{ media.id }}"
+            aria-label="View image {{ forloop.index }}"
+            aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+          >
+            <img
+              src="{{ media | image_url: width: 240 }}"
+              alt="{{ media.alt | default: product.title | escape }}"
+              width="120"
+              height="120"
+              loading="lazy"
+            >
+          </button>
+        {%- endfor -%}
+      </div>
+      <button
+        type="button"
+        class="product-gallery__nav product-gallery__nav--next"
+        data-gallery-next
+        aria-label="Next image"
+      ></button>
+    </div>
+  {%- endif -%}
+</div>

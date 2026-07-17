@@ -1,0 +1,330 @@
+/* "Why Most Probiotics Don't Work" — Figma 3613:3597 (olive band, comparison) */
+
+.why-biom {
+  background: #445438;
+  position: relative;
+  padding: 120px 0;
+  overflow: hidden;
+  border-radius: clamp(1.5rem, 2.1vw, 2.5rem) clamp(1.5rem, 2.1vw, 2.5rem) 0 0;
+}
+
+ @media (max-width: 480px) {
+  .why-biom {
+    padding: 40px 0 !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+    .why-biom .page-width {
+        padding: 0px 20px !important;
+    }
+}
+
+.why-biom__intro {
+  max-width: 899px;
+  margin: 0 auto clamp(2.5rem, 3.125vw, 3.75rem);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.why-biom__heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: #F9FFE3;
+  margin:0;
+}
+
+.why-biom__text {
+  font-family: var(--font-grift);
+  font-size: clamp(1rem, 0.94vw, 1.125rem);
+  color: var(--color-white);
+  max-width: 789px;
+  margin: 0 auto;
+  line-height: 1.35;
+}
+
+.why-biom__compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 4rem);
+  max-width: 1319px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  --connector-image-inset: 0.42;
+}
+
+.why-biom__visual {
+  width: clamp(16rem, 22.8vw, 27.375rem); /* 438px circle */
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.why-biom__visual img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.why-biom__visual::after {
+  content: '';
+  position: absolute;
+  top: -9%;
+  bottom: -9%;
+  left: 50%;
+  width: 1px;
+  background: rgba(224, 218, 209, 0.6);
+}
+
+.why-biom-card {
+  border: 1px solid #e0dad1;
+  border-radius: var(--radius-sm);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 360px;
+  transition: 0.6s ease;
+  justify-self: end;
+}
+
+.why-biom-card--right {
+  justify-self: end;
+}
+
+.why-biom-card__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 24px;
+  color: #e0dad1;
+  text-align: center;
+}
+
+.why-biom-card__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.why-biom-card__row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 7px;
+  border-bottom: 1px solid rgba(224, 218, 209, 0.3);
+}
+
+.why-biom-card__row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.why-biom-card--left .why-biom-card__icon {
+  flex-shrink: 0;
+  background: #E0DAD1;
+  border-radius: 20px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.why-biom__connector {
+  --connector-thickness: 1px;
+  --connector-dot-size: 8px;
+  --connector-image-inset: 0.42;
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  display: none;
+  transform: translateY(-50%);
+}
+
+.why-biom__connector:not(.is-vertical) {
+  height: var(--connector-thickness);
+}
+
+.why-biom__connector-line {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: var(--connector-thickness);
+  background: #E0DAD1;
+}
+
+.why-biom__connector-dot {
+  position: absolute;
+  top: 50%;
+  width: var(--connector-dot-size);
+  height: var(--connector-dot-size);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.why-biom__connector--left .why-biom__connector-dot {
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.why-biom__connector--right .why-biom__connector-dot {
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.why-biom__connector.is-vertical {
+  transform: translateX(-50%);
+  width: var(--connector-thickness);
+}
+
+.why-biom__connector.is-vertical .why-biom__connector-line {
+  width: var(--connector-thickness);
+  height: 100%;
+}
+
+.why-biom__connector.is-vertical.why-biom__connector--left .why-biom__connector-dot {
+  top: auto;
+  bottom: 0;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, 50%);
+}
+
+.why-biom__connector.is-vertical.why-biom__connector--right .why-biom__connector-dot {
+  top: 0;
+  bottom: auto;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
+}
+
+.why-biom-card--right .why-biom-card__icon {
+  flex-shrink: 0;
+  background: #445438;
+  border-radius: 20px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.biom-probiotics_wrap, .probiotics_wrap{
+  position: relative;
+}
+
+.biom-probiotics_wrap::after, .probiotics_wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #44543891;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.why-biom__compare:has(.why-biom-card--left:hover) .biom-probiotics_wrap::after, .why-biom__compare:has(.why-biom-card--right:hover) .probiotics_wrap::after, .why-biom__compare:has(.probiotics:hover) .biom-probiotics_wrap::after, .why-biom__compare:has(.biom-probiotics:hover) .probiotics_wrap::after{
+  opacity: 1;
+}
+.why-biom-card__icon img{
+   transition: 0.6s ease;
+}
+
+.why-biom-card--left:hover, .why-biom__compare:has(.probiotics:hover) .why-biom-card--left{
+  background-color: #E0DAD1;
+}
+.why-biom-card--left:hover .why-biom-card__title, .why-biom-card--left:hover .why-biom-card__row p, .why-biom__compare:has(.probiotics:hover) .why-biom-card--left .why-biom-card__title, .why-biom__compare:has(.probiotics:hover) .why-biom-card--left .why-biom-card__row p{
+  color: #445438;
+}
+.why-biom-card--left:hover .why-biom-card__icon img, .why-biom__compare:has(.probiotics:hover) .why-biom-card--left .why-biom-card__icon img{
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+.why-biom-card--right:hover .why-biom-card__icon img, .why-biom__compare:has(.biom-probiotics_wrap:hover) .why-biom-card--right .why-biom-card__icon img{
+  filter: brightness(0) saturate(100%) invert(18%) sepia(11%) saturate(1334%) hue-rotate(54deg) brightness(95%) contrast(89%);
+}
+.why-biom-card--left:hover .why-biom-card__icon, .why-biom__compare:has(.probiotics:hover) .why-biom-card--left .why-biom-card__icon{
+  background-color: #445438;
+}
+.why-biom-card--left:hover .why-biom-card__row, .why-biom__compare:has(.probiotics:hover) .why-biom-card--left .why-biom-card__row{
+  border-bottom: 1px solid #44543833;
+}
+.why-biom-card--right:hover, .why-biom__compare:has(.biom-probiotics:hover) .why-biom-card--right{
+  background-color: #2C3A22;
+  border: 1px solid #2C3A22;
+}
+.why-biom-card--right:hover .why-biom-card__title, .why-biom-card--right:hover .why-biom-card__row p, .why-biom__compare:has(.biom-probiotics:hover) .why-biom-card--right .why-biom-card__title, .why-biom__compare:has(.biom-probiotics:hover) .why-biom-card--right .why-biom-card__row p{
+  color: #fff;
+}
+.why-biom-card--right:hover .why-biom-card__icon, .why-biom__compare:has(.biom-probiotics:hover) .why-biom-card--right .why-biom-card__icon{
+  background-color: #E0DAD1;
+  border-radius:20px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.why-biom-card--right:hover .why-biom-card__row, .why-biom__compare:has(.biom-probiotics:hover) .why-biom-card--right .why-biom-card__row{
+  border-bottom: 1px solid #ffffff33;
+}
+.why-biom-card--left:hover .why-biom-card__row:last-child, .why-biom-card--right:hover .why-biom-card__row:last-child , .why-biom__compare:has(.probiotics:hover) .why-biom-card__row:last-child{
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+.why-biom-card__icon img,
+.why-biom-card__icon svg {
+  width: 45px;
+  height: 45px;
+}
+
+.why-biom-card__row p {
+  font-size: clamp(1rem, 0.94vw, 1.125rem);
+  color: var(--color-white);
+  line-height: 1.2;
+  max-width: 264px;
+  margin: 0;
+}
+
+@media screen and (max-width: 989px) {
+  .why-biom__compare {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    max-width: 500px !important;
+  }
+
+  .why-biom-card--left {
+    order: 1;
+  }
+
+  .why-biom__visual {
+    order: 2;
+    width: min(20rem, 80vw);
+  }
+
+  .why-biom-card--right {
+    order: 3;
+  }
+
+  .why-biom-card,
+  .why-biom-card--right {
+    justify-self: stretch;
+    max-width: none;
+  }
+}

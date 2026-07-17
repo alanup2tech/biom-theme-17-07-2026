@@ -1,0 +1,129 @@
+{{ 'section-science.css' | asset_url | stylesheet_tag }}
+
+<section class="science-split">
+  <div class="science-split__media">
+    {%- if section.settings.image != blank -%}
+      <img width="1200" height="900" src="{{ section.settings.image | image_url: width: 1920 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy">
+    {%- else -%}
+      <img width="600" height="450" src="{{ 'doctor-photo.png' | asset_url }}" alt="{{ section.settings.person_name | escape }}" loading="lazy">
+    {%- endif -%}
+
+    <div class="science-split__caption reveal">
+      <p class="science-split__name">{{ section.settings.person_name }}</p>
+      <p class="science-split__role">{{ section.settings.person_role }}</p>
+    </div>
+  </div>
+
+  <div class="science-split__content">
+    <div class="reveal">
+      <h2 class="science-split__heading">{{ section.settings.heading }}</h2>
+      <p class="science-split__sub">{{ section.settings.text }}</p>
+    </div>
+
+    <div class="science-split__cards">
+      {%- for block in section.blocks -%}
+        <div class="science-card reveal" {{ block.shopify_attributes }}>
+          <span class="science-card__icon">
+            {%- if block.settings.icon != blank -%}
+              <img width="360" height="270" src="{{ block.settings.icon | image_url: width: 360 }}" alt="" loading="lazy">
+            {%- elsif block.settings.icon_asset != blank -%}
+              <img width="600" height="450" src="{{ block.settings.icon_asset | asset_url }}" alt="" loading="lazy">
+            {%- endif -%}
+          </span>
+          <div class="science-card__body">
+            <div class="cards-section">
+              <h3 class="science-card__title">{{ block.settings.title }}</h3>
+              <p class="science-card__text">{{ block.settings.text }}</p>
+            </div>
+            {%- if block.settings.tag != blank -%}
+              {%- assign tag_id = block.settings.tag | handleize -%}
+              {%- if block.settings.open_video_modal or tag_id == 'proprietary-formula' -%}
+                <a id="{{ tag_id }}" href="{{ block.settings.tag_url }}" class="science-card__tag" data-hero-video-open>{{ block.settings.tag }}</a>
+              {%- else -%}
+                <a id="{{ tag_id }}" href="{{ block.settings.tag_url }}" class="science-card__tag">{{ block.settings.tag }}</a>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Science split",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "person_name", "label": "Name", "default": "Dr. Bobban Subhadra" },
+    {
+      "type": "text",
+      "id": "person_role",
+      "label": "Role",
+      "default": "Ph.D. · Co-founder & Chief Technology Officer"
+    },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Built on Microbiome Science" },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Biom products are designed using a microbiome systems approach-combining microbes, microbial nutrients, and microbial metabolites."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Feature card",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "text", "id": "icon_asset", "label": "Icon asset filename" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Biomsify® Fermentation" },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Beneficial microbes are cultivated using a proprietary fermentation approach designed to mimic aspects of the gut environment."
+        },
+        { "type": "text", "id": "tag", "label": "Tag", "default": "Patented Process" },
+        { "type": "text", "id": "tag_url", "label": "Tag link" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Science split",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Biomsify® Fermentation",
+            "text": "Beneficial microbes are cultivated using a proprietary fermentation approach designed to mimic aspects of the gut environment.",
+            "tag": "Patented Process",
+            "icon_asset": "icon-science-flask.svg"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "TriBIOM® Ecosystem Design",
+            "text": "Each Biom formula combines: Beneficial microbes · Microbial nutrients · Postbiotic metabolites a complete system, not just a capsule.",
+            "tag": "Proprietary Formula",
+            "icon_asset": "icon-science-atom.svg"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Microbiome Systems Approach",
+            "text": "Instead of delivering isolated bacteria, Biom formulations are designed to support the full microbial ecosystem in your gut.",
+            "tag": "Science-Led Design",
+            "icon_asset": "icon-science-microscope.svg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

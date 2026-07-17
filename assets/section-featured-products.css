@@ -1,0 +1,87 @@
+/* Featured products band — Figma 3613:3343 "Our Most Popular Microbiome Systems" */
+.featureSwiper {
+  align-items: stretch;
+}
+
+.featureSwiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+.featureSwiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+/* Make the card fill the full slide height */
+.featureSwiper .swiper-slide .product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+/* Push the CTA button to the bottom */
+.featureSwiper .swiper-slide .product-card__cta {
+  margin-top: auto;
+}
+
+.featured-products {
+  background: #fbfff1 !important;
+  position: relative;
+  padding: 70px 0;
+  overflow: hidden;
+}
+
+.featured-products__heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: #445438;
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.featured-products__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 1.5625vw, 1.875rem);
+  position: relative;
+  z-index: 1;
+}
+
+@media screen and (max-width: 1279px) {
+  .featured-products__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .featured-products__grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    margin: 0 calc(-1 * var(--page-gutter));
+    padding: 0 var(--page-gutter) 1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .featured-products__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .featured-products__grid .product-card {
+    flex: 0 0 78vw;
+    scroll-snap-align: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .featureSwiper .swiper-slide {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

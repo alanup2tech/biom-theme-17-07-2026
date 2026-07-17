@@ -1,0 +1,305 @@
+
+/* Page hero (About intro — Figma 3865:2696) */
+.page-hero {
+  background: var(--color-cream-bright);
+  padding: clamp(3rem, 5vw, 6.25rem) 0;
+}
+
+.page-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 853px) 1fr;
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+}
+
+.page-hero__heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: var(--color-accent);
+  margin-bottom: 1.875rem;
+}
+
+.page-hero__text {
+  color: var(--color-body);
+  font-size: clamp(0.9375rem, 0.94vw, 1.125rem);
+  line-height: 1.5;
+}
+
+.page-hero__media img {
+  border-radius: var(--radius-md);
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Cards trio (Science bands — generic) */
+.cards-trio {
+  padding: clamp(3rem, 5.2vw, 6.25rem) 0;
+}
+
+.cards-trio--white { background: var(--color-white); }
+.cards-trio--cream { background: var(--color-cream); }
+.cards-trio--cream-bright { background: var(--color-cream-bright); }
+.cards-trio--olive { background: var(--color-olive); }
+
+.cards-trio__intro {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto clamp(2rem, 3.125vw, 3.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+}
+
+.cards-trio__heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: var(--color-olive);
+}
+
+.cards-trio--olive .cards-trio__heading {
+  color: var(--color-cream-bright);
+}
+
+.cards-trio__text {
+  color: var(--color-body);
+  font-size: clamp(1rem, 0.94vw, 1.125rem);
+  line-height: 1.4;
+}
+
+.cards-trio--olive .cards-trio__text {
+  color: var(--color-white);
+}
+
+.cards-trio__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 1.5625vw, 1.875rem);
+}
+
+.trio-card {
+  background: var(--color-white);
+  border: 1px solid rgba(68, 84, 56, 0.12);
+  border-radius: var(--radius-md);
+  padding: 1.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: transform var(--duration-default) var(--ease-spring),
+    box-shadow var(--duration-default) var(--ease-spring);
+}
+
+.trio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 44px rgba(68, 84, 56, 0.12);
+}
+
+.trio-card__media {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.trio-card__media img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.trio-card__icon {
+  width: 72px;
+  height: 72px;
+}
+
+.trio-card__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.trio-card__title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1.125rem, 1.25vw, 1.5rem);
+  color: #3f4f33;
+}
+
+.trio-card__text {
+  color: var(--color-body);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.trio-card__tag {
+  margin-top: auto;
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.875rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: #fffcf5;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+}
+
+.cards-trio__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2rem, 3.125vw, 3.75rem);
+}
+
+/* Steps strip (Biofully fermentation 1-2-3) */
+.steps-strip {
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 1.875rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  color: var(--color-white);
+  position: relative;
+}
+
+.steps-strip__wrap {
+  padding: 0 0 clamp(3rem, 5.2vw, 6.25rem);
+  background: var(--color-white);
+}
+
+.steps-strip__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.steps-strip__num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.steps-strip__title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.375rem;
+}
+
+.steps-strip__text {
+  font-size: 0.9375rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+/* FAQ grid (Science/About Q&A cards) */
+.faq-grid {
+  padding: clamp(3rem, 5.2vw, 6.25rem) 0;
+  background: var(--color-white);
+}
+
+.faq-grid--olive {
+  background: var(--color-olive);
+}
+
+.faq-grid__intro {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(2rem, 3.125vw, 3.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.faq-grid__heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: var(--color-olive);
+}
+
+.faq-grid--olive .faq-grid__heading {
+  color: var(--color-cream-bright);
+}
+
+.faq-grid__text {
+  color: var(--color-body);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.faq-grid--olive .faq-grid__text {
+  color: var(--color-white);
+}
+
+.faq-grid__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.faq-grid .faq-item {
+  background: #f5f5f5;
+}
+
+.faq-grid .faq-item[open] {
+  background: var(--color-accent);
+}
+
+.faq-grid .faq-item[open] summary,
+.faq-grid .faq-item[open] .faq-item__body {
+  color: var(--color-white);
+}
+
+/* CTA band ("Ready to Support Your Microbiome Ecosystem?") */
+.cta-band {
+  background: var(--color-cream);
+  text-align: center;
+  padding: clamp(3.5rem, 6.25vw, 7.5rem) var(--page-gutter);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-band__heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: var(--color-olive);
+  max-width: 760px;
+  margin: 0 auto 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-band__text {
+  color: var(--color-body);
+  font-size: 1rem;
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-band__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+@media screen and (max-width: 989px) {
+  .page-hero__grid,
+  .cards-trio__grid,
+  .steps-strip,
+  .faq-grid__cards {
+    grid-template-columns: 1fr;
+  }
+}
