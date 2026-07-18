@@ -213,12 +213,17 @@
     transition: transform 0.2s ease;
   } */
 
-  .faq-page__item[open] .faq-page__icon svg {
-    transform: rotate(180deg);
+  .faq-page__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: rotate(0);
+    transform-origin: center;
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   }
-.faq-page__item[open]>summary .faq-page__icon>svg
-{
- transform: rotate(180deg);
+
+  .faq-page__item[open]:not(.is-closing) .faq-page__icon svg {
+    transform: rotate(180deg);
   }
   /* .faq-page__item[open] .faq-page__icon::after {
     transform: translate(-50%, -50%) scaleY(0);
@@ -231,15 +236,12 @@
     font-size: 18px;
     line-height: 1.65;
     border-top: 0;
+    opacity: 0;
+    transition: opacity 0.24s ease;
   }
 
   .faq-page__answer-inner {
-    display: grid;
-    grid-template-rows: 0fr;
-    overflow: hidden;
-    min-height: 0;
     padding-bottom: 50px;
-    transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .faq-page__item[open] .faq-page__answer {
@@ -247,8 +249,8 @@
     background: #f3f5ef;
   }
 
-  .faq-page__item[open] .faq-page__answer-inner {
-    grid-template-rows: 1fr;
+  .faq-page__item[open]:not(.is-closing) .faq-page__answer {
+    opacity: 1;
   }
 
   .faq-page__answer p {
@@ -357,18 +359,106 @@
 {% javascript %}
   document.addEventListener('DOMContentLoaded', function() {
 
-    // --- Accordion: close others when one opens ---
+    // Keep details content rendered until the height animation finishes.
+    var faqInstances = new WeakMap();
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    class FaqAccordion {
+      constructor(detail, group) {
+        this.detail = detail;
+        this.group = group;
+        this.summary = detail.querySelector('summary');
+        this.content = detail.querySelector('.faq-page__answer');
+        this.animation = null;
+        this.isClosing = false;
+        this.isExpanding = false;
+
+        if (!this.summary || !this.content) return;
+        this.summary.addEventListener('click', this.handleClick.bind(this));
+      }
+
+      handleClick(event) {
+        event.preventDefault();
+
+        if (this.isClosing || !this.detail.open) {
+          this.open();
+        } else {
+          this.close();
+        }
+      }
+
+      open() {
+        this.group.querySelectorAll('details.faq-page__item').forEach((other) => {
+          if (other !== this.detail) faqInstances.get(other)?.close();
+        });
+
+        if (reduceMotion.matches) {
+          this.finish(true);
+          return;
+        }
+
+        var startHeight = this.detail.getBoundingClientRect().height;
+        this.animation?.cancel();
+        this.detail.style.height = startHeight + 'px';
+        this.detail.style.overflow = 'hidden';
+        this.detail.classList.remove('is-closing');
+        this.detail.open = true;
+        this.isClosing = false;
+        this.isExpanding = true;
+
+        window.requestAnimationFrame(() => {
+          var endHeight = this.summary.offsetHeight + this.content.offsetHeight;
+          this.animate(startHeight, endHeight, true);
+        });
+      }
+
+      close() {
+        if (!this.detail.open && !this.isExpanding) return;
+
+        if (reduceMotion.matches) {
+          this.finish(false);
+          return;
+        }
+
+        var startHeight = this.detail.getBoundingClientRect().height;
+        this.animation?.cancel();
+        this.detail.style.height = startHeight + 'px';
+        this.detail.style.overflow = 'hidden';
+        this.detail.classList.add('is-closing');
+        this.isClosing = true;
+        this.isExpanding = false;
+        this.animate(startHeight, this.summary.offsetHeight, false);
+      }
+
+      animate(startHeight, endHeight, expanded) {
+        var animation = this.detail.animate(
+          { height: [startHeight + 'px', endHeight + 'px'] },
+          { duration: 360, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        );
+
+        this.animation = animation;
+        animation.onfinish = () => {
+          if (this.animation === animation) this.finish(expanded);
+        };
+        animation.oncancel = () => {
+          if (this.animation === animation) this.animation = null;
+        };
+      }
+
+      finish(expanded) {
+        this.detail.open = expanded;
+        this.detail.classList.remove('is-closing');
+        this.detail.style.removeProperty('height');
+        this.detail.style.removeProperty('overflow');
+        this.animation = null;
+        this.isClosing = false;
+        this.isExpanding = false;
+      }
+    }
+
     document.querySelectorAll('.faq-page__accordion').forEach(function(accordion) {
       accordion.querySelectorAll('details.faq-page__item').forEach(function(detail) {
-        detail.addEventListener('toggle', function() {
-          if (detail.open) {
-            accordion.querySelectorAll('details.faq-page__item').forEach(function(other) {
-              if (other !== detail && other.open) {
-                other.open = false;
-              }
-            });
-          }
-        });
+        faqInstances.set(detail, new FaqAccordion(detail, accordion));
       });
     });
 
