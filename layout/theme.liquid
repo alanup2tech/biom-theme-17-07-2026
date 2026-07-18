@@ -38,13 +38,15 @@
 
     {{ content_for_header }}
     {% # theme-check-enable RemoteAsset %}
+    {{ 'swiper-bundle.css' | asset_url | stylesheet_tag }}
     {{ 'responsive.css' | asset_url | stylesheet_tag }}
     {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
     {{ 'component-slider.css' | asset_url | stylesheet_tag }}
     {{ 'qa-edits.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
-    <script src="{{ 'section-swipers.js' | asset_url }}" type="module" fetchpriority="low"></script>
+    <script src="{{ 'section-swipers.js' | asset_url }}" defer></script>
     {% # theme-check-disable RemoteAsset %}
     <script>
       (() => {

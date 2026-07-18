@@ -6,13 +6,16 @@ const sliderSelector = [
 ].join(',');
 
 const observedSliders = new WeakSet();
-let swiperObserver;
 
 function loadSwiperStyles() {
   if (window.BiomSwiperStylesPromise) return window.BiomSwiperStylesPromise;
 
   const stylesheetUrl = document.body.dataset.swiperStylesheetUrl;
   if (!stylesheetUrl) return Promise.resolve();
+  const stylesheetExists = Array.from(document.querySelectorAll('link[rel="stylesheet"]')).some(
+    (link) => link.href === new URL(stylesheetUrl, document.baseURI).href
+  );
+  if (stylesheetExists) return Promise.resolve();
 
   window.BiomSwiperStylesPromise = new Promise((resolve) => {
     const link = document.createElement('link');
@@ -176,28 +179,10 @@ function observeSliders(root = document) {
 
   loadSwiperStyles();
 
-  if (!('IntersectionObserver' in window)) {
-    sliders.forEach(initializeSlider);
-    return;
-  }
-
-  if (!swiperObserver) {
-    swiperObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          swiperObserver.unobserve(entry.target);
-          initializeSlider(entry.target);
-        });
-      },
-      { rootMargin: '500px 0px' }
-    );
-  }
-
   sliders.forEach((slider) => {
     if (observedSliders.has(slider)) return;
     observedSliders.add(slider);
-    swiperObserver.observe(slider);
+    initializeSlider(slider);
   });
 }
 
