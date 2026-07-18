@@ -124,7 +124,10 @@
     "show_all_options": "Näytä kaikki vaihtoehdot",
     "open": "Avaa",
     "back_to": "Takaisin kohteeseen {{ title }}",
-    "zoom_media": "Lähennä mediasisältö: {{ index }}"
+    "zoom_media": "Lähennä mediasisältö: {{ index }}",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "arvostelua",

@@ -7,7 +7,6 @@
     assign order = 'drawer_search,logo,menu,localization,search,actions'
   endif
 
-  assign rows = 'top,bottom' | split: ','
   assign search_style = 'none'
 
   if section.settings.show_search
@@ -394,7 +393,6 @@
     {% endif %}
   {% endfor %} {% endcomment %}
   {%- liquid
-    assign scheme = 'color_scheme_top' | append: ''
     assign class = 'header__row color-' | append: section.settings.color_scheme_top | append: ' section section--full-width-margin section--' | append: section.settings.section_width
     assign style = '--border-bottom-width: ' | append: section.settings.border_width | append: 'px; --border-bottom-width-mobile: ' | append: section.settings.border_width | append: 'px;'
   -%}

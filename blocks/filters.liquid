@@ -147,24 +147,17 @@
         section-id="{{ section.id }}"
         form-style="{{ block_settings.filter_style }}"
       >
-         <search-button
-    class="search-action{% if display_style == 'text' %} search-action--text{% endif %}{% if class != blank %} {{ class | strip }}{% endif %} search-collection"
-  >
-    <button
-      on:click="#search-modal/showDialog"
-      class="button-unstyled header-actions__action{% if display_style == 'text' %} header-actions__text-style{% endif %}"
-      aria-label="{{ 'content.search_input_label' | t }}"
-      aria-haspopup="dialog"
-    >
-      <span class="">
-        {{ 'content.search' | t }}
-      </span>
-
-      <span class="svg-wrapper">
-        {{ 'icon-search.svg' | inline_asset_content }}
-      </span>
-    </button>
-  </search-button>
+        <search-button class="search-action search-collection">
+          <button
+            on:click="#search-modal/showDialog"
+            class="button-unstyled header-actions__action"
+            aria-label="{{ 'content.search_input_label' | t }}"
+            aria-haspopup="dialog"
+          >
+            <span>{{ 'content.search' | t }}</span>
+            <span class="svg-wrapper">{{ 'icon-search.svg' | inline_asset_content }}</span>
+          </button>
+        </search-button>
         <form
           action="{{ results_url }}"
           id="FacetFiltersForm--{{ section.id }}-desktop"
@@ -252,24 +245,17 @@
             id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
             ref="facetsForm"
           >
-            <search-button
-    class="search-action{% if display_style == 'text' %} search-action--text{% endif %}{% if class != blank %} {{ class | strip }}{% endif %}"
-  >
-    <button
-      on:click="#search-modal/showDialog"
-      class="button-unstyled header-actions__action{% if display_style == 'text' %} header-actions__text-style{% endif %}"
-      aria-label="{{ 'content.search_input_label' | t }}"
-      aria-haspopup="dialog"
-    >
-      <span class="{% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
-        {{ 'content.search' | t }}
-      </span>
-
-      <span class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}">
-        {{ 'icon-search.svg' | inline_asset_content }}
-      </span>
-    </button>
-  </search-button>
+            <search-button class="search-action">
+              <button
+                on:click="#search-modal/showDialog"
+                class="button-unstyled header-actions__action"
+                aria-label="{{ 'content.search_input_label' | t }}"
+                aria-haspopup="dialog"
+              >
+                <span class="mobile:hidden">{{ 'content.search' | t }}</span>
+                <span class="svg-wrapper desktop:hidden">{{ 'icon-search.svg' | inline_asset_content }}</span>
+              </button>
+            </search-button>
             {% render 'sorting',
               results: results,
               sort_by: sort_by,

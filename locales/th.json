@@ -124,7 +124,10 @@
     "show_all_options": "แสดงตัวเลือกทั้งหมด",
     "open": "เปิด",
     "back_to": "กลับไปที่ {{ title }}",
-    "zoom_media": "ซูมสื่อ {{ index }}"
+    "zoom_media": "ซูมสื่อ {{ index }}",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "รีวิว",

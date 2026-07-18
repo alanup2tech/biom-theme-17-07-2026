@@ -128,7 +128,10 @@
     "show_all_options": "Rodyti visus variantus",
     "open": "Atidaryti",
     "back_to": "Grįžti į „{{ title }}“",
-    "zoom_media": "Padidinti mediją {{ index }}"
+    "zoom_media": "Padidinti mediją {{ index }}",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "apžvalgos (-ų; -a)",

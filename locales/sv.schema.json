@@ -587,7 +587,8 @@
     "y_position": "Vertikal position",
     "enable_sticky_add_to_cart": "Fast fält för ”Lägg till i varukorgen”",
     "sticky_add_to_cart": "Fast ”Lägg till i varukorgen”",
-    "actions_display_style": "Menystil"
+    "actions_display_style": "Menystil",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Apple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Visar lagerhållningsenhet från överordnad produkt",
     "content_layout": "Innehållslayout",
     "mobile_media_1": "Mobilmedia 1",
-    "utilities": "Verktyg"
+    "utilities": "Verktyg",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Dela information om ditt varumärke med dina kunder. Beskriv en produkt, gör tillkännagivanden eller välkomna kunder till din butik.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Logotypen förblir synlig när klistrigt sidhuvud är aktivt",
     "media_type_info": "Funktionerna hämtas från menylänkarna",
     "logo_height": "Påverkar endast sidhuvudslogotypen",
-    "actions_display_style": "Ikoner används alltid på mobilen"
+    "actions_display_style": "Ikoner används alltid på mobilen",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "basic": "Grundläggande",

@@ -13,16 +13,11 @@
     assign last_row_count = total_blocks | minus: 1 | modulo: 4 | plus: 1
     assign tablet_last_row_count = total_blocks | minus: 1 | modulo: 2 | plus: 1
 
-    # Check if there are orphaned elements (single item in last row)
+    # Check if there is an orphaned element (single item in last row)
     assign has_isolated_grid_item_desktop = false
-    assign has_isolated_grid_item_tablet = false
 
     if total_blocks > 4 and last_row_count == 1
       assign has_isolated_grid_item_desktop = true
-    endif
-
-    if total_blocks == 5
-      assign has_isolated_grid_item_tablet = true
     endif
   %}
   <div

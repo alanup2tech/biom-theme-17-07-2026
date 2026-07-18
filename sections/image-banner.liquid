@@ -43,7 +43,7 @@
           {%- if block.settings.image != blank -%}
             <img width="1200" height="900" class="image-banner__bg" src="{{ block.settings.image | image_url: width: 2400 }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy">
           {%- else -%}
-            <img width="600" height="450" class="image-banner__bg" src="{{ 'banner-yoga.png' | asset_url }}" alt="" loading="lazy">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'image-banner__bg placeholder-svg' }}
           {%- endif -%}
 
           <div class="image-banner__slide-content">
@@ -52,7 +52,7 @@
                 {%- if block.settings.product_image != blank -%}
                   <img width="300" height="225" src="{{ block.settings.product_image | image_url: width: 300 }}" alt="" loading="lazy">
                 {%- else -%}
-                  <img width="600" height="450" src="{{ 'banner-product.png' | asset_url }}" alt="" loading="lazy">
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
                 {%- endif -%}
                 <a class="btn" href="{{ block.settings.product_link | default: routes.all_products_collection_url }}">
                   {{ block.settings.product_button_label }}
@@ -77,7 +77,7 @@
                       {%- if block.settings.product_image != blank -%}
                         <img width="300" height="225" src="{{ block.settings.product_image | image_url: width: 300 }}" alt="" loading="lazy">
                       {%- else -%}
-                        <img width="600" height="450" src="{{ 'banner-product.png' | asset_url }}" alt="" loading="lazy">
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
                       {%- endif -%}
                     </div>
                   {%- endif -%}

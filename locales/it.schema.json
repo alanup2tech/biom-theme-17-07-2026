@@ -587,7 +587,8 @@
     "y_position": "Posizione verticale",
     "enable_sticky_add_to_cart": "Barra fissa per l'aggiunta al carrello",
     "sticky_add_to_cart": "Aggiunta al carrello fissa",
-    "actions_display_style": "Stile menu"
+    "actions_display_style": "Stile menu",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Mela",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Mostra lo SKU del prodotto principale",
     "content_layout": "Layout del contenuto",
     "mobile_media_1": "Contenuto multimediale per mobile 1",
-    "utilities": "Utilità"
+    "utilities": "Utilità",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Condividi informazioni sul tuo brand con i clienti. Descrivi un prodotto, fai annunci o dai il benvenuto ai clienti nel tuo negozio.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Il logo rimarrà visibile quando l'header permanente è attivo",
     "media_type_info": "Le funzionalità vengono popolate dai link del menu",
     "logo_height": "Riguarda solo il logo dell’header",
-    "actions_display_style": "Le icone vengono sempre usate sui dispositivi mobili"
+    "actions_display_style": "Le icone vengono sempre usate sui dispositivi mobili",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "product_list": "Collezione in evidenza",

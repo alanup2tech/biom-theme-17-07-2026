@@ -124,7 +124,10 @@
     "show_all_options": "모든 옵션 보기",
     "open": "열기",
     "back_to": "{{ title }}(으)로 돌아가기",
-    "zoom_media": "{{ index }} 미디어 확대/축소"
+    "zoom_media": "{{ index }} 미디어 확대/축소",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "리뷰",

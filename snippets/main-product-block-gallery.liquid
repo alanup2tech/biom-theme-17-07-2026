@@ -17,7 +17,7 @@
         data-gallery-image
       >
     {%- else -%}
-      <img width="600" height="450" src="{{ 'product-biom.png' | asset_url }}" alt="{{ product.title | escape }}" data-gallery-image>
+      {{ 'product-1' | placeholder_svg_tag: 'product-gallery__placeholder placeholder-svg' }}
     {%- endif -%}
 
     {%- if show_pills and feature_pills != blank -%}

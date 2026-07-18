@@ -587,7 +587,8 @@
     "y_position": "ตำแหน่งแนวตั้ง",
     "enable_sticky_add_to_cart": "แถบเพิ่มลงในตะกร้าสินค้าแบบตรึง",
     "sticky_add_to_cart": "เพิ่มลงในตะกร้าสินค้าแบบตรึง",
-    "actions_display_style": "รูปแบบเมนู"
+    "actions_display_style": "รูปแบบเมนู",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Apple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "แสดง SKU จากสินค้าหลัก",
     "content_layout": "เลย์เอาต์เนื้อหา",
     "mobile_media_1": "สื่อสำหรับมือถือ 1",
-    "utilities": "ยูทิลิตี"
+    "utilities": "ยูทิลิตี",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>แชร์ข้อมูลเกี่ยวกับแบรนด์ของคุณกับลูกค้า อธิบายสินค้า ประกาศข่าวสาร หรือต้อนรับลูกค้าสู่ร้านค้าของคุณ</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "โลโก้จะยังคงแสดงอยู่เมื่อส่วนหัวแบบติดหนึบทำงาน",
     "media_type_info": "ฟีเจอร์มาจากลิงก์ในเมนูของคุณ",
     "logo_height": "มีผลกับโลโก้ส่วนหัวเท่านั้น",
-    "actions_display_style": "ใช้ไอคอนเสมอบนมือถือ"
+    "actions_display_style": "ใช้ไอคอนเสมอบนมือถือ",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "basic": "พื้นฐาน",

@@ -587,7 +587,8 @@
     "y_position": "Lodret position",
     "enable_sticky_add_to_cart": "Fastgjort bjælke med 'Læg i kurv'",
     "sticky_add_to_cart": "Fastgjort 'Læg i kurv'",
-    "actions_display_style": "Menustil"
+    "actions_display_style": "Menustil",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Apple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Viser SKU fra det overordnede produkt",
     "content_layout": "Indholdslayout",
     "mobile_media_1": "Medie til mobil 1",
-    "utilities": "Hjælpefunktioner"
+    "utilities": "Hjælpefunktioner",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Del oplysninger om dit brand med dine kunder. Beskriv et produkt, kom med meddelelser, eller byd kunder velkommen i din butik.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Logoet vil forblive synligt, når fastgjort sidehoved er aktivt",
     "media_type_info": "Funktioner hentes fra linksene i menuen",
     "logo_height": "Påvirker kun logoet i sidehovedet",
-    "actions_display_style": "Ikoner bruges altid på mobil"
+    "actions_display_style": "Ikoner bruges altid på mobil",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "basic": "Grundlæggende",

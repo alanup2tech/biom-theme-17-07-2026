@@ -20,7 +20,7 @@
           {%- if section.settings.video_thumb != blank -%}
             <img src="{{ section.settings.video_thumb | image_url: width: 160 }}" alt="" width="80" height="80" loading="eager">
           {%- else -%}
-            <img src="{{ 'hero-video-thumb-body.png' | asset_url }}" alt="" width="80" height="80" loading="eager">
+            <img src="{{ 'hero-bg.png' | asset_url }}" alt="" width="80" height="80" loading="eager">
           {%- endif -%}
           <span class="hero__video-thumb-overlay" aria-hidden="true"></span>
           <button
@@ -53,7 +53,7 @@
         fetchpriority="high"
       >
     {%- else -%}
-      <img width="600" height="450" class="hero__model" src="{{ 'hero-model.png' | asset_url }}" alt="" loading="eager" fetchpriority="high">
+      {{ 'product-1' | placeholder_svg_tag: 'hero__model placeholder-svg' }}
     {%- endif -%}
 
     <div class="hero__panel-content">

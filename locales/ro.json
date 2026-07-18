@@ -126,7 +126,10 @@
     "show_all_options": "Afișează toate opțiunile",
     "open": "Deschidere",
     "back_to": "Înapoi la {{ title }}",
-    "zoom_media": "Fă zoom pe elementul media {{ index }}"
+    "zoom_media": "Fă zoom pe elementul media {{ index }}",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "recenzii",

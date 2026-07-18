@@ -587,7 +587,8 @@
     "y_position": "Pystysuuntainen sijainti",
     "enable_sticky_add_to_cart": "Kiinteä Lisää ostoskoriin -palkki",
     "sticky_add_to_cart": "Kiinteä Lisää ostoskoriin -toiminto",
-    "actions_display_style": "Valikkotyyli"
+    "actions_display_style": "Valikkotyyli",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Omena",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Näyttää SKU-koodin päätuotteesta",
     "content_layout": "Sisällön asettelu",
     "mobile_media_1": "Mobiilimedia 1",
-    "utilities": "Aputoiminnot"
+    "utilities": "Aputoiminnot",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Jaa tietoja brändistäsi asiakkaillesi. Kuvaile tuotetta, tee ilmoituksia tai toivota asiakkaat tervetulleiksi kauppaasi.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Logo pysyy näkyvissä, kun kiinteä ylätunniste on aktiivinen",
     "media_type_info": "Ominaisuudet noudetaan valikkolinkeistäsi",
     "logo_height": "Vaikuttaa vain ylätunnisteen logoon",
-    "actions_display_style": "Kuvakkeet ovat aina käytössä mobiililaitteilla"
+    "actions_display_style": "Kuvakkeet ovat aina käytössä mobiililaitteilla",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "basic": "Perusosat",

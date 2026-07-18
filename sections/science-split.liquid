@@ -5,7 +5,7 @@
     {%- if section.settings.image != blank -%}
       <img width="1200" height="900" src="{{ section.settings.image | image_url: width: 1920 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy">
     {%- else -%}
-      <img width="600" height="450" src="{{ 'doctor-photo.png' | asset_url }}" alt="{{ section.settings.person_name | escape }}" loading="lazy">
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'science-split__placeholder placeholder-svg' }}
     {%- endif -%}
 
     <div class="science-split__caption reveal">

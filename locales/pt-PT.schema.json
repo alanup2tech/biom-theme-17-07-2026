@@ -587,7 +587,8 @@
     "y_position": "Posição vertical",
     "enable_sticky_add_to_cart": "Barra fixa de adicionar ao carrinho",
     "sticky_add_to_cart": "Barra fixa de adicionar ao carrinho",
-    "actions_display_style": "Estilo do menu"
+    "actions_display_style": "Estilo do menu",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Maçã",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Apresenta o SKU do produto principal",
     "content_layout": "Esquema do conteúdo",
     "mobile_media_1": "Conteúdo multimédia para telemóvel 1",
-    "utilities": "Utilitários"
+    "utilities": "Utilitários",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Partilhe informações sobre a sua marca com os seus clientes. Descreva um produto, faça anúncios ou dê as boas-vindas aos clientes na sua loja.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "O logótipo permanecerá visível quando o cabeçalho fixo estiver ativo",
     "media_type_info": "As funcionalidades são preenchidas a partir das ligações do menu",
     "logo_height": "Afeta apenas o logótipo do cabeçalho",
-    "actions_display_style": "Os ícones são sempre utilizados em telemóvel"
+    "actions_display_style": "Os ícones são sempre utilizados em telemóvel",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "basic": "Básico",

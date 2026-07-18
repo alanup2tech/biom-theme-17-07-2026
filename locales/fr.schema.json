@@ -587,7 +587,8 @@
     "y_position": "Position verticale",
     "enable_sticky_add_to_cart": "Barre d’ajout au panier flottante",
     "sticky_add_to_cart": "Ajout au panier flottant",
-    "actions_display_style": "Style de menu"
+    "actions_display_style": "Style de menu",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Pomme",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Affiche le SKU du produit parent",
     "content_layout": "Mise en page du contenu",
     "mobile_media_1": "Média mobile 1",
-    "utilities": "Utilitaires"
+    "utilities": "Utilitaires",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Partagez des informations sur votre marque avec vos clients. Décrivez un produit, faites des annonces ou accueillez les clients dans votre boutique.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Le logo restera visible lorsque l’en-tête fixe est actif",
     "media_type_info": "Les fonctionnalités sont renseignées à partir des liens de votre menu",
     "logo_height": "Affecte uniquement le logo de l’en-tête",
-    "actions_display_style": "Les icônes sont toujours utilisées sur mobile"
+    "actions_display_style": "Les icônes sont toujours utilisées sur mobile",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "basic": "De base",

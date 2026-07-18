@@ -587,7 +587,8 @@
     "y_position": "Dikey konum",
     "enable_sticky_add_to_cart": "Sabit sepete ekle çubuğu",
     "sticky_add_to_cart": "Sabit sepete ekle",
-    "actions_display_style": "Menü stili"
+    "actions_display_style": "Menü stili",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Apple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Ana üründeki SKU'yu görüntüler",
     "content_layout": "İçerik düzeni",
     "mobile_media_1": "Mobil medya 1",
-    "utilities": "Araçlar"
+    "utilities": "Araçlar",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Markanızla ilgili bilgileri müşterilerinizle paylaşın. Bir ürünü açıklayın, duyurular yapın veya mağazanıza gelen müşterileri karşılayın.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Yapışkan üstbilgi etkinken logo görünür kalır",
     "media_type_info": "Özellikler, menü bağlantılarınız kullanılarak oluşturulur",
     "logo_height": "Yalnızca üstbilgi logosunu etkiler",
-    "actions_display_style": "Mobilde her zaman simgeler kullanılır"
+    "actions_display_style": "Mobilde her zaman simgeler kullanılır",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "product_list": "Öne çıkan koleksiyon",

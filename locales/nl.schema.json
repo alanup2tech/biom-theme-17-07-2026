@@ -587,7 +587,8 @@
     "y_position": "Verticale positie",
     "enable_sticky_add_to_cart": "Vaste 'Toevoegen aan winkelwagen'-balk",
     "sticky_add_to_cart": "Vaste 'Toevoegen aan winkelwagen'-balk",
-    "actions_display_style": "Menustijl"
+    "actions_display_style": "Menustijl",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Apple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Toont de SKU van het bovenliggende product",
     "content_layout": "Contentopmaak",
     "mobile_media_1": "Mobiele media 1",
-    "utilities": "Hulpmiddelen"
+    "utilities": "Hulpmiddelen",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Deel informatie over je merk met je klanten. Beschrijf een product, doe aankondigingen of heet klanten welkom in je winkel.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Logo blijft zichtbaar wanneer de vaste koptekst actief is",
     "media_type_info": "Functies worden gevuld vanuit je menulinks",
     "logo_height": "Alleen van invloed op het koptekstlogo",
-    "actions_display_style": "Op mobiel worden altijd pictogrammen gebruikt"
+    "actions_display_style": "Op mobiel worden altijd pictogrammen gebruikt",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "product_list": "Uitgelichte collectie",

@@ -587,7 +587,8 @@
     "y_position": "垂直位置",
     "enable_sticky_add_to_cart": "固定加入購物車列",
     "sticky_add_to_cart": "固定加入購物車",
-    "actions_display_style": "選單樣式"
+    "actions_display_style": "選單樣式",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Apple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "顯示父商品的存貨單位 (SKU)",
     "content_layout": "內容版面配置",
     "mobile_media_1": "行動裝置用多媒體檔案 1",
-    "utilities": "公用程式"
+    "utilities": "公用程式",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>向顧客分享您的品牌故事。可用來敘述產品、發布公告，或歡迎顧客造訪您的商店。</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "啟用固定頁首時，標誌仍會顯示",
     "media_type_info": "功能會根據您的選單連結自動帶入",
     "logo_height": "僅影響頁首標誌",
-    "actions_display_style": "在行動裝置上一律使用圖示"
+    "actions_display_style": "在行動裝置上一律使用圖示",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "basic": "基本",

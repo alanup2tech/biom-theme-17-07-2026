@@ -43,11 +43,14 @@
     {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
     {{ 'component-slider.css' | asset_url | stylesheet_tag }}
     {{ 'qa-edits.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
+    {% # theme-check-disable RemoteAsset %}
     <script src="https://chatbot.biomprobiotics.com/widget/widget.js" defer></script>
-  {% include 'hulk_po_vd' %}</head>
+    {% # theme-check-enable RemoteAsset %}
+    {% render 'hulk_po_vd' %}
+  </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }} template-{{ template.name }}{% if template.suffix != blank %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}

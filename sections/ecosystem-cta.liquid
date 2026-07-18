@@ -13,7 +13,7 @@
     {%- if section.settings.image != blank -%}
       <img width="1200" height="900" src="{{ section.settings.image | image_url: width: 1560 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy">
     {%- else -%}
-      <img width="600" height="450" src="{{ 'ecosystem-hands.png' | asset_url }}" alt="" loading="lazy">
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'ecosystem-cta__placeholder placeholder-svg' }}
     {%- endif -%}
   </div>
 </section>

@@ -126,7 +126,10 @@
     "show_all_options": "Mostra tutte le opzioni",
     "open": "Apri",
     "back_to": "Torna a {{ title }}",
-    "zoom_media": "Zoom media {{ index }}"
+    "zoom_media": "Zoom media {{ index }}",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "recensioni",

@@ -124,7 +124,10 @@
     "show_all_options": "Visa alla alternativ",
     "open": "Öppna",
     "back_to": "Tillbaka till {{ title }}",
-    "zoom_media": "Zooma media {{ index }}"
+    "zoom_media": "Zooma media {{ index }}",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "recensioner",

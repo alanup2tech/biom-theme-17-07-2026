@@ -124,7 +124,10 @@
     "show_all_options": "显示所有选项",
     "open": "打开",
     "back_to": "返回 {{ title }}",
-    "zoom_media": "缩放媒体文件 {{ index }}"
+    "zoom_media": "缩放媒体文件 {{ index }}",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "评价",

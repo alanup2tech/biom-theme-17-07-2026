@@ -14,11 +14,11 @@
 
   if variant
     assign quantity_rule_soldout = false
-    if variant.quantity_rule.min > variant.inventory_quantity and inventory_managed and inventory_policy == 'deny'
+    if variant.quantity_rule.min > inventory_quantity and inventory_managed and inventory_policy == 'deny'
       assign quantity_rule_soldout = true
     endif
 
-    if variant.available
+    if variant.available and quantity_rule_soldout == false
       assign can_add_to_cart = true
     endif
   endif

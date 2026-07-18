@@ -124,7 +124,10 @@
     "show_all_options": "Hiển thị tất cả tùy chọn",
     "open": "Mở",
     "back_to": "Quay lại {{ title }}",
-    "zoom_media": "Thu phóng nội dung {{ index }}"
+    "zoom_media": "Thu phóng nội dung {{ index }}",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "đánh giá",

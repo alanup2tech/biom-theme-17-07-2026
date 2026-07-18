@@ -124,7 +124,10 @@
     "show_all_options": "Összes lehetőség megjelenítése",
     "open": "Megnyitás",
     "back_to": "Vissza ide: {{ title }}",
-    "zoom_media": "Médiaelem nagyítása ({{ index }})"
+    "zoom_media": "Médiaelem nagyítása ({{ index }})",
+    "copy_shareable_cart_link": "Copy shareable cart link",
+    "cart_link_copied": "Link copied!",
+    "share_cart_title": "Shared cart"
   },
   "content": {
     "reviews": "összegzés",

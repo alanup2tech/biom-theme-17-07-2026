@@ -587,7 +587,8 @@
     "y_position": "Vertikální umístění",
     "enable_sticky_add_to_cart": "Přilepený panel Přidat do košíku",
     "sticky_add_to_cart": "Přilepené tlačítko Přidat do košíku",
-    "actions_display_style": "Styl nabídky"
+    "actions_display_style": "Styl nabídky",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Apple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Zobrazuje SKU nadřazeného produktu",
     "content_layout": "Rozvržení obsahu",
     "mobile_media_1": "Mobilní média 1",
-    "utilities": "Nástroje"
+    "utilities": "Nástroje",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Sdílejte informace o značce se zákazníky. Popište produkt, oznamte novinky nebo přivítejte zákazníky v obchodě.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Logo zůstane viditelné, když je aktivní přilepené záhlaví",
     "media_type_info": "Funkce se načítají z odkazů v nabídce",
     "logo_height": "Týká se pouze loga v záhlaví",
-    "actions_display_style": "Na mobilních zařízeních se vždy používají ikony"
+    "actions_display_style": "Na mobilních zařízeních se vždy používají ikony",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "product_list": "Propagovaná kolekce",

@@ -11,62 +11,50 @@
   {%- render 'faq-page-sidebar' -%}
 
   <div class="faq-page__wrap">
-    {%- assign category_open = false -%}
-    {%- assign is_compact_section = false -%}
+    {%- assign category_number = 0 -%}
 
     {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        {%- when 'category' -%}
-          {%- assign is_compact_section = category_open -%}
-          {%- if category_open -%}
-                </div>
-              </div>
-            </div>
-          </div>
-          {%- endif -%}
-
-          <div
-            id="{{ block.settings.anchor_id | escape }}"
-            class="faq-page__section{% if is_compact_section %} faq-page__section--compact{% endif %}"
-            {{ block.shopify_attributes }}
-          >
-            <div class="faq-page__row">
-              <div class="faq-page__main">
-                {%- if block.settings.title != blank -%}
-                  <h3 class="faq-page__category-title">{{ block.settings.title }}</h3>
-                {%- endif -%}
-                <div class="faq-page__accordion">
-
-          {%- assign category_open = true -%}
-
-        {%- when 'question' -%}
-          {%- if category_open -%}
-            <details class="faq-page__item" {{ block.shopify_attributes }}>
-              <summary class="faq-page__question">
-                <span class="faq-page__question-text">{{ block.settings.question }}</span>
-                <span class="faq-page__icon" aria-hidden="true">{{- 'icon-faq-caret.svg' | inline_asset_content -}}</span>
-                
-              </summary>
-              {%- if block.settings.answer != blank -%}
-                <div class="faq-page__answer rte">
-                  <div class="faq-page__answer-inner">
-                    <p>{{ block.settings.answer }}</p>
-                  </div>
-                </div>
-              {%- else -%}
-                <div class="faq-page__answer faq-page__answer--empty"></div>
+      {%- if block.type == 'category' -%}
+        {%- assign category_number = category_number | plus: 1 -%}
+        {%- assign question_offset = forloop.index -%}
+        <div
+          id="{{ block.settings.anchor_id | escape }}"
+          class="faq-page__section{% if category_number > 1 %} faq-page__section--compact{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="faq-page__row">
+            <div class="faq-page__main">
+              {%- if block.settings.title != blank -%}
+                <h3 class="faq-page__category-title">{{ block.settings.title }}</h3>
               {%- endif -%}
-            </details>
-          {%- endif -%}
-      {%- endcase -%}
-    {%- endfor -%}
-
-    {%- if category_open -%}
-                </div>
+              <div class="faq-page__accordion">
+                {%- for question_block in section.blocks offset: question_offset -%}
+                  {%- if question_block.type == 'category' -%}
+                    {%- break -%}
+                  {%- elsif question_block.type == 'question' -%}
+                    <details class="faq-page__item" {{ question_block.shopify_attributes }}>
+                      <summary class="faq-page__question">
+                        <span class="faq-page__question-text">{{ question_block.settings.question }}</span>
+                        <span class="faq-page__icon" aria-hidden="true">{{- 'icon-faq-caret.svg' | inline_asset_content -}}</span>
+                      </summary>
+                      {%- if question_block.settings.answer != blank -%}
+                        <div class="faq-page__answer rte">
+                          <div class="faq-page__answer-inner">
+                            <p>{{ question_block.settings.answer }}</p>
+                          </div>
+                        </div>
+                      {%- else -%}
+                        <div class="faq-page__answer faq-page__answer--empty"></div>
+                      {%- endif -%}
+                    </details>
+                  {%- endif -%}
+                {%- endfor -%}
               </div>
             </div>
           </div>
-    {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
   </div>
 </div>
 

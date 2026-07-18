@@ -587,7 +587,8 @@
     "y_position": "縦位置",
     "enable_sticky_add_to_cart": "固定「カートに追加」バー",
     "sticky_add_to_cart": "固定「カートに追加」",
-    "actions_display_style": "メニュースタイル"
+    "actions_display_style": "メニュースタイル",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Apple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "親商品のSKUを表示します",
     "content_layout": "コンテンツレイアウト",
     "mobile_media_1": "モバイルメディア1",
-    "utilities": "ユーティリティ"
+    "utilities": "ユーティリティ",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>ブランドに関する情報をお客様に伝えましょう。商品の説明、お知らせ、ストアへのお客様への歓迎メッセージなどに使用します。</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "ロゴは、固定ヘッダーが有効な場合は表示されたままになります",
     "media_type_info": "機能はメニューのリンクを元に表示されます。",
     "logo_height": "ヘッダーのロゴにのみ適用されます。",
-    "actions_display_style": "モバイルでは常にアイコンが表示されます"
+    "actions_display_style": "モバイルでは常にアイコンが表示されます",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "product_list": "特集コレクション",

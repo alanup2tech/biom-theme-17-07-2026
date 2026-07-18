@@ -587,7 +587,8 @@
     "y_position": "Loddrett posisjon",
     "enable_sticky_add_to_cart": "Festet «Legg i handlekurv»-linje",
     "sticky_add_to_cart": "Festet «Legg i handlekurv»",
-    "actions_display_style": "Menystil"
+    "actions_display_style": "Menystil",
+    "vagibiom_cart_notice_text": "Notice message"
   },
   "options": {
     "apple": "Eple",
@@ -979,7 +980,8 @@
     "resource_reference_product_sku": "Viser SKU fra hovedproduktet",
     "content_layout": "Innholdslayout",
     "mobile_media_1": "Mobilmedium 1",
-    "utilities": "Verktøy"
+    "utilities": "Verktøy",
+    "vagibiom_cart_notice": "VagiBiom cart notice"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Del informasjon om merkevaren din med kundene. Beskriv et produkt, kom med kunngjøringer eller ønsk kundene velkommen til butikken.</p>",
@@ -1098,7 +1100,8 @@
     "hide_logo_on_home_page_help": "Logoen forblir synlig når klebrig topptekst er aktiv",
     "media_type_info": "Funksjonene hentes fra menykoblingene",
     "logo_height": "Påvirker kun logoen i toppteksten",
-    "actions_display_style": "Ikoner brukes alltid på mobil"
+    "actions_display_style": "Ikoner brukes alltid på mobil",
+    "vagibiom_cart_notice_text": "Shown in the cart and cart drawer when a product tagged \"vagibiom\" is in the cart. Leave empty to hide."
   },
   "categories": {
     "product_list": "Utvalgt samling",
