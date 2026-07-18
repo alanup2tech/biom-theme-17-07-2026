@@ -14,8 +14,8 @@
       "name": "Contact page",
       "settings": {
         "heading": "Find Out More",
-        "message_label": "Message",
-        "button_label": "Send Message",
+        "message_label": "Comment",
+        "button_label": "Submit",
         "accent_color": "#6A8E4E",
         "panel_background": "#6A8E4E",
         "panel_text_color": "#ffffff",
