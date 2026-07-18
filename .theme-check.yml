@@ -1,0 +1,14 @@
+extends: theme-check:recommended
+
+# Archived app-integration snapshots are not part of the active theme.
+ignore:
+  - node_modules/**
+  - "**/*-hulkapps-backup.liquid"
+
+# These templates reference blocks supplied by installed Shopify apps.
+JSONMissingBlock:
+  enabled: false
+
+# Shared component classes are intentionally styled across section/snippet boundaries.
+ValidScopedCSSClass:
+  enabled: false
