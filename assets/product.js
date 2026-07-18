@@ -267,6 +267,27 @@ function initSubscribeSaveButton(section) {
     return /one.?time/i.test(getOptionLabel(row));
   }
 
+  function isSubscriptionSelected() {
+    var activeOption = getSubifyActiveOption();
+
+    if (activeOption) {
+      if (activeOption.classList.contains('subscription-option')) return true;
+      if (activeOption.classList.contains('one-time-purchase-option')) return false;
+
+      var optionText = activeOption.textContent.toLowerCase();
+      if (/one.?time/.test(optionText)) return false;
+      if (/subscribe|subscription|recurring/.test(optionText)) return true;
+    }
+
+    var selectedRow = getSelectedRow();
+    if (selectedRow) {
+      if (isOneTimeRow(selectedRow)) return false;
+      if (isSubscribeRow(selectedRow)) return true;
+    }
+
+    return false;
+  }
+
   function pickPriceForRow(prices, row) {
     if (!prices.length) return '';
 
@@ -406,11 +427,24 @@ function initSubscribeSaveButton(section) {
         buttonLabel = 'Quick Cart';
       }
     }
+  } else {
+    var selectedRow = getSelectedRow();
+    if (selectedRow && isSubscribeRow(selectedRow)) {
+      buttonLabel = 'Subscribe & Save';
+    }
+  }
+
+  button.classList.remove('is-out-of-stock');
+
+  if (isSubscriptionSelected()) {
+    labelTextEl.textContent = buttonLabel;
+    priceEl.hidden = true;
+    button.setAttribute('aria-label', buttonLabel);
+    return;
   }
 
   labelTextEl.textContent = buttonLabel + ' –';
   priceEl.hidden = false;
-  button.classList.remove('is-out-of-stock');
 
   if (isValidPrice(price)) {
     button.setAttribute('aria-label', buttonLabel + ' – ' + price);
@@ -421,6 +455,11 @@ function initSubscribeSaveButton(section) {
 
   function applyPrice() {
     if (isApplying) return;
+
+    if (isSubscriptionSelected()) {
+      syncButtonLabel('');
+      return;
+    }
 
     var unitPrice = getSelectedPrice();
     var price = formatPriceForQuantity(unitPrice, getCurrentQuantity());
