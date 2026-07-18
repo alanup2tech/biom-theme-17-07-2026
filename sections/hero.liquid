@@ -1,15 +1,34 @@
 {{ 'section-hero.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign left_background_video = section.settings.left_background_video
+  assign left_background_poster = section.settings.left_background
+  if left_background_poster == blank and left_background_video != blank
+    assign left_background_poster = left_background_video.preview_image
+  endif
+-%}
+
 <section class="hero">
   <div class="hero__left">
-    {%- if section.settings.left_background_video != blank -%}
-      <video class="hero__left-bg" autoplay muted loop playsinline>
-        {%- for source in section.settings.left_background_video.sources -%}
-          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+    {%- if left_background_poster != blank -%}
+      {{
+        left_background_poster
+        | image_url: width: 1280
+        | image_tag:
+          class: 'hero__left-bg hero__left-bg--poster',
+          widths: '480, 750, 960, 1280',
+          sizes: '(max-width: 749px) 100vw, 50vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: ''
+      }}
+    {%- endif -%}
+    {%- if left_background_video != blank -%}
+      <video class="hero__left-bg" muted loop playsinline preload="none" data-hero-background-video aria-hidden="true">
+        {%- for source in left_background_video.sources -%}
+          <source data-src="{{ source.url }}" type="{{ source.mime_type }}">
         {%- endfor -%}
       </video>
-    {%- elsif section.settings.left_background != blank -%}
-      <img class="hero__left-bg" src="{{ section.settings.left_background | image_url: width: 1920 }}" alt="" width="960" height="810" loading="eager">
     {%- endif -%}
     <h1 class="hero__heading reveal">{{ section.settings.heading }}</h1>
     <p class="hero__text reveal">{{ section.settings.text }}</p>
@@ -130,14 +149,16 @@
                   autoplay: false,
                   loop: false,
                   muted: false,
+                  preload: 'none',
                   class: 'hero__video-modal-video'
               }}
             {%- elsif popup_embed_url != blank -%}
               <iframe
                 class="hero__video-modal-iframe"
-                src="{{ popup_embed_url }}"
+                data-src="{{ popup_embed_url }}"
                 title="{{ section.settings.video_title | default: 'Video player' | escape }}"
                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                loading="lazy"
                 allowfullscreen
               ></iframe>
             {%- endif -%}

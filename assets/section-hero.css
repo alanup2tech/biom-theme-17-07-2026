@@ -27,8 +27,15 @@
 }
 
 video.hero__left-bg {
+  z-index: 0;
   display: block;
+  opacity: 0;
   transform: scale(1.8);
+  transition: opacity 300ms ease;
+}
+
+video.hero__left-bg.is-playing {
+  opacity: 1;
 }
 
 .hero__left > *:not(.hero__left-bg) {

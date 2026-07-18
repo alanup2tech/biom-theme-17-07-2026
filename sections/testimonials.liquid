@@ -58,8 +58,9 @@
                     -%}
                     <iframe
                       class="{{ video_class }}"
-                      src="{{ video_src }}"
+                      data-src="{{ video_src }}"
                       allow="autoplay; encrypted-media"
+                      loading="lazy"
                       allowfullscreen
                       title="{{ block.settings.name | escape }}"
                     ></iframe>
@@ -72,7 +73,8 @@
                         controls: true,
                         autoplay: false,
                         loop: false,
-                        muted: false
+                        muted: false,
+                        preload: 'none'
                     }}
                   {%- endif -%}
                 </div>
@@ -194,8 +196,9 @@
                   -%}
                   <iframe
                     class="{{ video_class }}"
-                    src="{{ video_src }}"
+                    data-src="{{ video_src }}"
                     allow="autoplay; encrypted-media"
+                    loading="lazy"
                     allowfullscreen
                     title="{{ block.settings.name | escape }}"
                   ></iframe>
@@ -208,7 +211,8 @@
                       controls: true,
                       autoplay: false,
                       loop: false,
-                      muted: false
+                      muted: false,
+                      preload: 'none'
                   }}
                 {%- endif -%}
               </div>

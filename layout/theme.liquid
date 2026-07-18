@@ -38,16 +38,43 @@
 
     {{ content_for_header }}
     {% # theme-check-enable RemoteAsset %}
-    {{ 'swiper-bundle.css' | asset_url | stylesheet_tag }}
     {{ 'responsive.css' | asset_url | stylesheet_tag }}
     {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
     {{ 'component-slider.css' | asset_url | stylesheet_tag }}
     {{ 'qa-edits.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
+    <script src="{{ 'section-swipers.js' | asset_url }}" type="module" fetchpriority="low"></script>
     {% # theme-check-disable RemoteAsset %}
-    <script src="https://chatbot.biomprobiotics.com/widget/widget.js" defer></script>
+    <script>
+      (() => {
+        const chatbotUrl = 'https://chatbot.biomprobiotics.com/widget/widget.js';
+        let chatbotLoaded = false;
+
+        const loadChatbot = () => {
+          if (chatbotLoaded) return;
+          chatbotLoaded = true;
+          const script = document.createElement('script');
+          script.src = chatbotUrl;
+          script.async = true;
+          document.head.appendChild(script);
+        };
+
+        ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
+          window.addEventListener(eventName, loadChatbot, { once: true, passive: true });
+        });
+
+        window.addEventListener('load', () => {
+          window.setTimeout(() => {
+            if ('requestIdleCallback' in window) {
+              window.requestIdleCallback(loadChatbot, { timeout: 4000 });
+            } else {
+              loadChatbot();
+            }
+          }, 3000);
+        }, { once: true });
+      })();
+    </script>
     {% # theme-check-enable RemoteAsset %}
     {% render 'hulk_po_vd' %}
   </head>

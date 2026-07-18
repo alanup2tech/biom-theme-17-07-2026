@@ -1,327 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-  var swiper = new Swiper(".featureSwiper", {
-      slidesPerView: 4,
-      spaceBetween: 30,
-      loop: true,
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-          spaceBetween: 16,
-          centeredSlides: true,
-        },
-        768: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-          centeredSlides: false,
-        },
-        1024: {
-          slidesPerView: 3,
-          spaceBetween: 24,
-          centeredSlides: false,
-        },
-        1400: {
-          slidesPerView: 4,
-          spaceBetween: 30,
-          centeredSlides: false,
-        },
-      },
-      pagination: {
-        el: ".featureSwiper .swiper-pagination",
-        clickable: true,
-      },
-      autoplay: {
-        delay: 1500,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      },
-  });
-  // var swiper = new Swiper(".testimonials-swiper", {
-  //     slidesPerView: 1,
-  //     slidesPerGroup: 1,
-  //     spaceBetween: 30,
-  //     loop: true,
-  //     breakpoints: {
-  //       0: {
-  //         slidesPerView: 1,
-  //         spaceBetween: 12,
-  //         slidesPerGroup: 1,
-  //       },
-  //       426: {
-  //         slidesPerView: 1,
-  //         spaceBetween: 14,
-  //         slidesPerGroup: 1,
-  //       },
-  //       768: {
-  //         slidesPerView: 2,
-  //         spaceBetween: 30,
-  //         slidesPerGroup: 1,
-  //       },
-  //     },
-  //     pagination: {
-  //         el: ".testimonial-pagination-desktop",
-  //         type: "progressbar",
-  //         clickable: true,
-  //     },
-  //     navigation: {
-  //         nextEl: ".testimonials-swiper .swiper-button-next",
-  //         prevEl: ".testimonials-swiper .swiper-button-prev",
-  //     },
-  //     autoplay: {
-  //         delay: 2000,                  
-  //         disableOnInteraction: false,
-  //         pauseOnMouseEnter: true,  
-  //     },
-  // });
-  // var swiper = new Swiper(".testimonials-swiper-mob", {
-  //     slidesPerView: 1,
-  //     slidesPerGroup: 1,
-  //     spaceBetween: 30,
-  //     loop: true,
-  //     breakpoints: {
-  //       0: {
-  //         slidesPerView: 1,
-  //         spaceBetween: 12,
-  //         slidesPerGroup: 1,
-  //       },
-  //       426: {
-  //         slidesPerView: 1,
-  //         spaceBetween: 14,
-  //         slidesPerGroup: 1,
-  //       },
-  //       768: {
-  //         slidesPerView: 1,
-  //         spaceBetween: 30,
-  //         slidesPerGroup: 1,
-  //       },
-  //     },
-  //     pagination: {
-  //     el: '.testimonials-swiper-mob .swiper-pagination',
-  //     type: 'bullets',
-  //     clickable: true,
-  //   },
-  //     // navigation: {
-  //     //     nextEl: ".testimonials-swiper .swiper-button-next",
-  //     //     prevEl: ".testimonials-swiper .swiper-button-prev",
-  //     // },
-  //     autoplay: {
-  //         delay: 2000,                  
-  //         disableOnInteraction: false,
-  //         pauseOnMouseEnter: true,  
-  //     },
-  // });
- if (document.querySelector('.testimonials-swiper--desktop')) {
-    new Swiper('.testimonials-swiper--desktop', {
-      slidesPerView: 2,
-      slidesPerGroup: 1,
-      spaceBetween: 24,
-      loop: true,
-      pagination: {
-        el: '.testimonial-pagination-desktop',
-        type: 'progressbar',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.testimonials-swiper--desktop .swiper-button-next',
-        prevEl: '.testimonials-swiper--desktop .swiper-button-prev',
-      },
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      },
-    });
-  }
-
-  if (document.querySelector('.testimonials-swiper-mob')) {
-    new Swiper('.testimonials-swiper-mob', {
-      slidesPerView: 1,
-      slidesPerGroup: 1,
-      spaceBetween: 12,
-      loop: true,
-      pagination: {
-        el: '.testimonial-pagination-mobile',
-        type: 'bullets',
-        clickable: true,
-      },
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      },
-    });
-  }
-  var swiper = new Swiper('.image-banner-swiper', {
-    loop: true,
-    speed: 800,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
-    // effect: 'fade',
-    // fadeEffect: {
-    //   crossFade: true
-    // },
-    pagination: {
-      el: '.image-banner-swiper .swiper-pagination',
-      type: 'bullets',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.image-banner-swiper .swiper-button-next',
-      prevEl: '.image-banner-swiper .swiper-button-prev',
-    },
-  });
-});
-document.addEventListener('click', function (e) {
-  const btn = e.target.closest('.js-play-video');
-  if (!btn) return;
-
-  const card = btn.closest('.testimonial-card--video');
-  const video = card.querySelector('video');
-  const iframe = card.querySelector('iframe');
-
-  card.classList.add('is-playing');
-  if (video) {
-    video.play();
-  }
-  if (iframe) {
-    const src = iframe.src;
-    iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
-  }
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-  // Get Swiper instance
-  const swiperEl = document.querySelector('.testimonials-swiper');
-  const swiper = swiperEl?.swiper;
-
-  // Handle each play button
-  document.querySelectorAll('.js-play-video').forEach(function (playBtn) {
-    playBtn.addEventListener('click', function () {
-      const card = playBtn.closest('.testimonial-card--video');
-      const poster = card?.querySelector('.testimonial-card__poster');
-      const videoEl = card?.querySelector('.testimonial-card__video');
-      const video = card?.querySelector('video.testimonial-video');
-      const iframe = card?.querySelector('iframe');
-
-      // Hide poster + play button, show video
-      if (poster) poster.style.display = 'none';
-      if (videoEl) videoEl.style.display = 'block';
-      playBtn.style.display = 'none';
-
-      // Stop swiper autoplay while video plays
-      if (swiper) swiper.autoplay?.stop();
-
-      if (video) {
-        // Show pause state while buffering
-        video.addEventListener('waiting', function () {
-          playBtn.style.display = 'none'; // keep hidden, buffering
-        });
-
-        // Resume swiper when video ends or is paused
-        video.addEventListener('pause', function () {
-          if (swiper) swiper.autoplay?.start();
-          playBtn.style.display = 'flex';
-        });
-
-        video.addEventListener('ended', function () {
-          if (swiper) swiper.autoplay?.start();
-          // Show poster again
-          if (poster) poster.style.display = 'block';
-          if (videoEl) videoEl.style.display = 'none';
-          playBtn.style.display = 'flex';
-        });
-
-        video.play();
-      }
-
-      // For YouTube / Vimeo iframes — just stop swiper, can't control play/pause
-      if (iframe) {
-        // Resume swiper if user navigates away (slide change)
-        swiper?.on('slideChange', function () {
-          if (swiper) swiper.autoplay?.start();
-        });
-      }
-    });
-  });
-
-  // Also stop swiper on slide change if a video is playing
-  swiper?.on('slideChange', function () {
-    document.querySelectorAll('video.testimonial-video').forEach(function (v) {
-      if (!v.paused) {
-        v.pause();
-        if (swiper) swiper.autoplay?.start();
-      }
-    });
-  });
-
-});
-document.addEventListener('DOMContentLoaded', function () {
-  // Get Swiper instance
-  const swiperEl = document.querySelector('.testimonials-swiper-mob');
-  const swiper = swiperEl?.swiper;
-
-  // Handle each play button
-  document.querySelectorAll('.js-play-video').forEach(function (playBtn) {
-    playBtn.addEventListener('click', function () {
-      const card = playBtn.closest('.testimonial-card--video');
-      const poster = card?.querySelector('.testimonial-card__poster');
-      const videoEl = card?.querySelector('.testimonial-card__video');
-      const video = card?.querySelector('video.testimonial-video');
-      const iframe = card?.querySelector('iframe');
-
-      // Hide poster + play button, show video
-      if (poster) poster.style.display = 'none';
-      if (videoEl) videoEl.style.display = 'block';
-      playBtn.style.display = 'none';
-
-      // Stop swiper autoplay while video plays
-      if (swiper) swiper.autoplay?.stop();
-
-      if (video) {
-        // Show pause state while buffering
-        video.addEventListener('waiting', function () {
-          playBtn.style.display = 'none'; // keep hidden, buffering
-        });
-
-        // Resume swiper when video ends or is paused
-        video.addEventListener('pause', function () {
-          if (swiper) swiper.autoplay?.start();
-          playBtn.style.display = 'flex';
-        });
-
-        video.addEventListener('ended', function () {
-          if (swiper) swiper.autoplay?.start();
-          // Show poster again
-          if (poster) poster.style.display = 'block';
-          if (videoEl) videoEl.style.display = 'none';
-          playBtn.style.display = 'flex';
-        });
-
-        video.play();
-      }
-
-      // For YouTube / Vimeo iframes — just stop swiper, can't control play/pause
-      if (iframe) {
-        // Resume swiper if user navigates away (slide change)
-        swiper?.on('slideChange', function () {
-          if (swiper) swiper.autoplay?.start();
-        });
-      }
-    });
-  });
-
-  // Also stop swiper on slide change if a video is playing
-  swiper?.on('slideChange', function () {
-    document.querySelectorAll('video.testimonial-video').forEach(function (v) {
-      if (!v.paused) {
-        v.pause();
-        if (swiper) swiper.autoplay?.start();
-      }
-    });
-  });
-
-});
 
   const menuBtn = document.querySelector('#header-menu-btn');
   const themeMenuBtn = document.querySelector('.header__icon--menu');
@@ -366,15 +42,52 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'Escape') closeDrawer();
   });
 
+function initHeroBackgroundVideos(root = document) {
+  const saveData = navigator.connection?.saveData;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (saveData || reduceMotion) return;
+
+  root.querySelectorAll('[data-hero-background-video]').forEach((video) => {
+    if (video.dataset.deferredVideoInitialized === 'true') return;
+    video.dataset.deferredVideoInitialized = 'true';
+
+    const loadVideo = () => {
+      video.querySelectorAll('source[data-src]').forEach((source) => {
+        source.src = source.dataset.src;
+        source.removeAttribute('data-src');
+      });
+
+      video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
+      video.load();
+      video.play().catch(() => {});
+    };
+
+    const scheduleVideo = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadVideo, { timeout: 2000 });
+      } else {
+        window.setTimeout(loadVideo, 1000);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      scheduleVideo();
+    } else {
+      window.addEventListener('load', scheduleVideo, { once: true });
+    }
+  });
+}
 function initHeroVideoModal() {
   const modal = document.querySelector('[data-hero-video-modal]');
   const openBtn = document.querySelector('[data-hero-video-play]');
   const closeModal = modal?.querySelector('[data-hero-video-close]');
   const modalBackdrop = modal?.querySelector('[data-hero-video-backdrop]');
   const modalVideo = modal?.querySelector('video');
+  const modalIframe = modal?.querySelector('iframe[data-src]');
 
   function openHeroVideoModal() {
     if (!modal) return;
+    if (modalIframe && !modalIframe.hasAttribute('src')) modalIframe.src = modalIframe.dataset.src;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('hero-video-modal-open');
@@ -390,6 +103,7 @@ function initHeroVideoModal() {
       modalVideo.pause();
       modalVideo.currentTime = 0;
     }
+    modalIframe?.removeAttribute('src');
   }
 
   window.openHeroVideoModal = openHeroVideoModal;
@@ -413,11 +127,16 @@ function initHeroVideoModal() {
   });
 }
 
+initHeroBackgroundVideos();
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initHeroVideoModal);
 } else {
   initHeroVideoModal();
 }
+
+document.addEventListener('shopify:section:load', (event) => initHeroBackgroundVideos(event.target));
+
 (function () {
   'use strict';
 
