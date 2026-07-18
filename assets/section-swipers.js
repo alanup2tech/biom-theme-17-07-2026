@@ -42,7 +42,14 @@ function loadSwiperScript() {
     script.src = scriptUrl;
     script.async = true;
     script.addEventListener('load', () => resolve(window.Swiper), { once: true });
-    script.addEventListener('error', reject, { once: true });
+    script.addEventListener(
+      'error',
+      (error) => {
+        window.BiomSwiperPromise = null;
+        reject(error);
+      },
+      { once: true }
+    );
     document.head.appendChild(script);
   });
 
@@ -50,12 +57,39 @@ function loadSwiperScript() {
 }
 
 function autoplayOptions(element, delay) {
-  if (element.dataset.autoplay === 'false') return false;
-
   return {
+    enabled: element.dataset.autoplay !== 'false',
     delay,
     disableOnInteraction: false,
     pauseOnMouseEnter: true,
+  };
+}
+
+function paginationConfig(element, type = 'bullets') {
+  const pagination = element.querySelector('.swiper-pagination');
+  if (!pagination) return {};
+
+  return {
+    pagination: {
+      enabled: true,
+      el: pagination,
+      type,
+      clickable: true,
+    },
+  };
+}
+
+function navigationConfig(element) {
+  const nextEl = element.querySelector('.swiper-button-next');
+  const prevEl = element.querySelector('.swiper-button-prev');
+  if (!nextEl || !prevEl) return {};
+
+  return {
+    navigation: {
+      enabled: true,
+      nextEl,
+      prevEl,
+    },
   };
 }
 
@@ -86,10 +120,7 @@ function initializeFeatureSlider(element) {
         centeredSlides: false,
       },
     },
-    pagination: {
-      el: element.querySelector('.swiper-pagination'),
-      clickable: true,
-    },
+    ...paginationConfig(element),
     autoplay: autoplayOptions(element, 1500),
   });
 }
@@ -113,17 +144,8 @@ function initializeTestimonialSlider(element, mobile) {
     slidesPerGroup: 1,
     spaceBetween: mobile ? 12 : 24,
     loop: element.querySelectorAll('.swiper-slide').length > 1,
-    pagination: {
-      el: element.querySelector('.swiper-pagination'),
-      type: mobile ? 'bullets' : 'progressbar',
-      clickable: true,
-    },
-    navigation: mobile
-      ? undefined
-      : {
-          nextEl: element.querySelector('.swiper-button-next'),
-          prevEl: element.querySelector('.swiper-button-prev'),
-        },
+    ...paginationConfig(element, mobile ? 'bullets' : 'progressbar'),
+    ...(mobile ? {} : navigationConfig(element)),
     autoplay: autoplayOptions(element, 2000),
   });
 
@@ -139,15 +161,8 @@ function initializeImageBanner(element) {
     loop: element.querySelectorAll('.swiper-slide').length > 1,
     speed: 800,
     autoplay: autoplayOptions(element, 5000),
-    pagination: {
-      el: element.querySelector('.swiper-pagination'),
-      type: 'bullets',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: element.querySelector('.swiper-button-next'),
-      prevEl: element.querySelector('.swiper-button-prev'),
-    },
+    ...paginationConfig(element),
+    ...navigationConfig(element),
   });
 }
 
@@ -169,6 +184,7 @@ async function initializeSlider(element) {
     }
   } catch (error) {
     element.dataset.swiperInitialized = 'false';
+    observedSliders.delete(element);
     console.error('Unable to initialize slider.', error);
   }
 }
