@@ -132,7 +132,7 @@
     border-radius: 24px;
     background: #f7f7f5;
     overflow: hidden;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
   }
 
   .faq-page__item:last-child {
@@ -219,7 +219,7 @@
     height: 100%;
     transform: rotate(0);
     transform-origin: center;
-    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .faq-page__item[open]:not(.is-closing) .faq-page__icon svg {
@@ -237,7 +237,7 @@
     line-height: 1.65;
     border-top: 0;
     opacity: 0;
-    transition: opacity 0.24s ease;
+    transition: opacity 0.4s ease;
   }
 
   .faq-page__answer-inner {
@@ -433,7 +433,7 @@
       animate(startHeight, endHeight, expanded) {
         var animation = this.detail.animate(
           { height: [startHeight + 'px', endHeight + 'px'] },
-          { duration: 360, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+          { duration: 560, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
         );
 
         this.animation = animation;
