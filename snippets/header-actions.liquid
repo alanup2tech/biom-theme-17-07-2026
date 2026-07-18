@@ -6,8 +6,6 @@
   @param {object} [section] - The section object providing settings such as actions_font.
   @param {block} [block] - The block object, used for Shopify editor attributes.
   @param {string} [display_style] - Controls display mode for header actions: 'icon' or 'text'.
-  @param {string} [customer_account_menu] - The menu handle passed to the shopify-account component.
-
   @example
   {% render 'header-actions', section: section %}
 {% enddoc %}
@@ -200,6 +198,11 @@
   {% if shop.customer_accounts_enabled %}
     {% liquid
       assign account_actions_style = ''
+      assign account_url = routes.account_login_url
+      if customer
+        assign account_url = routes.account_url
+      endif
+
       if display_style == 'text' and section
         assign actions_font = section.settings.actions_font | default: 'body'
         assign font_obj = settings.type_heading_font
@@ -216,35 +219,28 @@
         assign account_actions_style = '--header-actions-font-family: ' | append: font_family_safe | append: '; --header-actions-font-weight: ' | append: font_obj.weight | append: ';'
       endif
     %}
-    <div
-      class="account-button header-actions__action{% if display_style == 'text' %} account-button--text{% endif %} color-{{ settings.popover_color_scheme }}"
+    <a
+      href="{{ account_url }}"
+      class="account-button header-actions__action{% if display_style == 'text' %} account-button--text{% endif %}"
+      aria-label="{{ 'content.account_title' | t }}"
+      rel="nofollow"
+      {% if account_actions_style != blank %}
+        style="{{ account_actions_style }}"
+      {% endif %}
     >
-      <shopify-account
-        menu="{{ customer_account_menu }}"
-        {% if account_actions_style != blank %}
-          style="{{ account_actions_style }}"
-        {% endif %}
+      <span
+        class="account-button__text header-actions__text-style {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}"
       >
-        {% if customer %}
-          <div class="account-button__fallback"></div>
-        {% else %}
-          <span
-            slot="signed-out-avatar"
-            class="account-button__text header-actions__text-style {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}"
-          >
-            {{ 'content.account_title' | t }}
-          </span>
+        {{ 'content.account_title' | t }}
+      </span>
 
-          <span
-            slot="signed-out-avatar"
-            class="{% if display_style != 'icon' %}desktop:hidden{% endif %}"
-            aria-hidden="true"
-          >
-            {{ account_icon }}
-          </span>
-        {% endif %}
-      </shopify-account>
-    </div>
+      <span
+        class="account-button__icon{% if display_style != 'icon' %} desktop:hidden{% endif %}"
+        aria-hidden="true"
+      >
+        {{ account_icon }}
+      </span>
+    </a>
   {% endif %}
 
   <span
@@ -262,19 +258,11 @@
 ></script>
 
 {% stylesheet %}
-  .header {
-    --account-offset-top: calc(
-      var(--header-group-height) + (var(--header-height) * var(--transparent-header-offset-boolean))
-    );
-
-    &[data-sticky-state='active'] {
-      --account-offset-top: calc(var(--header-height) - 1px);
-    }
-  }
-
   .account-button {
-    /* Remove the background color from the color scheme, we want to inherit the color of the header */
     background: transparent;
+    align-items: center;
+    line-height: normal;
+    text-decoration: none;
   }
 
   .account-button__icon,
@@ -283,44 +271,6 @@
     transition: color var(--header-content-transition-timing);
     -webkit-font-smoothing: antialiased;
   }
-
-  shopify-account {
-    --shopify-account-font-heading: var(--font-heading--family);
-    --shopify-account-font-heading-weight: var(--font-heading--weight);
-    --shopify-account-font-body: var(--font-body--family);
-    --shopify-account-font-body-weight: var(--font-body--weight);
-    --shopify-account-radius-base: var(--style-border-radius-popover);
-    --shopify-account-radius-button: var(--style-border-radius-buttons-primary);
-    --shopify-account-radius-button-small: var(--style-border-radius-buttons-primary);
-    --shopify-account-radius-input: var(--style-border-radius-buttons-primary);
-    --shopify-account-color-background: var(--color-background);
-    --shopify-account-color-text: var(--color-foreground);
-    --shopify-account-color-accent: var(--color-primary-button-background);
-    --shopify-account-color-accent-text: var(--color-primary-button-text);
-    --shopify-account-dialog-position-top: var(--account-offset-top);
-
-    &:not(:defined) {
-      min-width: 44px;
-      height: 44px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      /* Match the line height of the other buttons */
-      line-height: normal;
-    }
-  }
-
-  .account-button__fallback {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: var(--shopify-account-color-accent, #0a142f);
-  }
-
-  .account-button--text shopify-account {
-    color: inherit;
-  }
-
 
   header-actions {
     display: flex;
