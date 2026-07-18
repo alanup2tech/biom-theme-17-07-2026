@@ -1,0 +1,364 @@
+{%- liquid
+  assign form_id = 'ContactForm-' | append: section.id
+  assign name_id = form_id | append: '-name'
+  assign email_id = form_id | append: '-email'
+  assign message_id = form_id | append: '-message'
+-%}
+
+<section
+  class="contact-page"
+  style="--contact-accent: {{ section.settings.accent_color }}; --contact-panel: {{ section.settings.panel_background }}; --contact-panel-text: {{ section.settings.panel_text_color }};"
+>
+  <div class="contact-page__inner page-width">
+    <div class="contact-page__form-column">
+      <h2 class="contact-page__heading">{{ section.settings.heading | escape }}</h2>
+
+      {%- form 'contact', id: form_id, class: 'contact-page__form' -%}
+        <input name="contact[id]" type="hidden" value="{{ form_id }}">
+
+        {%- if form.errors -%}
+          <div class="contact-page__notice contact-page__notice--error" tabindex="-1" autofocus>
+            {{- 'icon-error.svg' | inline_asset_content -}}
+            {{- form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email -}}
+          </div>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? -%}
+          <div class="contact-page__notice contact-page__notice--success" tabindex="-1" autofocus>
+            {{- 'icon-checkmark.svg' | inline_asset_content -}}
+            {{- 'blocks.contact_form.post_success' | t -}}
+          </div>
+        {%- endif -%}
+
+        <label class="visually-hidden" for="{{ name_id }}">{{ 'blocks.contact_form.name' | t }}</label>
+        <input
+          id="{{ name_id }}"
+          class="contact-page__input"
+          type="text"
+          name="contact[name]"
+          autocomplete="name"
+          value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+          placeholder="{{ 'blocks.contact_form.name' | t }}"
+        >
+
+        <label class="visually-hidden" for="{{ email_id }}">
+          {{- 'blocks.contact_form.email' | t }} <span aria-hidden="true">*</span>
+        </label>
+        <input
+          id="{{ email_id }}"
+          class="contact-page__input"
+          type="email"
+          name="contact[email]"
+          autocomplete="email"
+          spellcheck="false"
+          autocapitalize="off"
+          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+          aria-required="true"
+          required
+          {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+          placeholder="{{ 'blocks.contact_form.email' | t }}"
+        >
+
+        <label class="visually-hidden" for="{{ message_id }}">{{ 'blocks.contact_form.comment' | t }}</label>
+        <textarea
+          id="{{ message_id }}"
+          class="contact-page__input contact-page__textarea"
+          name="contact[body]"
+          rows="5"
+          placeholder="{{ section.settings.message_label | escape }}"
+        >{{- form.body -}}</textarea>
+
+        <button class="contact-page__submit" type="submit">{{ section.settings.button_label | escape }}</button>
+      {%- endform -%}
+    </div>
+
+    <aside class="contact-page__panel" aria-label="Contact details">
+      <svg class="contact-page__phone-icon" viewBox="0 0 32 48" aria-hidden="true" focusable="false">
+        <rect x="4" y="2" width="24" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="4"/>
+        <path d="M6 36h20" fill="none" stroke="currentColor" stroke-width="4"/>
+        <circle cx="16" cy="41" r="1.8" fill="currentColor"/>
+      </svg>
+
+      <a class="contact-page__phone" href="tel:+19415528417">{{ section.settings.phone | escape }}</a>
+      <p class="contact-page__hours">{{ section.settings.hours | escape }}</p>
+      <a class="contact-page__email" href="mailto:{{ section.settings.email | escape }}">{{ section.settings.email | escape }}</a>
+      <div class="contact-page__address">
+        <strong>{{ section.settings.address_label | escape }}</strong>
+        {{ section.settings.address | escape }}
+      </div>
+
+      <div class="contact-page__socials" aria-label="Social media">
+        {%- if section.settings.facebook_url != blank -%}
+          <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'facebook' %}</svg></a>
+        {%- endif -%}
+        {%- if section.settings.twitter_url != blank -%}
+          <a href="{{ section.settings.twitter_url }}" target="_blank" rel="noopener noreferrer" aria-label="X"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'twitter' %}</svg></a>
+        {%- endif -%}
+        {%- if section.settings.linkedin_url != blank -%}
+          <a href="{{ section.settings.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'linkedin' %}</svg></a>
+        {%- endif -%}
+        {%- if section.settings.instagram_url != blank -%}
+          <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'instagram' %}</svg></a>
+        {%- endif -%}
+        {%- if section.settings.youtube_url != blank -%}
+          <a href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'youtube' %}</svg></a>
+        {%- endif -%}
+        {%- if section.settings.pinterest_url != blank -%}
+          <a href="{{ section.settings.pinterest_url }}" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'pinterest' %}</svg></a>
+        {%- endif -%}
+      </div>
+    </aside>
+  </div>
+</section>
+
+{% stylesheet %}
+  .contact-page {
+    padding-block: 72px;
+    background: #fff;
+  }
+
+  .contact-page__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 452px);
+    gap: clamp(40px, 5vw, 64px);
+    align-items: stretch;
+  }
+
+  .contact-page__form-column {
+    padding-block: 2px 8px;
+  }
+
+  .contact-page__heading {
+    margin: 0 0 30px;
+    color: var(--contact-accent);
+    font-size: clamp(2.6rem, 2.4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .contact-page__form {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+  }
+
+  .contact-page__input {
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    padding: 9px 16px;
+    color: #252525;
+    font: inherit;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--contact-accent);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .contact-page__input::placeholder {
+    color: #929292;
+    opacity: 1;
+  }
+
+  .contact-page__input:focus {
+    outline: 2px solid var(--contact-accent);
+    outline-offset: 2px;
+  }
+
+  .contact-page__textarea {
+    min-height: 112px;
+    margin-top: 3px;
+    resize: vertical;
+  }
+
+  .contact-page__submit {
+    align-self: flex-end;
+    min-width: 150px;
+    padding: 13px 22px;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    background: var(--contact-accent);
+    border: 1px solid var(--contact-accent);
+    border-radius: 0;
+    transition: transform 160ms ease, filter 160ms ease;
+  }
+
+  .contact-page__submit:hover {
+    filter: brightness(.9);
+    transform: translateY(-2px);
+  }
+
+  .contact-page__notice {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 12px 14px;
+    border: 1px solid currentColor;
+  }
+
+  .contact-page__notice svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+  }
+
+  .contact-page__notice--error {
+    color: #9b241b;
+  }
+
+  .contact-page__notice--success {
+    color: var(--contact-accent);
+  }
+
+  .contact-page__panel {
+    display: flex;
+    min-height: 484px;
+    padding: 36px 30px 34px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--contact-panel-text);
+    text-align: center;
+    background: var(--contact-panel);
+  }
+
+  .contact-page__phone-icon {
+    width: 34px;
+    height: 51px;
+    margin-bottom: 22px;
+  }
+
+  .contact-page__phone,
+  .contact-page__email {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact-page__phone {
+    font-size: clamp(2.7rem, 2.4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .contact-page__hours {
+    margin: 45px 0 23px;
+    font-size: 1.6rem;
+    line-height: 1.4;
+  }
+
+  .contact-page__email {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .contact-page__address {
+    max-width: 390px;
+    margin-top: 26px;
+    font-size: 1.55rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .contact-page__address strong {
+    display: block;
+  }
+
+  .contact-page__socials {
+    display: flex;
+    margin-top: 48px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .contact-page__socials a {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    color: var(--contact-panel);
+    background: var(--contact-panel-text);
+    border-radius: 50%;
+    transition: transform 160ms ease;
+  }
+
+  .contact-page__socials a:hover {
+    transform: translateY(-2px);
+  }
+
+  .contact-page__socials svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  @media screen and (max-width: 899px) {
+    .contact-page__inner {
+      grid-template-columns: 1fr;
+      gap: 42px;
+    }
+
+    .contact-page__panel {
+      min-height: 0;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .contact-page {
+      padding-block: 48px;
+    }
+
+    .contact-page__heading {
+      margin-bottom: 22px;
+    }
+
+    .contact-page__submit {
+      align-self: stretch;
+    }
+
+    .contact-page__panel {
+      padding: 34px 20px;
+    }
+
+    .contact-page__hours {
+      margin-top: 30px;
+    }
+
+    .contact-page__socials {
+      margin-top: 36px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact page",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find Out More" },
+    { "type": "text", "id": "message_label", "label": "Message placeholder", "default": "Message" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send Message" },
+    { "type": "color", "id": "accent_color", "label": "Form accent color", "default": "#445438" },
+    { "type": "header", "content": "Contact information" },
+    { "type": "color", "id": "panel_background", "label": "Panel background", "default": "#445438" },
+    { "type": "color", "id": "panel_text_color", "label": "Panel text color", "default": "#ffffff" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "(941)-552-8417" },
+    { "type": "text", "id": "hours", "label": "Hours", "default": "8 AM - 5 PM (Monday to Saturday)" },
+    { "type": "text", "id": "email", "label": "Email", "default": "info@biomprobiotics.com" },
+    { "type": "text", "id": "address_label", "label": "Address label", "default": "Address: Biom Pharmaceutical Corporation," },
+    { "type": "text", "id": "address", "label": "Address", "default": "2310 Whitfield Park Ave, Suite A, Sarasota, FL 34243" },
+    { "type": "header", "content": "Social links" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook" },
+    { "type": "url", "id": "twitter_url", "label": "X / Twitter" },
+    { "type": "url", "id": "linkedin_url", "label": "LinkedIn" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram" },
+    { "type": "url", "id": "youtube_url", "label": "YouTube" },
+    { "type": "url", "id": "pinterest_url", "label": "Pinterest" }
+  ],
+  "presets": [{ "name": "Contact page" }]
+}
+{% endschema %}
