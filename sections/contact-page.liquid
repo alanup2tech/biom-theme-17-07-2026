@@ -176,8 +176,6 @@
   .contact-page__submit {
     align-self: flex-end;
     min-width: 150px;
-    font-size: 17px;
-    font-weight: 700;
   }
 
   .contact-page__submit:hover {
@@ -239,13 +237,13 @@
 
   .contact-page__hours {
     margin: 38px 0 20px;
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.45;
   }
 
   .contact-page__email {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 1.45;
   }
@@ -253,7 +251,7 @@
   .contact-page__address {
     max-width: 360px;
     margin-top: 22px;
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 1.45;
   }
@@ -293,35 +291,6 @@
     fill: currentColor;
   }
 
-  @media screen and (max-width: 1199px) {
-    .contact-page {
-      padding-block: 60px;
-    }
-
-    .contact-page__inner {
-      grid-template-columns: minmax(0, 1fr) minmax(340px, 410px);
-      gap: 40px;
-    }
-
-    .contact-page__panel {
-      padding: 34px 24px 32px;
-    }
-
-    .contact-page__phone {
-      font-size: 30px;
-    }
-
-    .contact-page__hours,
-    .contact-page__email,
-    .contact-page__address {
-      font-size: 16px;
-    }
-
-    .contact-page__socials {
-      gap: 14px;
-    }
-  }
-
   @media screen and (max-width: 899px) {
     .contact-page__inner {
       grid-template-columns: 1fr;
@@ -330,13 +299,6 @@
 
     .contact-page__panel {
       min-height: 0;
-      padding: 46px 32px;
-    }
-
-    .contact-page__hours,
-    .contact-page__email,
-    .contact-page__address {
-      font-size: 17px;
     }
   }
 
@@ -347,89 +309,23 @@
 
     .contact-page__heading {
       margin-bottom: 22px;
-      font-size: 28px;
     }
 
     .contact-page__submit {
       align-self: stretch;
       width: 100%;
-      font-size: 16px;
-      font-weight: 700;
     }
 
     .contact-page__panel {
-      padding: 38px 20px;
-    }
-
-    .contact-page__phone-icon {
-      width: 30px;
-      height: 45px;
-      margin-bottom: 18px;
-    }
-
-    .contact-page__phone {
-      font-size: 28px;
+      padding: 34px 20px;
     }
 
     .contact-page__hours {
       margin-top: 30px;
     }
 
-    .contact-page__hours,
-    .contact-page__email,
-    .contact-page__address {
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
-    .contact-page__address {
-      margin-top: 18px;
-    }
-
     .contact-page__socials {
       margin-top: 36px;
-      gap: 12px;
-    }
-  }
-
-  @media screen and (max-width: 399px) {
-    .contact-page {
-      padding-block: 40px;
-    }
-
-    .contact-page__inner {
-      gap: 34px;
-    }
-
-    .contact-page__heading {
-      font-size: 26px;
-    }
-
-    .contact-page__form {
-      gap: 18px;
-    }
-
-    .contact-page__panel {
-      padding: 32px 14px;
-    }
-
-    .contact-page__phone {
-      font-size: 25px;
-    }
-
-    .contact-page__hours,
-    .contact-page__email,
-    .contact-page__address {
-      font-size: 14px;
-    }
-
-    .contact-page__socials {
-      gap: 10px;
-    }
-
-    .contact-page__socials a {
-      width: 32px;
-      height: 32px;
     }
   }
 {% endstylesheet %}
