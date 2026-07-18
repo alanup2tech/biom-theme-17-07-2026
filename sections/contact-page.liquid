@@ -1,95 +1,8 @@
-{%- liquid
-  assign form_id = 'ContactForm-' | append: section.id
-  assign name_id = form_id | append: '-name'
-  assign email_id = form_id | append: '-email'
-  assign phone_id = form_id | append: '-phone'
-  assign message_id = form_id | append: '-message'
--%}
-
 <section
   class="contact-page"
-  style="--contact-accent: {{ section.settings.accent_color }}; --contact-panel: {{ section.settings.panel_background }}; --contact-panel-text: {{ section.settings.panel_text_color }};"
+  style="--contact-panel: {{ section.settings.panel_background }}; --contact-panel-text: {{ section.settings.panel_text_color }};"
 >
   <div class="contact-page__inner page-width">
-    <div class="contact-page__form-column">
-      <h2 class="contact-page__heading">{{ section.settings.heading | escape }}</h2>
-
-      {%- form 'contact', id: form_id, class: 'contact-page__form' -%}
-        <input name="contact[id]" type="hidden" value="{{ form_id }}">
-
-        {%- if form.errors -%}
-          <div class="contact-page__notice contact-page__notice--error" tabindex="-1" autofocus>
-            {{- 'icon-error.svg' | inline_asset_content -}}
-            {{- form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email -}}
-          </div>
-        {%- endif -%}
-
-        {%- if form.posted_successfully? -%}
-          <div class="contact-page__notice contact-page__notice--success" tabindex="-1" autofocus>
-            {{- 'icon-checkmark.svg' | inline_asset_content -}}
-            {{- 'blocks.contact_form.post_success' | t -}}
-          </div>
-        {%- endif -%}
-
-        <div class="contact-page__form-row">
-          <div>
-            <label class="visually-hidden" for="{{ name_id }}">{{ 'blocks.contact_form.name' | t }}</label>
-            <input
-              id="{{ name_id }}"
-              class="contact-page__input"
-              type="text"
-              name="contact[name]"
-              autocomplete="name"
-              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
-              placeholder="{{ 'blocks.contact_form.name' | t }}"
-            >
-          </div>
-
-          <div>
-            <label class="visually-hidden" for="{{ email_id }}">
-              {{- 'blocks.contact_form.email' | t }} <span aria-hidden="true">*</span>
-            </label>
-            <input
-              id="{{ email_id }}"
-              class="contact-page__input"
-              type="email"
-              name="contact[email]"
-              autocomplete="email"
-              spellcheck="false"
-              autocapitalize="off"
-              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
-              aria-required="true"
-              required
-              {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
-              placeholder="{{ 'blocks.contact_form.email' | t }}"
-            >
-          </div>
-        </div>
-
-        <label class="visually-hidden" for="{{ phone_id }}">{{ 'blocks.contact_form.phone' | t }}</label>
-        <input
-          id="{{ phone_id }}"
-          class="contact-page__input"
-          type="tel"
-          name="contact[phone]"
-          autocomplete="tel"
-          value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
-          placeholder="{{ 'blocks.contact_form.phone' | t }}"
-        >
-
-        <label class="visually-hidden" for="{{ message_id }}">{{ 'blocks.contact_form.comment' | t }}</label>
-        <textarea
-          id="{{ message_id }}"
-          class="contact-page__input contact-page__textarea"
-          name="contact[body]"
-          rows="5"
-          placeholder="{{ section.settings.message_label | escape }}"
-        >{{- form.body -}}</textarea>
-
-        <button class="button contact-page__submit" type="submit">{{ section.settings.button_label | escape }}</button>
-      {%- endform -%}
-    </div>
-
     <aside class="contact-page__panel" aria-label="Contact details">
       <svg class="contact-page__phone-icon" viewBox="0 0 32 48" aria-hidden="true" focusable="false">
         <rect x="4" y="2" width="24" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="4"/>
@@ -137,97 +50,9 @@
 
   .contact-page__inner {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(40px, 5vw, 64px);
+    grid-template-columns: minmax(0, 560px);
+    justify-content: center;
     align-items: stretch;
-  }
-
-  .contact-page__form-column {
-    padding-block: 2px 8px;
-  }
-
-  .contact-page__heading {
-    margin: 0 0 30px;
-    color: var(--contact-accent);
-    font-family: 'TT Gateral', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .contact-page__form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .contact-page__form-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-  }
-
-  .contact-page__input {
-    display: block;
-    width: 100%;
-    min-height: 58px;
-    padding: 16px 20px;
-    color: #252525;
-    font: inherit;
-    background: #fff;
-    border: 1px solid #dedede;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .contact-page__input::placeholder {
-    color: #929292;
-    opacity: 1;
-  }
-
-  .contact-page__input:focus {
-    border-color: var(--contact-accent);
-    outline: 1px solid var(--contact-accent);
-    outline-offset: 0;
-  }
-
-  .contact-page__textarea {
-    min-height: 258px;
-    resize: vertical;
-  }
-
-  .contact-page__submit {
-    align-self: flex-start;
-    min-width: 150px;
-    font-size: 17px;
-    font-weight: 700;
-  }
-
-  .contact-page__submit:hover {
-    color: #fff;
-    background-color: #445438;
-  }
-
-  .contact-page__notice {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    padding: 12px 14px;
-    border: 1px solid currentColor;
-  }
-
-  .contact-page__notice svg {
-    width: 18px;
-    height: 18px;
-    flex: 0 0 auto;
-  }
-
-  .contact-page__notice--error {
-    color: #9b241b;
-  }
-
-  .contact-page__notice--success {
-    color: var(--contact-accent);
   }
 
   .contact-page__panel {
@@ -322,8 +147,7 @@
     }
 
     .contact-page__inner {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 40px;
+      grid-template-columns: minmax(0, 520px);
     }
 
     .contact-page__panel {
@@ -348,7 +172,6 @@
   @media screen and (max-width: 749px) {
     .contact-page__inner {
       grid-template-columns: 1fr;
-      gap: 42px;
     }
 
     .contact-page__panel {
@@ -366,22 +189,6 @@
   @media screen and (max-width: 749px) {
     .contact-page {
       padding-block: 48px;
-    }
-
-    .contact-page__heading {
-      margin-bottom: 22px;
-      font-size: 28px;
-    }
-
-    .contact-page__form-row {
-      grid-template-columns: 1fr;
-    }
-
-    .contact-page__submit {
-      align-self: stretch;
-      width: 100%;
-      font-size: 16px;
-      font-weight: 700;
     }
 
     .contact-page__panel {
@@ -425,15 +232,7 @@
     }
 
     .contact-page__inner {
-      gap: 34px;
-    }
-
-    .contact-page__heading {
-      font-size: 26px;
-    }
-
-    .contact-page__form {
-      gap: 18px;
+      grid-template-columns: 1fr;
     }
 
     .contact-page__panel {
@@ -465,10 +264,6 @@
 {
   "name": "Contact page",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Find Out More" },
-    { "type": "text", "id": "message_label", "label": "Message placeholder", "default": "Comment" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Submit" },
-    { "type": "color", "id": "accent_color", "label": "Form accent color", "default": "#6A8E4E" },
     { "type": "header", "content": "Contact information" },
     { "type": "color", "id": "panel_background", "label": "Panel background", "default": "#6A8E4E" },
     { "type": "color", "id": "panel_text_color", "label": "Panel text color", "default": "#ffffff" },
