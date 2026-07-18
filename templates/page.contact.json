@@ -9,13 +9,13 @@
         "color_scheme": ""
       }
     },
-    "form": {
+    "contact": {
       "type": "contact-page",
       "name": "Contact page",
       "settings": {
         "heading": "Find Out More",
-        "message_label": "Comment",
-        "button_label": "Submit",
+        "message_label": "Message",
+        "button_label": "Send Message",
         "accent_color": "#6A8E4E",
         "panel_background": "#6A8E4E",
         "panel_text_color": "#ffffff",
@@ -33,5 +33,5 @@
       }
     }
   },
-  "order": ["team_banner_7Ed7pg", "form"]
+  "order": ["team_banner_7Ed7pg", "contact"]
 }
