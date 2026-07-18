@@ -2,6 +2,7 @@
   assign form_id = 'ContactForm-' | append: section.id
   assign name_id = form_id | append: '-name'
   assign email_id = form_id | append: '-email'
+  assign phone_id = form_id | append: '-phone'
   assign message_id = form_id | append: '-message'
 -%}
 
@@ -30,33 +31,50 @@
           </div>
         {%- endif -%}
 
-        <label class="visually-hidden" for="{{ name_id }}">{{ 'blocks.contact_form.name' | t }}</label>
-        <input
-          id="{{ name_id }}"
-          class="contact-page__input"
-          type="text"
-          name="contact[name]"
-          autocomplete="name"
-          value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
-          placeholder="{{ 'blocks.contact_form.name' | t }}"
-        >
+        <div class="contact-page__form-row">
+          <div>
+            <label class="visually-hidden" for="{{ name_id }}">{{ 'blocks.contact_form.name' | t }}</label>
+            <input
+              id="{{ name_id }}"
+              class="contact-page__input"
+              type="text"
+              name="contact[name]"
+              autocomplete="name"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="{{ 'blocks.contact_form.name' | t }}"
+            >
+          </div>
 
-        <label class="visually-hidden" for="{{ email_id }}">
-          {{- 'blocks.contact_form.email' | t }} <span aria-hidden="true">*</span>
-        </label>
+          <div>
+            <label class="visually-hidden" for="{{ email_id }}">
+              {{- 'blocks.contact_form.email' | t }} <span aria-hidden="true">*</span>
+            </label>
+            <input
+              id="{{ email_id }}"
+              class="contact-page__input"
+              type="email"
+              name="contact[email]"
+              autocomplete="email"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              required
+              {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+              placeholder="{{ 'blocks.contact_form.email' | t }}"
+            >
+          </div>
+        </div>
+
+        <label class="visually-hidden" for="{{ phone_id }}">{{ 'blocks.contact_form.phone' | t }}</label>
         <input
-          id="{{ email_id }}"
+          id="{{ phone_id }}"
           class="contact-page__input"
-          type="email"
-          name="contact[email]"
-          autocomplete="email"
-          spellcheck="false"
-          autocapitalize="off"
-          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
-          aria-required="true"
-          required
-          {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
-          placeholder="{{ 'blocks.contact_form.email' | t }}"
+          type="tel"
+          name="contact[phone]"
+          autocomplete="tel"
+          value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+          placeholder="{{ 'blocks.contact_form.phone' | t }}"
         >
 
         <label class="visually-hidden" for="{{ message_id }}">{{ 'blocks.contact_form.comment' | t }}</label>
@@ -119,7 +137,7 @@
 
   .contact-page__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 452px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(40px, 5vw, 64px);
     align-items: stretch;
   }
@@ -140,19 +158,24 @@
   .contact-page__form {
     display: flex;
     flex-direction: column;
-    gap: 23px;
+    gap: 14px;
+  }
+
+  .contact-page__form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
   }
 
   .contact-page__input {
     display: block;
     width: 100%;
-    min-height: 46px;
-    padding: 9px 16px;
+    min-height: 58px;
+    padding: 16px 20px;
     color: #252525;
     font: inherit;
-    background: transparent;
-    border: 0;
-    border-bottom: 2px solid var(--contact-accent);
+    background: #fff;
+    border: 1px solid #dedede;
     border-radius: 0;
     box-shadow: none;
   }
@@ -163,19 +186,21 @@
   }
 
   .contact-page__input:focus {
-    outline: 2px solid var(--contact-accent);
-    outline-offset: 2px;
+    border-color: var(--contact-accent);
+    outline: 1px solid var(--contact-accent);
+    outline-offset: 0;
   }
 
   .contact-page__textarea {
-    min-height: 112px;
-    margin-top: 3px;
+    min-height: 258px;
     resize: vertical;
   }
 
   .contact-page__submit {
-    align-self: flex-end;
+    align-self: flex-start;
     min-width: 150px;
+    font-size: 17px;
+    font-weight: 700;
   }
 
   .contact-page__submit:hover {
@@ -237,13 +262,13 @@
 
   .contact-page__hours {
     margin: 38px 0 20px;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 400;
     line-height: 1.45;
   }
 
   .contact-page__email {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 500;
     line-height: 1.45;
   }
@@ -251,7 +276,7 @@
   .contact-page__address {
     max-width: 360px;
     margin-top: 22px;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 500;
     line-height: 1.45;
   }
@@ -291,7 +316,36 @@
     fill: currentColor;
   }
 
-  @media screen and (max-width: 899px) {
+  @media screen and (max-width: 1199px) {
+    .contact-page {
+      padding-block: 60px;
+    }
+
+    .contact-page__inner {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px;
+    }
+
+    .contact-page__panel {
+      padding: 34px 24px 32px;
+    }
+
+    .contact-page__phone {
+      font-size: 30px;
+    }
+
+    .contact-page__hours,
+    .contact-page__email,
+    .contact-page__address {
+      font-size: 16px;
+    }
+
+    .contact-page__socials {
+      gap: 14px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
     .contact-page__inner {
       grid-template-columns: 1fr;
       gap: 42px;
@@ -299,6 +353,13 @@
 
     .contact-page__panel {
       min-height: 0;
+      padding: 46px 32px;
+    }
+
+    .contact-page__hours,
+    .contact-page__email,
+    .contact-page__address {
+      font-size: 17px;
     }
   }
 
@@ -309,23 +370,93 @@
 
     .contact-page__heading {
       margin-bottom: 22px;
+      font-size: 28px;
+    }
+
+    .contact-page__form-row {
+      grid-template-columns: 1fr;
     }
 
     .contact-page__submit {
       align-self: stretch;
       width: 100%;
+      font-size: 16px;
+      font-weight: 700;
     }
 
     .contact-page__panel {
-      padding: 34px 20px;
+      padding: 38px 20px;
+    }
+
+    .contact-page__phone-icon {
+      width: 30px;
+      height: 45px;
+      margin-bottom: 18px;
+    }
+
+    .contact-page__phone {
+      font-size: 28px;
     }
 
     .contact-page__hours {
       margin-top: 30px;
     }
 
+    .contact-page__hours,
+    .contact-page__email,
+    .contact-page__address {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .contact-page__address {
+      margin-top: 18px;
+    }
+
     .contact-page__socials {
       margin-top: 36px;
+      gap: 12px;
+    }
+  }
+
+  @media screen and (max-width: 399px) {
+    .contact-page {
+      padding-block: 40px;
+    }
+
+    .contact-page__inner {
+      gap: 34px;
+    }
+
+    .contact-page__heading {
+      font-size: 26px;
+    }
+
+    .contact-page__form {
+      gap: 18px;
+    }
+
+    .contact-page__panel {
+      padding: 32px 14px;
+    }
+
+    .contact-page__phone {
+      font-size: 25px;
+    }
+
+    .contact-page__hours,
+    .contact-page__email,
+    .contact-page__address {
+      font-size: 14px;
+    }
+
+    .contact-page__socials {
+      gap: 10px;
+    }
+
+    .contact-page__socials a {
+      width: 32px;
+      height: 32px;
     }
   }
 {% endstylesheet %}
@@ -335,8 +466,8 @@
   "name": "Contact page",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Find Out More" },
-    { "type": "text", "id": "message_label", "label": "Message placeholder", "default": "Message" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send Message" },
+    { "type": "text", "id": "message_label", "label": "Message placeholder", "default": "Comment" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Submit" },
     { "type": "color", "id": "accent_color", "label": "Form accent color", "default": "#6A8E4E" },
     { "type": "header", "content": "Contact information" },
     { "type": "color", "id": "panel_background", "label": "Panel background", "default": "#6A8E4E" },
