@@ -9,7 +9,7 @@
         "color_scheme": ""
       }
     },
-    "contact": {
+    "form": {
       "type": "contact-page",
       "name": "Contact page",
       "settings": {
@@ -33,5 +33,5 @@
       }
     }
   },
-  "order": ["team_banner_7Ed7pg", "contact"]
+  "order": ["team_banner_7Ed7pg", "form"]
 }
