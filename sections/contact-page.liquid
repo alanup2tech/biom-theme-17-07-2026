@@ -68,7 +68,7 @@
           placeholder="{{ section.settings.message_label | escape }}"
         >{{- form.body -}}</textarea>
 
-        <button class="contact-page__submit" type="submit">{{ section.settings.button_label | escape }}</button>
+        <button class="button contact-page__submit" type="submit">{{ section.settings.button_label | escape }}</button>
       {%- endform -%}
     </div>
 
@@ -131,7 +131,8 @@
   .contact-page__heading {
     margin: 0 0 30px;
     color: var(--contact-accent);
-    font-size: clamp(2.6rem, 2.4vw, 3.4rem);
+    font-family: 'TT Gateral', sans-serif;
+    font-size: 32px;
     font-weight: 700;
     line-height: 1.2;
   }
@@ -175,21 +176,6 @@
   .contact-page__submit {
     align-self: flex-end;
     min-width: 150px;
-    padding: 13px 22px;
-    color: #fff;
-    font: inherit;
-    font-weight: 600;
-    line-height: 1.2;
-    cursor: pointer;
-    background: var(--contact-accent);
-    border: 1px solid var(--contact-accent);
-    border-radius: 0;
-    transition: transform 160ms ease, filter 160ms ease;
-  }
-
-  .contact-page__submit:hover {
-    filter: brightness(.9);
-    transform: translateY(-2px);
   }
 
   .contact-page__notice {
@@ -245,32 +231,35 @@
   }
 
   .contact-page__hours {
-    margin: 45px 0 23px;
-    font-size: 1.6rem;
-    line-height: 1.4;
+    margin: 38px 0 20px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.45;
   }
 
   .contact-page__email {
-    font-size: 1.6rem;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
   }
 
   .contact-page__address {
-    max-width: 390px;
-    margin-top: 26px;
-    font-size: 1.55rem;
-    font-weight: 600;
-    line-height: 1.5;
+    max-width: 360px;
+    margin-top: 22px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
   }
 
   .contact-page__address strong {
     display: block;
+    font-weight: 500;
   }
 
   .contact-page__socials {
     display: flex;
     margin-top: 48px;
-    gap: 10px;
+    gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -319,6 +308,7 @@
 
     .contact-page__submit {
       align-self: stretch;
+      width: 100%;
     }
 
     .contact-page__panel {
