@@ -1,0 +1,221 @@
+<aside
+  class="contact-details-block"
+  style="
+    --contact-panel: {{ block.settings.panel_background }};
+    --contact-panel-text: {{ block.settings.panel_text_color }};
+    --contact-card-width: {{ block.settings.card_width }}px;
+  "
+  aria-label="Contact details"
+  {{ block.shopify_attributes }}
+>
+  <svg class="contact-details-block__phone-icon" viewBox="0 0 32 48" aria-hidden="true" focusable="false">
+    <rect x="4" y="2" width="24" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="4"/>
+    <path d="M6 36h20" fill="none" stroke="currentColor" stroke-width="4"/>
+    <circle cx="16" cy="41" r="1.8" fill="currentColor"/>
+  </svg>
+
+  <a class="contact-details-block__phone" href="tel:+19415528417">{{ block.settings.phone | escape }}</a>
+  <p class="contact-details-block__hours">{{ block.settings.hours | escape }}</p>
+  <a class="contact-details-block__email" href="mailto:{{ block.settings.email | escape }}">{{ block.settings.email | escape }}</a>
+  <div class="contact-details-block__address">
+    <strong>{{ block.settings.address_label | escape }}</strong>
+    {{ block.settings.address | escape }}
+  </div>
+
+  <div class="contact-details-block__socials" aria-label="Social media">
+    {%- if block.settings.facebook_url != blank -%}
+      <a href="{{ block.settings.facebook_url }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'facebook' %}</svg></a>
+    {%- endif -%}
+    {%- if block.settings.twitter_url != blank -%}
+      <a href="{{ block.settings.twitter_url }}" target="_blank" rel="noopener noreferrer" aria-label="X"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'twitter' %}</svg></a>
+    {%- endif -%}
+    {%- if block.settings.linkedin_url != blank -%}
+      <a href="{{ block.settings.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'linkedin' %}</svg></a>
+    {%- endif -%}
+    {%- if block.settings.instagram_url != blank -%}
+      <a href="{{ block.settings.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'instagram' %}</svg></a>
+    {%- endif -%}
+    {%- if block.settings.youtube_url != blank -%}
+      <a href="{{ block.settings.youtube_url }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'youtube' %}</svg></a>
+    {%- endif -%}
+    {%- if block.settings.pinterest_url != blank -%}
+      <a href="{{ block.settings.pinterest_url }}" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><svg viewBox="0 0 20 20" aria-hidden="true">{% render 'icon', icon: 'pinterest' %}</svg></a>
+    {%- endif -%}
+  </div>
+</aside>
+
+{% stylesheet %}
+  .contact-details-block {
+    display: flex;
+    width: min(100%, var(--contact-card-width));
+    min-height: 484px;
+    padding: 36px 30px 34px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--contact-panel-text);
+    text-align: center;
+    background: var(--contact-panel);
+  }
+
+  .contact-details-block__phone-icon {
+    width: 34px;
+    height: 51px;
+    margin-bottom: 22px;
+  }
+
+  .contact-details-block__phone,
+  .contact-details-block__email {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact-details-block__phone {
+    font-size: clamp(2.7rem, 2.4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .contact-details-block__hours {
+    margin: 38px 0 20px;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  .contact-details-block__email {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .contact-details-block__address {
+    max-width: 360px;
+    margin-top: 22px;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .contact-details-block__address strong {
+    display: block;
+    font-weight: 500;
+  }
+
+  .contact-details-block__socials {
+    display: flex;
+    margin-top: 48px;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .contact-details-block__socials a {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    color: var(--contact-panel);
+    background: var(--contact-panel-text);
+    border-radius: 50%;
+    transition: transform 160ms ease;
+  }
+
+  .contact-details-block__socials a:hover {
+    transform: translateY(-2px);
+  }
+
+  .contact-details-block__socials svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  @media screen and (max-width: 749px) {
+    .contact-details-block {
+      min-height: 0;
+      padding: 38px 20px;
+    }
+
+    .contact-details-block__phone-icon {
+      width: 30px;
+      height: 45px;
+      margin-bottom: 18px;
+    }
+
+    .contact-details-block__phone {
+      font-size: 28px;
+    }
+
+    .contact-details-block__hours {
+      margin-top: 30px;
+    }
+
+    .contact-details-block__hours,
+    .contact-details-block__email,
+    .contact-details-block__address {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .contact-details-block__address {
+      margin-top: 18px;
+    }
+
+    .contact-details-block__socials {
+      margin-top: 36px;
+      gap: 12px;
+    }
+  }
+
+  @media screen and (max-width: 399px) {
+    .contact-details-block {
+      padding: 32px 14px;
+    }
+
+    .contact-details-block__phone {
+      font-size: 25px;
+    }
+
+    .contact-details-block__hours,
+    .contact-details-block__email,
+    .contact-details-block__address {
+      font-size: 14px;
+    }
+
+    .contact-details-block__socials {
+      gap: 10px;
+    }
+
+    .contact-details-block__socials a {
+      width: 32px;
+      height: 32px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact details",
+  "tag": null,
+  "settings": [
+    { "type": "range", "id": "card_width", "label": "Card width", "min": 320, "max": 800, "step": 20, "unit": "px", "default": 560 },
+    { "type": "color", "id": "panel_background", "label": "Background", "default": "#6A8E4E" },
+    { "type": "color", "id": "panel_text_color", "label": "Text color", "default": "#ffffff" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "(941)-552-8417" },
+    { "type": "text", "id": "hours", "label": "Hours", "default": "8 AM - 5 PM (Monday to Saturday)" },
+    { "type": "text", "id": "email", "label": "Email", "default": "info@biomprobiotics.com" },
+    { "type": "text", "id": "address_label", "label": "Address label", "default": "Address: Biom Pharmaceutical Corporation," },
+    { "type": "text", "id": "address", "label": "Address", "default": "2310 Whitfield Park Ave, Suite A, Sarasota, FL 34243" },
+    { "type": "header", "content": "Social links" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook" },
+    { "type": "url", "id": "twitter_url", "label": "X / Twitter" },
+    { "type": "url", "id": "linkedin_url", "label": "LinkedIn" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram" },
+    { "type": "url", "id": "youtube_url", "label": "YouTube" },
+    { "type": "url", "id": "pinterest_url", "label": "Pinterest" }
+  ],
+  "presets": [{ "name": "Contact details" }]
+}
+{% endschema %}

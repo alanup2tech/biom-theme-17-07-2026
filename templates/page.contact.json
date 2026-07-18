@@ -9,25 +9,61 @@
         "color_scheme": ""
       }
     },
-    "form": {
-      "type": "contact-page",
-      "name": "Contact page",
+    "contact_information": {
+      "type": "section",
+      "name": "Contact information",
+      "blocks": {
+        "contact_details": {
+          "type": "contact-details",
+          "name": "Contact details",
+          "settings": {
+            "card_width": 560,
+            "panel_background": "#6A8E4E",
+            "panel_text_color": "#ffffff",
+            "phone": "(941)-552-8417",
+            "hours": "8 AM - 5 PM (Monday to Saturday)",
+            "email": "info@biomprobiotics.com",
+            "address_label": "Address: Biom Pharmaceutical Corporation,",
+            "address": "2310 Whitfield Park Ave, Suite A, Sarasota, FL 34243",
+            "facebook_url": "https://www.facebook.com/biomprobiotics/",
+            "twitter_url": "https://twitter.com/biomprobiotics",
+            "linkedin_url": "https://www.linkedin.com/company/biom-pharmaceuticals/",
+            "instagram_url": "https://www.instagram.com/biomprobiotics/?hl=en",
+            "youtube_url": "https://www.youtube.com/channel/UCRQiW0fSLxpSE2smAMsskAA",
+            "pinterest_url": "https://in.pinterest.com/biomprobiotics/"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["contact_details"],
       "settings": {
-        "panel_background": "#6A8E4E",
-        "panel_text_color": "#ffffff",
-        "phone": "(941)-552-8417",
-        "hours": "8 AM - 5 PM (Monday to Saturday)",
-        "email": "info@biomprobiotics.com",
-        "address_label": "Address: Biom Pharmaceutical Corporation,",
-        "address": "2310 Whitfield Park Ave, Suite A, Sarasota, FL 34243",
-        "facebook_url": "https://www.facebook.com/biomprobiotics/",
-        "twitter_url": "https://twitter.com/biomprobiotics",
-        "linkedin_url": "https://www.linkedin.com/company/biom-pharmaceuticals/",
-        "instagram_url": "https://www.instagram.com/biomprobiotics/?hl=en",
-        "youtube_url": "https://www.youtube.com/channel/UCRQiW0fSLxpSE2smAMsskAA",
-        "pinterest_url": "https://in.pinterest.com/biomprobiotics/"
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-1",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 72,
+        "padding-block-end": 72
       }
     }
   },
-  "order": ["team_banner_7Ed7pg", "form"]
+  "order": ["team_banner_7Ed7pg", "contact_information"]
 }
